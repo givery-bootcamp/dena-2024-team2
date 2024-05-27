@@ -26,8 +26,8 @@
 
 ## How to develop
 
-```
-$ docker-compose up
+```sh
+docker-compose up
 ```
 
 - backend: `http://localhost:9000`
@@ -40,9 +40,9 @@ $ docker-compose up
 初期状態で、DBから値を読み出してHello worldを表示する構成となっていますが、初回起動時にはテーブルが存在しないためWebサーバへのアクセスがエラーになります。
 起動後に以下のスクリプトを実行してテーブルの作成と初期データの投入を行ってください。
 
-```
-host$ docker-compose exec db sh -c "mysql < /sqlscripts/create.sql"
-host$ docker-compose exec db sh -c "mysql training < /sqlscripts/insert.sql"
+```sh
+docker-compose exec db sh -c "mysql < /sqlscripts/create.sql"
+docker-compose exec db sh -c "mysql training < /sqlscripts/insert.sql"
 ```
 
 Reactを開発する人はブラウザの拡張機能をインストールしてください。(任意)
@@ -52,15 +52,15 @@ Reactを開発する人はブラウザの拡張機能をインストールして
 
 ## How to connect database
 
-```
-host$ docker-compose exec db mysql training
+```sh
+docker-compose exec db mysql training
 ```
 
 ## How to connect backend/frontend shell
 
-```
-host$ docker-compose exec backend bash
-host$ docker-compose exec frontend bash
+```sh
+docker-compose exec backend bash
+docker-compose exec frontend bash
 ```
 
 ライブラリをインストールする場合はdockerコンテナ側でコマンドを実行してください。
