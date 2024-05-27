@@ -1,0 +1,33 @@
+- type: input
+  attributes:
+    label: 元のIssue
+    description: [givery-bootcamp/training-app-2024](https://github.com/givery-bootcamp/training-app-2024/issues?q=is%3Aissue+is%3Aopen)におけるIssue
+    validations:
+      required: true
+- type: dropdown
+  attributes:
+    label: 領域
+    description: バックエンドかフロントエンドか
+    options:
+      - バックエンド
+      - フロントエンド
+  validations:
+    required: true
+- type: textarea
+  attributes:
+    label: 説明
+    description: Issueに関する詳細説明や仕様など。
+  validations:
+    required: true
+- type: textarea
+  attributes:
+    label: 受入条件
+    description: このIssueを完了とみなす条件
+    value: |
+      - [ ] 仕様をすべて満たしている
+      - [ ] テストが記述されている
+      - [ ] テストがすべて成功している
+      - [ ] コードが適切にフォーマットされている
+  validations:
+    required: true
+    
