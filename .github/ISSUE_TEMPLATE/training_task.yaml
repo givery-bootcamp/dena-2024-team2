@@ -9,7 +9,7 @@ body:
     validations:
       required: true
   - type: dropdown
-   attributes:
+    attributes:
       label: 領域
       description: バックエンドかフロントエンドか
       options:
