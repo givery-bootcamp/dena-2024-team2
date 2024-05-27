@@ -38,9 +38,10 @@ func (r *GetPostsRepository) Get() (entities.Posts, error) {
 	posts :=[]Post{}
 	result := r.Conn.Find(&posts)
 	if result.Error != nil {
-		fmt.Printf("hoge")
 		if errors.Is(result.Error, gorm.ErrRecordNotFound) {
+		  return nil, nil
 		}
+		return nil, result.Error
 	}
 	return convertGetPostsRepositoryModelToEntity(posts), nil
 }
