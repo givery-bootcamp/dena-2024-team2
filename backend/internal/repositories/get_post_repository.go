@@ -12,15 +12,12 @@ type GetPostsRepository struct {
 	Conn *gorm.DB
 }
 
-type GetPosts struct {
-	Posts []*Post
-}
-
 type Post struct {
 	Id        int
 	Title     string
 	Body      string
 	UserId    int
+	UserName  string
 	CreatedAt time.Time
 	UpdatedAt time.Time
 	DeletedAt time.Time
@@ -34,7 +31,7 @@ func NewGetPostRepository(conn *gorm.DB) *GetPostsRepository {
 
 func (r *GetPostsRepository) Get() (entities.Posts, error) {
 	posts := []Post{}
-	result := r.Conn.Find(&posts)
+	result := r.Conn.Table("posts").Select("posts.id, posts.title, posts.body, posts.user_id, posts.created_at, posts.updated_at, users.name").Joins("join users on posts.user_id = users.id").Scan(&posts)
 	if result.Error != nil {
 		if errors.Is(result.Error, gorm.ErrRecordNotFound) {
 			return nil, nil
