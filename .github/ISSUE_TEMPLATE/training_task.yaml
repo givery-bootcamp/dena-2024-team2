@@ -1,13 +1,13 @@
 name: 元リポジトリからの作成
-title: ""
+description: "[givery-bootcamp/training-app-2024](https://github.com/givery-bootcamp/training-app-2024/issues?q=is%3Aissue+is%3Aopen)で示されているIssueを元にIssueを作成する"
 projects: ["givery-bootcamp/52"]
 body:
   - type: input
     attributes:
       label: 元のIssue
       description: [givery-bootcamp/training-app-2024](https://github.com/givery-bootcamp/training-app-2024/issues?q=is%3Aissue+is%3Aopen)におけるIssue
-      validations:
-        required: true
+    validations:
+      required: true
   - type: dropdown
    attributes:
       label: 領域
