@@ -30,29 +30,13 @@ func NewGetPostRepository(conn *gorm.DB) *GetPostsRepository {
 }
 
 func (r *GetPostsRepository) Get() (entities.Posts, error) {
-	posts := []Post{}
-	result := r.Conn.Table("posts").Select("posts.id, posts.title, posts.body, posts.user_id, posts.created_at, posts.updated_at, users.name").Joins("join users on posts.user_id = users.id").Scan(&posts)
+	posts := []entities.Post{}
+	result := r.Conn.Table("posts").Select("posts.id, posts.title, posts.body, posts.created_at, posts.updated_at,users.id, users.name").Joins("join users on posts.user_id = users.id").Scan(&posts)
 	if result.Error != nil {
 		if errors.Is(result.Error, gorm.ErrRecordNotFound) {
 			return nil, nil
 		}
 		return nil, result.Error
 	}
-	return convertGetPostsRepositoryModelToEntity(posts), nil
-}
-
-func convertGetPostsRepositoryModelToEntity(posts []Post) entities.Posts {
-	entityPosts := make([]entities.Post, len(posts))
-	for i, v := range posts {
-		entityPosts[i] = entities.Post{
-			Id:        v.Id,
-			Title:     v.Title,
-			Body:      v.Body,
-			UserId:    v.UserId,
-			CreatedAt: v.CreatedAt,
-			UpdatedAt: v.UpdatedAt,
-			DeletedAt: v.DeletedAt,
-		}
-	}
-	return entityPosts
+	return posts, nil
 }
