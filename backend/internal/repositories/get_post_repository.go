@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"gorm.io/gorm"
 	"time"
+	"myapp/internal/entities"
 )
 
 type GetPostsRepository struct {
@@ -14,8 +15,6 @@ type GetPostsRepository struct {
 type GetPosts struct {
 	Posts []*Post
 }
-
-type Posts []*Post
 
 type Post struct {
 	Id int
@@ -35,13 +34,29 @@ func NewGetPostRepository(conn *gorm.DB) *GetPostsRepository {
 	}
 }
 
-func (r *GetPostsRepository) Get() {
+func (r *GetPostsRepository) Get() (entities.Posts, error) {
 	posts :=[]Post{}
 	result := r.Conn.Find(&posts)
-	fmt.Printf("result: %+v\n", result)
 	if result.Error != nil {
 		fmt.Printf("hoge")
 		if errors.Is(result.Error, gorm.ErrRecordNotFound) {
 		}
 	}
+	return convertGetPostsRepositoryModelToEntity(posts), nil
+}
+
+func convertGetPostsRepositoryModelToEntity(posts []Post) entities.Posts {
+  entityPosts:=make([]entities.Post, len(posts))
+  for i, v := range posts {
+	entityPosts[i] = entities.Post{
+		Id: v.Id,
+		Title: v.Title,
+		Body: v.Body,
+		UserId: v.UserId,
+		CreatedAt: v.CreatedAt,
+		UpdatedAt: v.UpdatedAt,
+		DeletedAt: v.DeletedAt,
+	}
+  }
+  return entityPosts
 }
