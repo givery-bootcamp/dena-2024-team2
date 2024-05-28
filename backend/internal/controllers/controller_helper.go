@@ -6,13 +6,14 @@ import (
 )
 
 type ErrorResponse struct {
-	Message string "json:`message`"
+	Message string `json:"message"`
 }
 
 func DB(ctx *gin.Context) *gorm.DB {
 	return ctx.MustGet("db").(*gorm.DB)
 }
 
+//nolint:unused
 func handleError(ctx *gin.Context, status int, err error) {
 	res := ErrorResponse{
 		Message: err.Error(),
