@@ -1,7 +1,6 @@
 package repositories
 
 import (
-	"errors"
 	"myapp/internal/entities"
 	"time"
 
@@ -29,14 +28,27 @@ func NewGetPostRepository(conn *gorm.DB) *GetPostsRepository {
 	}
 }
 
-func (r *GetPostsRepository) Get() (entities.Posts, error) {
-	posts := []entities.Post{}
-	result := r.Conn.Table("posts").Select("posts.id, posts.title, posts.body, posts.created_at, posts.updated_at,users.id, users.name").Joins("join users on posts.user_id = users.id").Scan(&posts)
-	if result.Error != nil {
-		if errors.Is(result.Error, gorm.ErrRecordNotFound) {
-			return nil, nil
-		}
-		return nil, result.Error
+func (r *GetPostsRepository) Get(channelId int) (entities.Posts, error) {
+	posts := []Post{}
+	if err := r.Conn.Table("posts").Select("posts.id, posts.title, posts.body, posts.created_at, posts.updated_at,users.id, users.name").Joins("join users on posts.user_id = users.id").Where("channel_id = ?", channelId).Scan(&posts).Error; err != nil {
+		return nil, err
 	}
-	return posts, nil
+
+	return convertToEntities(posts), nil
+}
+
+func convertToEntities(posts []Post) entities.Posts {
+	entityPosts := make(entities.Posts, len(posts))
+	for i, v := range posts {
+		entityPosts[i] = entities.Post{
+			Id:        v.Id,
+			Title:     v.Title,
+			Body:      v.Body,
+			User:      entities.User{Id: v.UserId, Name: v.UserName},
+			CreatedAt: v.CreatedAt,
+			UpdatedAt: v.UpdatedAt,
+			DeletedAt: v.DeletedAt,
+		}
+	}
+	return entityPosts
 }

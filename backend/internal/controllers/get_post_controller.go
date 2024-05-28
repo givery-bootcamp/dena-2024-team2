@@ -2,42 +2,53 @@ package controllers
 
 import (
 	"errors"
-	"fmt"
 	"myapp/internal/entities"
-	"myapp/internal/repositories"
+	"myapp/internal/usecases"
+	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/gin-gonic/gin"
 )
 
 func GetPosts(ctx *gin.Context) {
-	repository := repositories.NewGetPostRepository(DB(ctx))
-	posts, err := repository.Get()
-	fmt.Printf("controller resultid: %+v\n", posts)
-	postsJson := convertToJson(posts)
+	channelId, err := strconv.Atoi(ctx.Param("channel_id"))
 	if err != nil {
-		handleError(ctx, 500, err)
-	} else if posts != nil {
-		ctx.JSON(200, postsJson)
+		ctx.JSON(http.StatusBadRequest, err.Error())
+	}
+
+	uc := usecases.NewGetChannelPostUsecase()
+	posts, err := uc.Execute(ctx, channelId)
+	if err != nil {
+		if errors.Is(err, entities.ErrNotFound) {
+			handleError(ctx, 404, errors.New("channel not found"))
+		} else {
+			handleError(ctx, 500, err)
+		}
 	} else {
-		handleError(ctx, 404, errors.New("Not found"))
+		ctx.JSON(200, convertToJson(posts))
 	}
 }
 
-func convertToJson(posts []entities.Posts) ChannnelPostJson {
-	entityPosts := make([]ChannnelPostJson, len(posts))
+func convertToJson(posts entities.Posts) ResponseJson {
+	jsonPosts := make([]ChannnelPostJson, len(posts))
 	for i, v := range posts {
-		entityPosts[i] = ChannnelPostJson{
+		jsonPosts[i] = ChannnelPostJson{
 			Id:        v.Id,
 			Title:     v.Title,
 			Body:      v.Body,
-			UserId:    v.UserId,
+			UserName:  v.User.Name,
+			UserId:    v.User.Id,
 			CreatedAt: v.CreatedAt,
 			UpdatedAt: v.UpdatedAt,
 			DeletedAt: v.DeletedAt,
 		}
 	}
-	return entityPosts
+	return ResponseJson{Posts: jsonPosts}
+}
+
+type ResponseJson struct {
+	Posts []ChannnelPostJson `json:"posts"`
 }
 
 type ChannnelPostJson struct {
