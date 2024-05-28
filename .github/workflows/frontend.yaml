@@ -1,0 +1,22 @@
+name: Lint
+
+on:
+  pull_request:
+    paths:
+      - 'frontend/**'
+
+jobs:
+  lint:
+    name: Node Lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Biome
+        uses: biomejs/setup-biome@v2
+        with:
+          version: latest
+      - name: Run Biome
+        run: biome ci .
