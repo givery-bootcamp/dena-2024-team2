@@ -32,12 +32,6 @@ func (r *GetChannelsRepository) Get() ([]entities.Channel, error) {
 	obj := []Channel{}
 	result := r.Conn.Find(&obj)
 	fmt.Printf("result: %+v\n", obj)
-	if result.Error != nil {
-		if errors.Is(result.Error, gorm.ErrRecordNotFound) {
-			return nil, nil
-		}
-		return nil, result.Error
-	}
 	return convertChannelsRepositoryModelToEntity(obj), nil
 }
 
