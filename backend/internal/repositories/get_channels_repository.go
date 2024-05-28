@@ -1,7 +1,6 @@
 package repositories
 
 import (
-	"errors"
 	"fmt"
 	"gorm.io/gorm"
 	"time"
@@ -30,7 +29,7 @@ func NewChannelsRepository(conn *gorm.DB) *GetChannelsRepository {
 
 func (r *GetChannelsRepository) Get() ([]entities.Channel, error) {
 	obj := []Channel{}
-	result := r.Conn.Find(&obj)
+	r.Conn.Find(&obj)
 	fmt.Printf("result: %+v\n", obj)
 	return convertChannelsRepositoryModelToEntity(obj), nil
 }
