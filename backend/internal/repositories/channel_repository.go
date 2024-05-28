@@ -20,7 +20,7 @@ func NewGetChannelRepository(conn *gorm.DB) *ChannelRepository {
 func (r *ChannelRepository) Get(channelId int) (*entities.Channel, error) {
 	channel := &entities.Channel{}
 	if err := r.Conn.First(&channel, channelId).Error; err != nil {
-		if !errors.Is(err, gorm.ErrRecordNotFound) {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, entities.ErrNotFound
 		}
 		log.Printf("%v", err)

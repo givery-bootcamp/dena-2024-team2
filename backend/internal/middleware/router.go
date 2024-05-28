@@ -11,5 +11,5 @@ func SetupRoutes(app *gin.Engine) {
 		ctx.String(200, "It w")
 	})
 	app.GET("/hello", controllers.HelloWorld)
-	app.GET("/channels/:channle_id/posts", controllers.GetPosts)
+	app.GET("/channels/:id/posts", controllers.GetPosts)
 }

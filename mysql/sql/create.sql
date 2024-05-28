@@ -45,3 +45,6 @@ CREATE TABLE IF NOT EXISTS channels(
   deleted_at DATETIME     NULL,
   FOREIGN KEY (server_id) REFERENCES servers (id)
 );
+
+ALTER TABLE posts ADD channel_id INT NOT NULL AFTER user_id;
+ALTER TABLE posts ADD FOREIGN KEY (channel_id) REFERENCES channels (id)

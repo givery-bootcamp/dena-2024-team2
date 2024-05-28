@@ -12,7 +12,7 @@ import (
 )
 
 func GetPosts(ctx *gin.Context) {
-	channelId, err := strconv.Atoi(ctx.Param("channel_id"))
+	channelId, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, err.Error())
 	}

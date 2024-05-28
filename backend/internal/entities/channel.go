@@ -7,7 +7,7 @@ import (
 type Channel struct {
 	Id        int
 	ServerId  int
-	Name      int
+	Name      string
 	CreatedAt time.Time
 	UpdatedAt time.Time
 	DeletedAt time.Time
