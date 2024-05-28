@@ -8,7 +8,13 @@ import (
 
 func GetChannels(ctx *gin.Context) {
 	repository := repositories.NewChannelsRepository(DB(ctx))
-	repository.Get()
-    ctx.JSON(200, "")
+	channels, err := repository.Get()
+	if err != nil {
+		handleError(ctx, 500, err)
+	} else if channels != nil{
+		ctx.JSON(200, channels)
+	} else {
+		handleError(ctx, 404, errors.New("Not found"))
+	}
 }
 
