@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - 'backend/**'
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -11,12 +12,16 @@ permissions:
 jobs:
   lint:
     runs-on: ubuntu-latest
-    container: golang:1.22
     name: Go Lint
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+            
+      - name: "Setup Go"
+        uses: actions/setup-go@v5
+        with:
+          go-version: 1.22
 
       - name: Golangci-lint
         uses: golangci/golangci-lint-action@v6.0.1
