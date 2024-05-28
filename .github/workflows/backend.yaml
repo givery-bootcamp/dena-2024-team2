@@ -1,0 +1,32 @@
+name: Backend Lint
+
+on:
+  push:
+    paths:
+      - 'backend/**'
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    container: golang:1.22
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Golangci-lint
+        uses: golangci/golangci-lint-action@v6.0.1
+        with:
+          working-directory: ./backend
+  
+  test:
+    runs-on: ubuntu-latest
+    container: golang:1.22
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Run tests
+        run: go test
+        working-directory: ./backend
