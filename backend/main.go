@@ -18,5 +18,6 @@ func main() {
 	app.Use(middleware.Transaction())
 	app.Use(middleware.Cors())
 	middleware.SetupRoutes(app)
+	//nolint:errcheck
 	app.Run(fmt.Sprintf("%s:%d", config.HostName, config.Port))
 }
