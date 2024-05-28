@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"myapp/internal/controllers"
 	"github.com/gin-gonic/gin"
 )
 
