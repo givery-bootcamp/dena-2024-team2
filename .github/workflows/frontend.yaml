@@ -1,8 +1,9 @@
 name: Lint
 
 on:
-  push:
   pull_request:
+    paths:
+      - 'frontend/**'
 
 jobs:
   lint:
@@ -19,16 +20,3 @@ jobs:
           version: latest
       - name: Run Biome
         run: biome ci .
-
-  test:
-    runs-on: ubuntu-latest
-    container: node:20.12.2
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Setup Biome
-        uses: biomejs/setup-biome@v2
-        with:
-          version: latest
