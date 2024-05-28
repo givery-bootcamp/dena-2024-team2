@@ -1,18 +1,13 @@
-import ReactDOM from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
-import { Provider } from 'react-redux';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App.tsx";
+import "./index.css";
 
-import './main.scss';
-import App from './app/App';
-import { store } from './shared/store';
-
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
-);
+const rootElement = document.getElementById("root");
+if (!rootElement) throw new Error("Failed to find the root Element");
+const root = ReactDOM.createRoot(rootElement);
 root.render(
-  <BrowserRouter>
-    <Provider store={store}>
-      <App />
-    </Provider>
-  </BrowserRouter>
+	<React.StrictMode>
+		<App />
+	</React.StrictMode>,
 );
