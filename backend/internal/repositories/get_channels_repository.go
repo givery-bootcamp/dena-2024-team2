@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"gorm.io/gorm"
 	"time"
+	"myapp/internal/entities"
 )
 
 type GetChannelsRepository struct {
@@ -27,12 +28,30 @@ func NewChannelsRepository(conn *gorm.DB) *GetChannelsRepository {
 	}
 }
 
-func (r *GetChannelsRepository) Get() {
-	obj :=[]Channel{}
+func (r *GetChannelsRepository) Get() ([]entities.Channel, error) {
+	obj := []Channel{}
 	result := r.Conn.Find(&obj)
 	fmt.Printf("result: %+v\n", obj)
 	if result.Error != nil {
 		if errors.Is(result.Error, gorm.ErrRecordNotFound) {
+			return nil, nil
 		}
+		return nil, result.Error
 	}
+	return convertChannelsRepositoryModelToEntity(obj), nil
+}
+
+func convertChannelsRepositoryModelToEntity(channels []Channel) []entities.Channel {
+	entityChannels := make([]entities.Channel, len(channels))
+	for i, v := range channels {
+		entityChannels[i] = entities.Channel{
+			Id:        v.Id,
+			ServerId:  v.ServerId,
+			Name:      v.Name,
+			CreatedAt: v.CreatedAt,
+			UpdatedAt: v.UpdatedAt,
+			DeletedAt: v.DeletedAt,
+	  }
+	}
+	return entityChannels
 }
