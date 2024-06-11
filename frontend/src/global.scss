@@ -37,3 +37,12 @@
   --breakpoint-lg: 992px;
   --breakpoint-xl: 1200px;
 }
+
+h1,
+h2,
+h3,
+h4,
+p,
+span {
+  font-weight: var(--font-weight-normal);
+}

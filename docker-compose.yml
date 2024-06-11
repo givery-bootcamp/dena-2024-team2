@@ -26,6 +26,18 @@ services:
     environment:
       TZ: Asia/Tokyo
     init: true
+  storybook:
+    image: node:20.12.2
+    working_dir: /home/node/myapp
+    ports:
+      - '6001:6001'
+    volumes:
+      - ./frontend:/home/node/myapp
+      - /home/node/myapp/node_modules
+    command: "bash -c 'npm i && npm run storybook'"
+    environment:
+      TZ: Asia/Tokyo
+    init: true
   db:
     build:
       context: ./docker
