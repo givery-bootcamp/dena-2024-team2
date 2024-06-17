@@ -4,7 +4,7 @@ import styles from "./button.module.scss";
 type Props = {
 	children: React.ReactNode;
 	size: "sm" | "md" | "lg";
-	variant: "fill" | "outline";
+	variant: "fill" | "outline" | "ghost";
 	color: "primary" | "secondary";
 	type?: "button" | "submit" | "reset";
 	onClick: () => void;

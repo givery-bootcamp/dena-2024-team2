@@ -36,17 +36,25 @@
   outline: 1px solid;
 }
 
+.ghost {
+  background-color: transparent;
+}
+
 .primary {
   color: white;
 }
 
 .primary.fill {
-  background-color: #007bff;
+  background-color: var(--c-primary);
 }
 
 .primary.outline {
-  color: #007bff;
-  outline-color: #007bff;
+  color: var(--c-primary);
+  outline-color: var(--c-primary);
+}
+
+.primary.ghost {
+  color: var(--c-primary);
 }
 
 .secondary {
@@ -54,12 +62,16 @@
 }
 
 .secondary.fill {
-  background-color: #6c757d;
+  background-color: var(--c-gray-500);
 }
 
 .secondary.outline {
-  color: #6c757d;
-  outline-color: #6c757d;
+  color: var(--c-gray-500);
+  outline-color: var(--c-gray-500);
+}
+
+.secondary.ghost {
+  color: var(--c-gray-500);
 }
 
 .sm {
