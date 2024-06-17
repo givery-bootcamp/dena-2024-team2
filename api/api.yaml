@@ -1,0 +1,21 @@
+openapi: "3.1.0"
+info:
+  title: "Training App API"
+  version: "1.0.0"
+servers:
+  - url: "http://localhost:8080"
+    description: "Mock Server"
+  - url: "http://localhost:9000"
+    description: "Development Server"
+paths:
+  /:
+    get:
+      operationId: "healthcheck"
+      responses:
+        200:
+          description: "Healthcheck"
+          content:
+            plain/text:
+              schema:
+                type: "string"
+                example: "It works"
