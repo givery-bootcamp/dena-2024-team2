@@ -1,0 +1,50 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  color: var(--c-text-main);
+
+  // variables =================
+  // colors =============
+  --c-primary: #4ecdc4;
+  --c-text-main: #3a4953;
+
+  --c-gray-50: #EFEFEF;
+
+  // radius =============
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+
+  // shadows =============
+  --shadow-light: 0 5px 15px rgba(0, 0, 0, 0.1);
+  --shadow-dark: 0 5px 15px rgba(0, 0, 0, 0.2);
+
+  // typography =============
+  --font-size-base: 16px;
+  --font-size-sm: 12px;
+  --font-size-md: 20px;
+  --font-size-lg: 24px;
+  --font-weight-normal: 400;
+  --font-weight-bold: 700;
+
+  // spacing =============
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+
+  // breakpoints =============
+  --breakpoint-sm: 576px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1200px;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+span {
+  font-weight: var(--font-weight-normal);
+}
