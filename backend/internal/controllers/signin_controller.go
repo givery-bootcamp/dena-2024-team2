@@ -1,7 +1,10 @@
 package controllers
 
 import (
+	"errors"
 	"fmt"
+	"myapp/internal/entities"
+	"myapp/internal/usecases"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -20,10 +23,15 @@ func Signin(ctx *gin.Context) {
 	}
 	fmt.Printf("%v", json)
 	uc := usecases.NewSigninUsecase()
-	user, err := uc.Execute(ctx)
+	userId, err := uc.Execute(ctx, json.UserName, json.Password)
 	if err != nil {
-		ctx.JSON(http.StatusUnauthorized, err.Error())
+		if errors.Is(err, entities.ErrNotFound) {
+			handleError(ctx, http.StatusUnauthorized, errors.New("failed to signin"))
+		} else {
+			handleError(ctx, 500, err)
+		}
 		return
 	}
+	token, err := middleware.generateToken(userId)
 	ctx.JSON(http.StatusOK, gin.H{"message": "login success"})
 }

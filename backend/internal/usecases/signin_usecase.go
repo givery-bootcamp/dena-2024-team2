@@ -14,13 +14,9 @@ func NewSigninUsecase() *SigninUsecase {
 
 func (uc *SigninUsecase) Execute(ctx *gin.Context, userName string, password string) (*string, error) {
 	authRepo := repositories.NewUserRepository(DB(ctx))
-	useId, err := authRepo.Authenticate(userName, password)
+	userId, err := authRepo.Authenticate(userName, password)
 	if err != nil {
 		return nil, err
 	}
-	token, err := middleware.generateToken(useId)
-	if err != nil {
-		return nil, err
-	}
-	return token, nil
+	return userId, nil
 }
