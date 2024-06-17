@@ -11,7 +11,6 @@ import (
 func SignUp(ctx *gin.Context) {
 
 	var account entities.Account
-	ctx.BindJSON(&account)
 	if err := ctx.BindJSON(&account); err != nil {
 		handleError(ctx, 400, err)
 		return
