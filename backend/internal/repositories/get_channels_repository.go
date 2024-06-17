@@ -44,7 +44,7 @@ func convertChannelsRepositoryModelToEntity(channels []Channel) []entities.Chann
 			CreatedAt: v.CreatedAt,
 			UpdatedAt: v.UpdatedAt,
 			DeletedAt: v.DeletedAt,
-	  }
+		}
 	}
 	return entityChannels
 }
