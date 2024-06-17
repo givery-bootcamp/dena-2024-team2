@@ -11,5 +11,5 @@ func SetupRoutes(app *gin.Engine) {
 		ctx.String(200, "It works")
 	})
 
-	app.GET("/signin", controllers.Signin)
+	app.POST("/signin", controllers.Signin)
 }
