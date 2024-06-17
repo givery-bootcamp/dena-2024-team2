@@ -19,7 +19,7 @@ func SignUp(ctx *gin.Context) {
 	}
 
 	usecase := usecases.NewSignUpUsecase()
-	usecase.Execute()
+	usecase.Execute(ctx)
 
 }
 
