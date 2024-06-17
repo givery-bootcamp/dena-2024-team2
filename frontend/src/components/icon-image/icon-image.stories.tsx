@@ -6,6 +6,7 @@ import { IconImage } from "./icon-image";
 export default {
 	title: "Components/IconImage",
 	component: IconImage,
+	tags: ["autodocs"],
 	argTypes: {
 		src: {
 			control: "text",
