@@ -12,6 +12,10 @@ func SignUp(ctx *gin.Context) {
 
 	var account entities.Account
 	ctx.BindJSON(&account)
+	if err := ctx.BindJSON(&account); err != nil {
+		handleError(ctx, 400, err)
+		return
+	}
 	fmt.Println(account)
 	if err := validateSignUpParameters(account); err != nil {
 		handleError(ctx, 400, err)
@@ -19,8 +23,12 @@ func SignUp(ctx *gin.Context) {
 	}
 
 	usecase := usecases.NewSignUpUsecase()
-	usecase.Execute(ctx)
+	err := usecase.Execute(ctx)
+	if err != nil {
 
+	} else {
+		ctx.JSON(200, "suceess")
+	}
 }
 
 // name or password のどちらかが不足のときエラーにする
