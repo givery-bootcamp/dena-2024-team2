@@ -1,0 +1,78 @@
+.root {
+  all: unset;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: inherit;
+  font: inherit;
+  text-decoration: none;
+  outline: none;
+}
+
+.button {
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+}
+
+.fill {
+  border: none;
+}
+
+.outline {
+  background-color: transparent;
+  outline: 1px solid;
+}
+
+.primary {
+  color: white;
+}
+
+.primary.fill {
+  background-color: #007bff;
+}
+
+.primary.outline {
+  color: #007bff;
+  outline-color: #007bff;
+}
+
+.secondary {
+  color: white;
+}
+
+.secondary.fill {
+  background-color: #6c757d;
+}
+
+.secondary.outline {
+  color: #6c757d;
+  outline-color: #6c757d;
+}
+
+.sm {
+  padding: 0.25rem 0.5rem;
+  font-size: var(--font-size-sm);
+}
+
+.md {
+  padding: 0.5rem 1rem;
+  font-size: var(--font-size-base);
+}
+
+.lg {
+  padding: 0.5rem 1rem;
+  font-size: var(--font-size-lg);
+}
