@@ -10,6 +10,14 @@ import (
 
 func SignUp(ctx *gin.Context) {
 
+	var user entities.User
+	ctx.BindJSON(&user)
+	fmt.Println(user)
+	if err := validateSignUpParameters(user); err != nil {
+		handleError(ctx, 400, err)
+		return
+	}
+
 }
 
 // name or password のどちらかが不足のときエラーにする
