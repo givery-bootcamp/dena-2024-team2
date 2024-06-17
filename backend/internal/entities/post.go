@@ -4,11 +4,12 @@ import (
 	"time"
 )
 
-type Channels []Channel
-type Channel struct {
+type Posts []Post
+type Post struct {
 	Id        int
-	ServerId  int
-	Name      string
+	Title     string
+	Body      string
+	User      User
 	CreatedAt time.Time
 	UpdatedAt time.Time
 	DeletedAt time.Time
