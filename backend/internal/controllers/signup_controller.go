@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"errors"
 	"fmt"
 	"myapp/internal/entities"
 	"myapp/internal/usecases"
@@ -27,7 +26,7 @@ func SignUp(ctx *gin.Context) {
 // name or password のどちらかが不足のときエラーにする
 func validateSignUpParameters(account entities.Account) error {
 	if account.Name == "" || account.Password == "" {
-		return errors.New(fmt.Sprintf("Missing name or password"))
+		return fmt.Errorf("%v", "Missing name or password")
 	}
 	return nil
 }
