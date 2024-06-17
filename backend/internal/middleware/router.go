@@ -12,4 +12,6 @@ func SetupRoutes(app *gin.Engine) {
 	})
 
 	app.POST("/signin", controllers.Signin)
+	app.GET("/channel", controllers.GetChannels)
+	app.GET("/channels/:id/posts", controllers.GetPosts)
 }
