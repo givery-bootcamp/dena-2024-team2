@@ -10,10 +10,10 @@ import (
 
 func SignUp(ctx *gin.Context) {
 
-	var user entities.User
-	ctx.BindJSON(&user)
-	fmt.Println(user)
-	if err := validateSignUpParameters(user); err != nil {
+	var account entities.Account
+	ctx.BindJSON(&account)
+	fmt.Println(account)
+	if err := validateSignUpParameters(account); err != nil {
 		handleError(ctx, 400, err)
 		return
 	}
@@ -21,8 +21,8 @@ func SignUp(ctx *gin.Context) {
 }
 
 // name or password のどちらかが不足のときエラーにする
-func validateSignUpParameters(user entities.User) error {
-	if user.Name == "" || user.Password == "" {
+func validateSignUpParameters(account entities.Account) error {
+	if account.Name == "" || account.Password == "" {
 		return errors.New(fmt.Sprintf("Missing name or password"))
 	}
 	return nil
