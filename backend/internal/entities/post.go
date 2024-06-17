@@ -2,6 +2,7 @@ package entities
 
 import "time"
 
+type Posts []Post
 type Post struct {
 	Id        int        `json:"id"`
 	ChannelId int        `json:"channel_id"`
