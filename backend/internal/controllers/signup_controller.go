@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"myapp/internal/entities"
+	"myapp/internal/usecases"
 
 	"github.com/gin-gonic/gin"
 )
@@ -17,6 +18,9 @@ func SignUp(ctx *gin.Context) {
 		handleError(ctx, 400, err)
 		return
 	}
+
+	usecase := usecases.NewSignUpUsecase()
+	usecase.Execute()
 
 }
 
