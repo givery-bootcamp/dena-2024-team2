@@ -4,6 +4,7 @@ import (
 	"time"
 )
 
+type Channels []Channel
 type Channel struct {
 	Id        int
 	ServerId  int
