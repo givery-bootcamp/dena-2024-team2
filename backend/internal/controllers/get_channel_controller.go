@@ -4,6 +4,7 @@ import (
 	"errors"
 	"github.com/gin-gonic/gin"
 	"myapp/internal/repositories"
+	"time"
 )
 
 func GetChannels(ctx *gin.Context) {
@@ -18,3 +19,15 @@ func GetChannels(ctx *gin.Context) {
 	}
 }
 
+type ChannelsResponseJson struct {
+	Channels []ChannelJson `json:"channels"`
+}
+
+type ChannelJson struct {
+	Id        int       `json:"id"`
+	ServerId  int       `json:"serverId"`
+	Name      string    `json:"name"`
+	CreatedAt time.Time `json:"createdAt"`
+	UpdatedAt time.Time `json:"updatedAt"`
+	DeletedAt time.Time `json:"deletedAt"`
+}
