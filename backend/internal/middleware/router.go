@@ -11,7 +11,7 @@ func SetupRoutes(app *gin.Engine) {
 		ctx.String(200, "It works")
 	})
 
-	app.POST("/create_post", controllers.CreatePost)
+	app.POST("/channels/:id/posts", controllers.CreatePost)
 	app.GET("/channel", controllers.GetChannels)
 	app.GET("/channels/:id/posts", controllers.GetPosts)
 

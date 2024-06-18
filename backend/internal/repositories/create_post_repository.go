@@ -1,8 +1,6 @@
 package repositories
 
 import (
-	"errors"
-	"fmt"
 	"myapp/internal/entities"
 	"time"
 
@@ -34,12 +32,7 @@ func NewCreatePostRepository(conn *gorm.DB) *CreatePostRepository {
 func (r *CreatePostRepository) Post(post entities.Post) (*entities.Post, error) {
 	result := r.Conn.Omit("DeletedAt").Create(&post)
 
-	fmt.Printf("%+v\n", result)
-	fmt.Printf("%+v\n", post)
 	if result.Error != nil {
-		if errors.Is(result.Error, gorm.ErrRecordNotFound) {
-			return nil, nil
-		}
 		return nil, result.Error
 	}
 	return convertCreatePostRepositoryModelToEntity(&post), nil
