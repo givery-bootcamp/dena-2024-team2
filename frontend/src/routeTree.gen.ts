@@ -13,23 +13,24 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as SpacesSpaceIdChannelsChannelIdImport } from './routes/spaces/$spaceId/channels/$channelId'
 
 // Create Virtual Routes
 
-const AboutLazyImport = createFileRoute('/about')()
 const IndexLazyImport = createFileRoute('/')()
 
 // Create/Update Routes
-
-const AboutLazyRoute = AboutLazyImport.update({
-  path: '/about',
-  getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/about.lazy').then((d) => d.Route))
 
 const IndexLazyRoute = IndexLazyImport.update({
   path: '/',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
+
+const SpacesSpaceIdChannelsChannelIdRoute =
+  SpacesSpaceIdChannelsChannelIdImport.update({
+    path: '/spaces/$spaceId/channels/$channelId',
+    getParentRoute: () => rootRoute,
+  } as any)
 
 // Populate the FileRoutesByPath interface
 
@@ -42,11 +43,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexLazyImport
       parentRoute: typeof rootRoute
     }
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutLazyImport
+    '/spaces/$spaceId/channels/$channelId': {
+      id: '/spaces/$spaceId/channels/$channelId'
+      path: '/spaces/$spaceId/channels/$channelId'
+      fullPath: '/spaces/$spaceId/channels/$channelId'
+      preLoaderRoute: typeof SpacesSpaceIdChannelsChannelIdImport
       parentRoute: typeof rootRoute
     }
   }
@@ -56,7 +57,7 @@ declare module '@tanstack/react-router' {
 
 export const routeTree = rootRoute.addChildren({
   IndexLazyRoute,
-  AboutLazyRoute,
+  SpacesSpaceIdChannelsChannelIdRoute,
 })
 
 /* prettier-ignore-end */
@@ -68,14 +69,14 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/about"
+        "/spaces/$spaceId/channels/$channelId"
       ]
     },
     "/": {
       "filePath": "index.lazy.tsx"
     },
-    "/about": {
-      "filePath": "about.lazy.tsx"
+    "/spaces/$spaceId/channels/$channelId": {
+      "filePath": "spaces/$spaceId/channels/$channelId.tsx"
     }
   }
 }
