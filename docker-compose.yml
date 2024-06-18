@@ -45,7 +45,7 @@ services:
     volumes:
       - mysql-local:/var/lib/mysql
       - ./mysql/my.cnf:/etc/mysql/conf.d/my.cnf
-      - ./mysql/initdb:/docker-entrypoint-initdb.d
+      - ./mysql/sql:/docker-entrypoint-initdb.d
     environment:
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
       - MYSQL_DATABASE=training
