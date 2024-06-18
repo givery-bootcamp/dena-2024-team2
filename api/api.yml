@@ -1,0 +1,71 @@
+openapi: "3.0.2"
+info:
+  title: "Training App API"
+  version: "1.0.0"
+servers:
+  - url: "http://localhost:8080"
+    description: "Mock Server"
+  - url: "http://localhost:9000"
+    description: "Development Server"
+paths:
+  /:
+    get:
+      operationId: "healthcheck"
+      responses:
+        200:
+          description: "Healthcheck"
+          content:
+            plain/text:
+              schema:
+                type: "string"
+                example: "It works"
+  /channnel:
+    get:
+      operationId: "getChannels"
+      responses:
+        200:
+          description: "List of channels"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  type: "object"
+                  properties:
+                    id:
+                      type: "integer"
+                      example: "1"
+                    name:
+                      type: "string"
+                      example: "General"
+                    description:
+                      type: "string"
+                      example: "General discussion"
+                    members:
+                      type: "array"
+                      items:
+                        type: "string"
+                        example: "user1"
+
+components:
+  schemas:
+    Channel:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          example: "1"
+        server_id:
+          type: "integer"
+          example: "1"
+        name:
+          type: "string"
+          example: "General"
+        description:
+          type: "string"
+          example: "General discussion"
+        members:
+          type: "array"
+          items:
+            type: "string"
+            example: "user1"

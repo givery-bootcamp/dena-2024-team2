@@ -61,9 +61,9 @@ services:
     ports:
       - '8000:8080'
     volumes:
-      - ./api/api.yaml:/openapi.yaml
+      - ./api/api.yml:/openapi.yml
     environment:
-      SWAGGER_JSON: /openapi.yaml
+      SWAGGER_JSON: /openapi.yml
   apidoc2:
     build:
       context: ./
@@ -75,5 +75,7 @@ services:
     ports:
       - '8080:4010'
     volumes:
-      - ./api/api.yaml:/openapi.yaml
-    command: 'mock -d -h 0.0.0.0 /openapi.yaml'
+      - ./api/api.yml:/openapi.yml
+    command: 'mock -d -h 0.0.0.0 /openapi.yml'
+volumes:
+  mysql-local:
