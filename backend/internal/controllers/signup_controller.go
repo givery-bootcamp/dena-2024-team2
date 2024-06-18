@@ -22,7 +22,7 @@ func SignUp(ctx *gin.Context) {
 	}
 
 	usecase := usecases.NewSignUpUsecase()
-	err := usecase.Execute(ctx)
+	err := usecase.Execute(ctx, account.Name, account.Password)
 	if err != nil {
 
 	} else {
