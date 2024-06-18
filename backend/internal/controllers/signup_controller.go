@@ -9,7 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func SignUp(ctx *gin.Context) {
+func Signup(ctx *gin.Context) {
 
 	var account entities.Account
 	if err := ctx.BindJSON(&account); err != nil {
@@ -17,12 +17,12 @@ func SignUp(ctx *gin.Context) {
 		return
 	}
 	fmt.Println(account)
-	if err := validateSignUpParameters(account); err != nil {
+	if err := validateSignupParameters(account); err != nil {
 		handleError(ctx, 400, err)
 		return
 	}
 
-	usecase := usecases.NewSignUpUsecase()
+	usecase := usecases.NewSignupUsecase()
 	err := usecase.Execute(ctx, account.Name, account.Password)
 	if err != nil {
 		handleError(ctx, http.StatusBadRequest, err)
@@ -32,7 +32,7 @@ func SignUp(ctx *gin.Context) {
 }
 
 // name or password のどちらかが不足のときエラーにする
-func validateSignUpParameters(account entities.Account) error {
+func validateSignupParameters(account entities.Account) error {
 	if account.Name == "" || account.Password == "" {
 		return fmt.Errorf("%v", "Missing name or password")
 	}

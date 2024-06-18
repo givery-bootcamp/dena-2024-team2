@@ -6,16 +6,16 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type SignUpUsecase struct {
+type SignupUsecase struct {
 }
 
-func NewSignUpUsecase() *SignUpUsecase {
-	return &SignUpUsecase{}
+func NewSignupUsecase() *SignupUsecase {
+	return &SignupUsecase{}
 }
 
-func (uc *SignUpUsecase) Execute(ctx *gin.Context, name string, password string) error {
-	repository := repositories.NewSignUpRepository(DB(ctx))
-	err := repository.SignUp(name, password)
+func (uc *SignupUsecase) Execute(ctx *gin.Context, name string, password string) error {
+	repository := repositories.NewSignupRepository(DB(ctx))
+	err := repository.Signup(name, password)
 
 	return err
 }

@@ -7,7 +7,7 @@ import (
 	"gorm.io/gorm"
 )
 
-type SignUpRepository struct {
+type SignupRepository struct {
 	Conn *gorm.DB
 }
 
@@ -20,13 +20,13 @@ type Account struct {
 	DeletedAt time.Time
 }
 
-func NewSignUpRepository(conn *gorm.DB) *SignUpRepository {
-	return &SignUpRepository{
+func NewSignupRepository(conn *gorm.DB) *SignupRepository {
+	return &SignupRepository{
 		Conn: conn,
 	}
 }
 
-func (r *SignUpRepository) SignUp(name string, password string) error {
+func (r *SignupRepository) Signup(name string, password string) error {
 
 	account := Account{}
 	r.Conn.Table("users").Select("name").Where("name = ?", name).Find(&account)
