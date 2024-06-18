@@ -4,7 +4,6 @@ import (
 	"errors"
 	"fmt"
 	"myapp/internal/entities"
-	"myapp/internal/infrastructures"
 	"myapp/internal/usecases"
 	"net/http"
 
@@ -24,7 +23,7 @@ func Signin(ctx *gin.Context) {
 	}
 	fmt.Printf("%v", json)
 	uc := usecases.NewSigninUsecase()
-	userId, err := uc.Execute(ctx, json.UserName, json.Password)
+	token, err := uc.Execute(ctx, json.UserName, json.Password)
 	if err != nil {
 		if errors.Is(err, entities.ErrNotFound) {
 			handleError(ctx, http.StatusUnauthorized, errors.New("failed to signin"))
@@ -33,11 +32,7 @@ func Signin(ctx *gin.Context) {
 		}
 		return
 	}
-	token, err := infrastructures.GenerateToken(userId)
-	if err != nil {
-		handleError(ctx, http.StatusInternalServerError, err)
-		return
-	}
+
 	ctx.SetCookie("token", token, 0, "", ctx.Request.Host, false, true)
 	ctx.JSON(http.StatusOK, gin.H{"message": "login success"})
 }

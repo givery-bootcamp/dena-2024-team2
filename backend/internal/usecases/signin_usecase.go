@@ -1,6 +1,7 @@
 package usecases
 
 import (
+	"myapp/internal/infrastructures"
 	"myapp/internal/repositories"
 
 	"github.com/gin-gonic/gin"
@@ -12,11 +13,15 @@ func NewSigninUsecase() *SigninUsecase {
 	return &SigninUsecase{}
 }
 
-func (uc *SigninUsecase) Execute(ctx *gin.Context, userName string, password string) (uint, error) {
+func (uc *SigninUsecase) Execute(ctx *gin.Context, userName string, password string) (string, error) {
 	authRepo := repositories.NewUserRepository(DB(ctx))
 	userId, err := authRepo.Authenticate(userName, password)
 	if err != nil {
-		return 0, err
+		return "", err
 	}
-	return userId, nil
+	token, err := infrastructures.GenerateToken(userId)
+	if err != nil {
+		return "", err
+	}
+	return token, nil
 }
