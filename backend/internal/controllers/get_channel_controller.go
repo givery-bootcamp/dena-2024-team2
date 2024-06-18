@@ -3,6 +3,7 @@ package controllers
 import (
 	"errors"
 	"github.com/gin-gonic/gin"
+	"myapp/internal/entities"
 	"myapp/internal/repositories"
 	"time"
 )
@@ -13,10 +14,25 @@ func GetChannels(ctx *gin.Context) {
 	if err != nil {
 		handleError(ctx, 500, err)
 	} else if channels != nil{
-		ctx.JSON(200, channels)
+		ctx.JSON(200, channelsConvertToJson(channels))
 	} else {
 		handleError(ctx, 404, errors.New("Not found"))
 	}
+}
+
+func channelsConvertToJson(channels entities.Channels) ChannelsResponseJson {
+	jsonChannels := make([]ChannelJson, len(channels))
+	for i, v := range channels {
+		jsonChannels[i] = ChannelJson{
+			Id:        v.Id,
+			ServerId:  v.ServerId,
+			Name:      v.Name,
+			CreatedAt: v.CreatedAt,
+			UpdatedAt: v.UpdatedAt,
+			DeletedAt: v.DeletedAt,
+		}
+	}
+	return ChannelsResponseJson{Channels: jsonChannels}
 }
 
 type ChannelsResponseJson struct {
