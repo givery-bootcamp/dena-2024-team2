@@ -2,7 +2,6 @@ package middleware
 
 import (
 	"fmt"
-	"log"
 	"myapp/internal/infrastructures"
 	"net/http"
 	"strings"
@@ -10,21 +9,19 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func Auth() gin.HandlerFunc {
-	return func(ctx *gin.Context) {
-		jwtToken, err := extractBearerToken(ctx.GetHeader("Authorization"))
-		if err != nil {
-			ctx.JSON(http.StatusUnauthorized, err)
-			return
-		}
-		log.Printf("ninsyoutyantodekiteiru")
-		err = infrastructures.VerifyToken(jwtToken)
-		if err != nil {
-			ctx.JSON(http.StatusUnauthorized, err)
-			return
-		}
-		ctx.Next()
+func Auth(ctx *gin.Context) {
+	jwtToken, err := extractBearerToken(ctx.GetHeader("Authorization"))
+	if err != nil {
+		ctx.AbortWithStatusJSON(http.StatusUnauthorized, err.Error())
+		return
 	}
+	err = infrastructures.VerifyToken(jwtToken)
+	if err != nil {
+		// ctx.AbortWithStatusJSON(http.StatusUnauthorized, "")
+		ctx.AbortWithStatusJSON(http.StatusUnauthorized, err.Error())
+		return
+	}
+	ctx.Next()
 }
 
 func extractBearerToken(headerString string) (string, error) {
