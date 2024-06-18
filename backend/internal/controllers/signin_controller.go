@@ -2,7 +2,6 @@ package controllers
 
 import (
 	"errors"
-	"fmt"
 	"myapp/internal/entities"
 	"myapp/internal/usecases"
 	"net/http"
@@ -21,7 +20,6 @@ func Signin(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, err.Error())
 		return
 	}
-	fmt.Printf("%v", json)
 	uc := usecases.NewSigninUsecase()
 	token, err := uc.Execute(ctx, json.UserName, json.Password)
 	if err != nil {
