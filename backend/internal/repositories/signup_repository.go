@@ -1,11 +1,23 @@
 package repositories
 
 import (
+	"fmt"
+	"time"
+
 	"gorm.io/gorm"
 )
 
 type SignUpRepository struct {
 	Conn *gorm.DB
+}
+
+type Account struct {
+	Id        int
+	Name      string
+	Password  string
+	CreatedAt time.Time
+	UpdatedAt time.Time
+	DeletedAt time.Time
 }
 
 func NewSignUpRepository(conn *gorm.DB) *SignUpRepository {
@@ -14,6 +26,15 @@ func NewSignUpRepository(conn *gorm.DB) *SignUpRepository {
 	}
 }
 
-func (r *SignUpRepository) SignUp() {
+func (r *SignUpRepository) SignUp(name string, password string) error {
+
+	account := Account{}
+	r.Conn.Table("users").Select("name").Where("name = ?", name).Find(&account)
+	if account.Name != "" {
+		// name がすでに使われているときエラーにする
+		return fmt.Errorf("%v", "その名前は他のアカウントで使用されています。")
+	}
+
+	return nil
 
 }

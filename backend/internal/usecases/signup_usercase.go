@@ -15,7 +15,7 @@ func NewSignUpUsecase() *SignUpUsecase {
 
 func (uc *SignUpUsecase) Execute(ctx *gin.Context, name string, password string) error {
 	repository := repositories.NewSignUpRepository(DB(ctx))
-	repository.SignUp()
+	err := repository.SignUp(name, password)
 
-	return nil
+	return err
 }
