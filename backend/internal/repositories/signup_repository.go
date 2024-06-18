@@ -35,6 +35,9 @@ func (r *SignUpRepository) SignUp(name string, password string) error {
 		return fmt.Errorf("%v", "その名前は他のアカウントで使用されています。")
 	}
 
-	return nil
+	// 新しいアカウントのとき保存する
+	newAccount := Account{Name: name, Password: password}
+	r.Conn.Table("users").Omit("DeletedAt").Create(&newAccount)
 
+	return nil
 }
