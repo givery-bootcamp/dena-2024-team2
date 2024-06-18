@@ -19,7 +19,7 @@ paths:
               schema:
                 type: "string"
                 example: "It works"
-  /channnel:
+  /channel:
     get:
       operationId: "getChannels"
       responses:
@@ -30,26 +30,11 @@ paths:
               schema:
                 type: "array"
                 items:
-                  type: "object"
-                  properties:
-                    id:
-                      type: "integer"
-                      example: "1"
-                    name:
-                      type: "string"
-                      example: "General"
-                    description:
-                      type: "string"
-                      example: "General discussion"
-                    members:
-                      type: "array"
-                      items:
-                        type: "string"
-                        example: "user1"
+                  $ref: "#/components/schemas/channel"
 
 components:
   schemas:
-    Channel:
+    channel:
       type: "object"
       properties:
         id:
@@ -61,11 +46,3 @@ components:
         name:
           type: "string"
           example: "General"
-        description:
-          type: "string"
-          example: "General discussion"
-        members:
-          type: "array"
-          items:
-            type: "string"
-            example: "user1"
