@@ -1,8 +1,6 @@
 package controllers
 
 import (
-	"encoding/json"
-	"io"
 	"myapp/internal/entities"
 	"myapp/internal/repositories"
 	"myapp/internal/usecases"
@@ -19,13 +17,8 @@ func CreatePost(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, err.Error())
 	}
 	post.ChannelId = channelId
-	bytes, err := io.ReadAll(ctx.Request.Body)
-	if err != nil {
-		ctx.String(http.StatusInternalServerError, "")
-		return
-	}
 
-	if err := json.Unmarshal(bytes, &post); err != nil {
+	if err := ctx.BindJSON(&post); err != nil {
 		ctx.String(http.StatusBadRequest, "エラー:invalid json")
 		return
 	}
