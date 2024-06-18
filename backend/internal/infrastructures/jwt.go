@@ -14,7 +14,7 @@ type CustomClaims struct {
 }
 
 func GenerateToken(userId uint) (string, error) {
-	key := "secret"
+	key := []byte("secret")
 	claims := CustomClaims{
 		userId,
 		jwt.RegisteredClaims{

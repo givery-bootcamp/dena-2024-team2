@@ -24,7 +24,7 @@ type authResult struct {
 
 func (r *UserRepository) Authenticate(userName string, password string) (uint, error) {
 	result := &authResult{}
-	if err := r.Conn.Select("user_id").Where("name = ? AND password=?", userName, password).Take(&result).Error; err != nil {
+	if err := r.Conn.Table("users").Select("id").Where("name = ? AND password=?", userName, password).Take(&result).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return 0, entities.ErrNotFound
 		}
