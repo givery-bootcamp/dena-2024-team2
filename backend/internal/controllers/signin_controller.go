@@ -31,6 +31,9 @@ func Signin(ctx *gin.Context) {
 		return
 	}
 
-	ctx.SetCookie("token", token, 0, "", ctx.Request.Host, false, true)
-	ctx.JSON(http.StatusOK, gin.H{"message": "login success"})
+	ctx.JSON(http.StatusOK, requestJson{token})
+}
+
+type requestJson struct {
+	AccessToken string `json:"access_token"`
 }
