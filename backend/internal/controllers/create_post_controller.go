@@ -2,7 +2,6 @@ package controllers
 
 import (
 	"encoding/json"
-	"fmt"
 	"io"
 	"myapp/internal/entities"
 	"myapp/internal/repositories"
@@ -30,7 +29,7 @@ func CreatePost(ctx *gin.Context) {
 		ctx.String(http.StatusBadRequest, "エラー:invalid json")
 		return
 	}
-	fmt.Println(post)
+
 	repository := repositories.NewCreatePostRepository(DB(ctx))
 	usecase := usecases.NewCreatePostUsecase(repository)
 	result, err := usecase.Execute(post)
