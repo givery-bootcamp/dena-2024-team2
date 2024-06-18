@@ -2,10 +2,11 @@ package controllers
 
 import (
 	"errors"
-	"github.com/gin-gonic/gin"
 	"myapp/internal/entities"
 	"myapp/internal/repositories"
 	"time"
+
+	"github.com/gin-gonic/gin"
 )
 
 func GetChannels(ctx *gin.Context) {
@@ -13,7 +14,7 @@ func GetChannels(ctx *gin.Context) {
 	channels, err := repository.Get()
 	if err != nil {
 		handleError(ctx, 500, err)
-	} else if channels != nil{
+	} else if channels != nil {
 		ctx.JSON(200, channelsConvertToJson(channels))
 	} else {
 		handleError(ctx, 404, errors.New("Not found"))
