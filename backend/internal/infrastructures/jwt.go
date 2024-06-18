@@ -30,7 +30,7 @@ func GenerateToken(userId uint) (string, error) {
 	unsignedToken := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	signedToken, err := unsignedToken.SignedString(key)
 	if err != nil {
-		log.Println("%v", err)
+		log.Printf("%v", err)
 		return "", err
 	}
 
