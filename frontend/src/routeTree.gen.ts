@@ -13,11 +13,15 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as SpacesSpaceIdChannelsChannelIdImport } from './routes/spaces/$spaceId/channels/$channelId'
+import { Route as SpacesSpaceIdChannelsChannelIdPageImport } from './routes/spaces/$spaceId/channels/$channelId/page'
 
 // Create Virtual Routes
 
 const IndexLazyImport = createFileRoute('/')()
+const SpacesSpaceIdLazyImport = createFileRoute('/spaces/$spaceId')()
+const SpacesSpaceIdChannelsChannelIdLazyImport = createFileRoute(
+  '/spaces/$spaceId/channels/$channelId',
+)()
 
 // Create/Update Routes
 
@@ -26,10 +30,27 @@ const IndexLazyRoute = IndexLazyImport.update({
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
 
-const SpacesSpaceIdChannelsChannelIdRoute =
-  SpacesSpaceIdChannelsChannelIdImport.update({
+const SpacesSpaceIdLazyRoute = SpacesSpaceIdLazyImport.update({
+  path: '/spaces/$spaceId',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() =>
+  import('./routes/spaces.$spaceId.lazy').then((d) => d.Route),
+)
+
+const SpacesSpaceIdChannelsChannelIdLazyRoute =
+  SpacesSpaceIdChannelsChannelIdLazyImport.update({
     path: '/spaces/$spaceId/channels/$channelId',
     getParentRoute: () => rootRoute,
+  } as any).lazy(() =>
+    import('./routes/spaces.$spaceId_.channels.$channelId.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+
+const SpacesSpaceIdChannelsChannelIdPageRoute =
+  SpacesSpaceIdChannelsChannelIdPageImport.update({
+    path: '/channels/$channelId/page',
+    getParentRoute: () => SpacesSpaceIdLazyRoute,
   } as any)
 
 // Populate the FileRoutesByPath interface
@@ -43,12 +64,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexLazyImport
       parentRoute: typeof rootRoute
     }
+    '/spaces/$spaceId': {
+      id: '/spaces/$spaceId'
+      path: '/spaces/$spaceId'
+      fullPath: '/spaces/$spaceId'
+      preLoaderRoute: typeof SpacesSpaceIdLazyImport
+      parentRoute: typeof rootRoute
+    }
     '/spaces/$spaceId/channels/$channelId': {
       id: '/spaces/$spaceId/channels/$channelId'
       path: '/spaces/$spaceId/channels/$channelId'
       fullPath: '/spaces/$spaceId/channels/$channelId'
-      preLoaderRoute: typeof SpacesSpaceIdChannelsChannelIdImport
+      preLoaderRoute: typeof SpacesSpaceIdChannelsChannelIdLazyImport
       parentRoute: typeof rootRoute
+    }
+    '/spaces/$spaceId/channels/$channelId/page': {
+      id: '/spaces/$spaceId/channels/$channelId/page'
+      path: '/channels/$channelId/page'
+      fullPath: '/spaces/$spaceId/channels/$channelId/page'
+      preLoaderRoute: typeof SpacesSpaceIdChannelsChannelIdPageImport
+      parentRoute: typeof SpacesSpaceIdLazyImport
     }
   }
 }
@@ -57,7 +92,10 @@ declare module '@tanstack/react-router' {
 
 export const routeTree = rootRoute.addChildren({
   IndexLazyRoute,
-  SpacesSpaceIdChannelsChannelIdRoute,
+  SpacesSpaceIdLazyRoute: SpacesSpaceIdLazyRoute.addChildren({
+    SpacesSpaceIdChannelsChannelIdPageRoute,
+  }),
+  SpacesSpaceIdChannelsChannelIdLazyRoute,
 })
 
 /* prettier-ignore-end */
@@ -69,14 +107,25 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/spaces/$spaceId",
         "/spaces/$spaceId/channels/$channelId"
       ]
     },
     "/": {
       "filePath": "index.lazy.tsx"
     },
+    "/spaces/$spaceId": {
+      "filePath": "spaces.$spaceId.lazy.tsx",
+      "children": [
+        "/spaces/$spaceId/channels/$channelId/page"
+      ]
+    },
     "/spaces/$spaceId/channels/$channelId": {
-      "filePath": "spaces/$spaceId/channels/$channelId.tsx"
+      "filePath": "spaces.$spaceId_.channels.$channelId.lazy.tsx"
+    },
+    "/spaces/$spaceId/channels/$channelId/page": {
+      "filePath": "spaces/$spaceId/channels/$channelId/page.tsx",
+      "parent": "/spaces/$spaceId"
     }
   }
 }
