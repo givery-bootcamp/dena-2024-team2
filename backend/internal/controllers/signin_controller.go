@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"myapp/internal/entities"
+	"myapp/internal/infrastructures"
 	"myapp/internal/usecases"
 	"net/http"
 
@@ -28,10 +29,15 @@ func Signin(ctx *gin.Context) {
 		if errors.Is(err, entities.ErrNotFound) {
 			handleError(ctx, http.StatusUnauthorized, errors.New("failed to signin"))
 		} else {
-			handleError(ctx, 500, err)
+			handleError(ctx, http.StatusInternalServerError, err)
 		}
 		return
 	}
-	token, err := middleware.generateToken(userId)
+	token, err := infrastructures.GenerateToken(userId)
+	if err != nil {
+		handleError(ctx, http.StatusInternalServerError, err)
+		return
+	}
+	ctx.SetCookie("token", token, 0, "", ctx.Request.Host, false, true)
 	ctx.JSON(http.StatusOK, gin.H{"message": "login success"})
 }

@@ -18,18 +18,18 @@ func NewUserRepository(conn *gorm.DB) *UserRepository {
 	}
 }
 
-type result struct {
-	Id *uint
+type authResult struct {
+	Id uint
 }
 
-func (r *UserRepository) Authenticate(userName string, password string) (*uint, error) {
-	result := &result{}
+func (r *UserRepository) Authenticate(userName string, password string) (uint, error) {
+	result := &authResult{}
 	if err := r.Conn.Select("user_id").Where("name = ? AND password=?", userName, password).Take(&result).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
-			return nil, entities.ErrNotFound
+			return 0, entities.ErrNotFound
 		}
 		log.Printf("%v", err)
-		return nil, err
+		return 0, err
 	}
 	return result.Id, nil
 }
