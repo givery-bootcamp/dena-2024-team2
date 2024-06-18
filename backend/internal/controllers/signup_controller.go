@@ -17,12 +17,12 @@ func Signup(ctx *gin.Context) {
 
 	var account requestParam
 	if err := ctx.BindJSON(&account); err != nil {
-		handleError(ctx, 400, err)
+		handleError(ctx, http.StatusBadRequest, err)
 		return
 	}
 	fmt.Println(account)
 	if err := validateSignupParameters(account); err != nil {
-		handleError(ctx, 400, err)
+		handleError(ctx, http.StatusBadRequest, err)
 		return
 	}
 
@@ -31,14 +31,14 @@ func Signup(ctx *gin.Context) {
 	if err != nil {
 		handleError(ctx, http.StatusBadRequest, err)
 	} else {
-		ctx.JSON(200, "suceess")
+		ctx.JSON(200, "アカウント登録完了")
 	}
 }
 
 // name or password のどちらかが不足のときエラーにする
 func validateSignupParameters(account requestParam) error {
 	if account.Name == "" || account.Password == "" {
-		return fmt.Errorf("%v", "Missing name or password")
+		return fmt.Errorf("%v", "名前かパスワードが不足しています。")
 	}
 	return nil
 }
