@@ -1,0 +1,5 @@
+package infrastructures
+
+func encryptPassword() {
+
+}
