@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"myapp/internal/entities"
 	"myapp/internal/usecases"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
@@ -24,7 +25,7 @@ func SignUp(ctx *gin.Context) {
 	usecase := usecases.NewSignUpUsecase()
 	err := usecase.Execute(ctx, account.Name, account.Password)
 	if err != nil {
-
+		handleError(ctx, http.StatusBadRequest, err)
 	} else {
 		ctx.JSON(200, "suceess")
 	}
