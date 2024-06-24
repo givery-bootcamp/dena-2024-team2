@@ -1,6 +1,5 @@
-import { Header } from "./components/header";
-import "modern-css-reset";
 import styles from "./App.module.scss";
+import { Header } from "./components/ui";
 
 function App() {
 	return (
