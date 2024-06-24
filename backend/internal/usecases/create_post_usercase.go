@@ -15,6 +15,6 @@ func NewCreatePostUsecase(r interfaces.CreatePostRepository) *CreatePostUsecase 
 	}
 }
 
-func (u *CreatePostUsecase) Execute(post entities.Post) (*entities.Post, error) {
-	return u.repository.Post(post)
+func (u *CreatePostUsecase) Execute(userID int, channelID int, content string) (*entities.Post, error) {
+	return u.repository.Post(userID, channelID, content)
 }

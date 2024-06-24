@@ -13,14 +13,14 @@ type CreatePostRepository struct {
 
 // This struct is same as entity model
 // However define again for training
-type NewPost struct {
+type post struct {
 	Id        int
 	ChannelId int
 	UserId    int
 	Content   string
 	CreatedAt time.Time
 	UpdatedAt time.Time
-	DeletedAt time.Time
+	DeletedAt *time.Time
 }
 
 func NewCreatePostRepository(conn *gorm.DB) *CreatePostRepository {
@@ -29,7 +29,11 @@ func NewCreatePostRepository(conn *gorm.DB) *CreatePostRepository {
 	}
 }
 
-func (r *CreatePostRepository) Post(post entities.Post) (*entities.Post, error) {
+func (r *CreatePostRepository) Post(userID int, channelID int, content string) (*entities.Post, error) {
+	var post post
+	post.ChannelId = channelID
+	post.UserId = userID
+	post.Content = content
 	result := r.Conn.Omit("DeletedAt").Create(&post)
 
 	if result.Error != nil {
@@ -38,7 +42,7 @@ func (r *CreatePostRepository) Post(post entities.Post) (*entities.Post, error) 
 	return convertCreatePostRepositoryModelToEntity(&post), nil
 }
 
-func convertCreatePostRepositoryModelToEntity(v *entities.Post) *entities.Post {
+func convertCreatePostRepositoryModelToEntity(v *post) *entities.Post {
 	return &entities.Post{
 		Id:        v.Id,
 		ChannelId: v.ChannelId,
