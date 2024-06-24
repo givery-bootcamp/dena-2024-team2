@@ -30,7 +30,6 @@ func channelsConvertToJson(channels entities.Channels) ChannelsResponseJson {
 			Name:      v.Name,
 			CreatedAt: v.CreatedAt,
 			UpdatedAt: v.UpdatedAt,
-			DeletedAt: v.DeletedAt,
 		}
 	}
 	return ChannelsResponseJson{Channels: jsonChannels}
@@ -46,5 +45,4 @@ type ChannelJson struct {
 	Name      string    `json:"name"`
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
-	DeletedAt time.Time `json:"deletedAt"`
 }
