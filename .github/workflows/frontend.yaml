@@ -24,5 +24,7 @@ jobs:
           working-dir: ./frontend
       - name: change dir
         run: cd frontend
+      - name: list files
+        run: ls
       - name: Run Biome
-        run: biome ci . --config-path ./
+        run: biome ci . --config-path frontend/biome.json
