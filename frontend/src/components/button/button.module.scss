@@ -1,0 +1,90 @@
+.root {
+  all: unset;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: inherit;
+  font: inherit;
+  text-decoration: none;
+  outline: none;
+}
+
+.button {
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+}
+
+.fill {
+  border: none;
+}
+
+.outline {
+  background-color: transparent;
+  outline: 1px solid;
+}
+
+.ghost {
+  background-color: transparent;
+}
+
+.primary {
+  color: white;
+}
+
+.primary.fill {
+  background-color: var(--c-primary);
+}
+
+.primary.outline {
+  color: var(--c-primary);
+  outline-color: var(--c-primary);
+}
+
+.primary.ghost {
+  color: var(--c-primary);
+}
+
+.secondary {
+  color: white;
+}
+
+.secondary.fill {
+  background-color: var(--c-gray-500);
+}
+
+.secondary.outline {
+  color: var(--c-gray-500);
+  outline-color: var(--c-gray-500);
+}
+
+.secondary.ghost {
+  color: var(--c-gray-500);
+}
+
+.sm {
+  padding: 0.25rem 0.5rem;
+  font-size: var(--font-size-sm);
+}
+
+.md {
+  padding: 0.5rem 1rem;
+  font-size: var(--font-size-base);
+}
+
+.lg {
+  padding: 0.5rem 1rem;
+  font-size: var(--font-size-lg);
+}

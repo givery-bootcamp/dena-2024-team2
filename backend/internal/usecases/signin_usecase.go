@@ -19,6 +19,7 @@ func (uc *SigninUsecase) Execute(ctx *gin.Context, userName string, password str
 	if err != nil {
 		return "", err
 	}
+
 	token, err := infrastructures.GenerateToken(userId)
 	if err != nil {
 		return "", err
