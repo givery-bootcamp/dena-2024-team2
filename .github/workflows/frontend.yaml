@@ -25,4 +25,4 @@ jobs:
       - name: change dir
         run: cd frontend
       - name: Run Biome
-        run: biome ci . --config-path ./biome.json
+        run: biome ci . --config-path ./
