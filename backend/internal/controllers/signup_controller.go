@@ -20,7 +20,6 @@ func Signup(ctx *gin.Context) {
 		handleError(ctx, http.StatusBadRequest, err)
 		return
 	}
-	fmt.Println(account)
 	if err := validateSignupParameters(account); err != nil {
 		handleError(ctx, http.StatusBadRequest, err)
 		return
