@@ -13,7 +13,6 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as SpacesSpaceIdChannelsChannelIdPageImport } from './routes/spaces/$spaceId/channels/$channelId/page'
 
 // Create Virtual Routes
 
@@ -47,12 +46,6 @@ const SpacesSpaceIdChannelsChannelIdLazyRoute =
     ),
   )
 
-const SpacesSpaceIdChannelsChannelIdPageRoute =
-  SpacesSpaceIdChannelsChannelIdPageImport.update({
-    path: '/channels/$channelId/page',
-    getParentRoute: () => SpacesSpaceIdLazyRoute,
-  } as any)
-
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -78,13 +71,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SpacesSpaceIdChannelsChannelIdLazyImport
       parentRoute: typeof rootRoute
     }
-    '/spaces/$spaceId/channels/$channelId/page': {
-      id: '/spaces/$spaceId/channels/$channelId/page'
-      path: '/channels/$channelId/page'
-      fullPath: '/spaces/$spaceId/channels/$channelId/page'
-      preLoaderRoute: typeof SpacesSpaceIdChannelsChannelIdPageImport
-      parentRoute: typeof SpacesSpaceIdLazyImport
-    }
   }
 }
 
@@ -92,9 +78,7 @@ declare module '@tanstack/react-router' {
 
 export const routeTree = rootRoute.addChildren({
   IndexLazyRoute,
-  SpacesSpaceIdLazyRoute: SpacesSpaceIdLazyRoute.addChildren({
-    SpacesSpaceIdChannelsChannelIdPageRoute,
-  }),
+  SpacesSpaceIdLazyRoute,
   SpacesSpaceIdChannelsChannelIdLazyRoute,
 })
 
@@ -115,17 +99,10 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "index.lazy.tsx"
     },
     "/spaces/$spaceId": {
-      "filePath": "spaces.$spaceId.lazy.tsx",
-      "children": [
-        "/spaces/$spaceId/channels/$channelId/page"
-      ]
+      "filePath": "spaces.$spaceId.lazy.tsx"
     },
     "/spaces/$spaceId/channels/$channelId": {
       "filePath": "spaces.$spaceId_.channels.$channelId.lazy.tsx"
-    },
-    "/spaces/$spaceId/channels/$channelId/page": {
-      "filePath": "spaces/$spaceId/channels/$channelId/page.tsx",
-      "parent": "/spaces/$spaceId"
     }
   }
 }
