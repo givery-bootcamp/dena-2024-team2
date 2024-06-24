@@ -22,5 +22,7 @@ jobs:
         with:
           version: latest
           working-dir: ./frontend
+      - name: change dir
+        run: cd frontend
       - name: Run Biome
-        run: biome ci ./frontend
+        run: biome ci .
