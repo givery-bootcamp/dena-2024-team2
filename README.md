@@ -1,4 +1,5 @@
 # Training app 2024
+
 ## docker-compose structure
 
 - backend:
@@ -30,8 +31,11 @@
 docker-compose up
 ```
 
-- backend: `http://localhost:9000`
-- frontend: `http://localhost:3000`
+- backend: http://localhost:9000
+- frontend: http://localhost:3000
+- api document(swagger ui): http://localhost:8000
+- api document(element): http://localhost:8010
+- api mockserver: http://localhost:8080
 
 でWebサーバが起動します。
 
