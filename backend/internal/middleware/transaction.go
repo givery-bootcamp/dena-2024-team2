@@ -1,8 +1,9 @@
 package middleware
 
 import (
-	"github.com/gin-gonic/gin"
 	"myapp/internal/external"
+
+	"github.com/gin-gonic/gin"
 )
 
 func Transaction() gin.HandlerFunc {

@@ -8,14 +8,14 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type requestParam struct {
+type signupRequestParam struct {
 	Name     string `json:"name"`
 	Password string `json:"password"`
 }
 
 func Signup(ctx *gin.Context) {
 
-	var account requestParam
+	var account signupRequestParam
 	if err := ctx.BindJSON(&account); err != nil {
 		handleError(ctx, http.StatusBadRequest, err)
 		return
@@ -35,7 +35,7 @@ func Signup(ctx *gin.Context) {
 }
 
 // name or password のどちらかが不足のときエラーにする
-func validateSignupParameters(account requestParam) error {
+func validateSignupParameters(account signupRequestParam) error {
 	if account.Name == "" || account.Password == "" {
 		return fmt.Errorf("%v", "名前かパスワードが不足しています。")
 	}
