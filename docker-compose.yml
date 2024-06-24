@@ -56,3 +56,24 @@ services:
       timeout: 30s
       retries: 10
       start_period: 5s
+  apidoc:
+    image: swaggerapi/swagger-ui
+    ports:
+      - '8000:8080'
+    volumes:
+      - ./api/api.yaml:/openapi.yaml
+    environment:
+      SWAGGER_JSON: /openapi.yaml
+  apidoc2:
+    build:
+      context: ./
+      dockerfile: ./docker/apidoc-element.Dockerfile
+    ports:
+      - '8010:80'
+  apimock:
+    image: stoplight/prism:5
+    ports:
+      - '8080:4010'
+    volumes:
+      - ./api/api.yaml:/openapi.yaml
+    command: 'mock -d -h 0.0.0.0 /openapi.yaml'
