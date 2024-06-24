@@ -9,19 +9,21 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func Auth(ctx *gin.Context) {
-	jwtToken, err := extractBearerToken(ctx.GetHeader("Authorization"))
-	if err != nil {
-		ctx.AbortWithStatusJSON(http.StatusUnauthorized, err.Error())
-		return
+func Auth() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		jwtToken, err := extractBearerToken(ctx.GetHeader("Authorization"))
+		if err != nil {
+			ctx.AbortWithStatusJSON(http.StatusUnauthorized, err.Error())
+			return
+		}
+		uid, err := infrastructures.VerifyToken(jwtToken)
+		if err != nil {
+			// ctx.AbortWithStatusJSON(http.StatusUnauthorized, "")
+			ctx.AbortWithStatusJSON(http.StatusUnauthorized, err.Error())
+			return
+		}
+		ctx.Next()
 	}
-	err = infrastructures.VerifyToken(jwtToken)
-	if err != nil {
-		// ctx.AbortWithStatusJSON(http.StatusUnauthorized, "")
-		ctx.AbortWithStatusJSON(http.StatusUnauthorized, err.Error())
-		return
-	}
-	ctx.Next()
 }
 
 func extractBearerToken(headerString string) (string, error) {

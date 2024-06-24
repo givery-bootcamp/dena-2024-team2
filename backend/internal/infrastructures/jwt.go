@@ -39,7 +39,7 @@ func GenerateToken(userId uint) (string, error) {
 	return signedToken, nil
 }
 
-func VerifyToken(token string) error {
+func VerifyToken(token string) (uint, error) {
 	parsedToken, err := jwt.ParseWithClaims(token, &CustomClaims{}, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
@@ -49,13 +49,13 @@ func VerifyToken(token string) error {
 	})
 
 	if err != nil {
-		return err
+		return 0, err
 	}
 
 	if claims, ok := parsedToken.Claims.(*CustomClaims); ok {
-		log.Println("hogehogehoge", claims.UserId, claims.ExpiresAt)
+		return claims.UserId, nil
 	} else {
 		log.Fatal("unknown claims type, cannot proceed")
+		return 0, fmt.Errorf("failed to convert token to customClaims")
 	}
-	return nil
 }
