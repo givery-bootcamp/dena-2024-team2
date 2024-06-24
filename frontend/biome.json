@@ -10,6 +10,7 @@
 		}
 	},
 	"files": {
-		"include": ["src/**"]
+		"include": ["src/**"],
+		"ignore": ["src/routeTree.gen.ts"]
 	}
 }
