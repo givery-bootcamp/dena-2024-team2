@@ -9,8 +9,7 @@ import (
 )
 
 type createChannelsRequestParam struct {
-	ServerId int    `json:"server_id"`
-	Name     string `json:"name"`
+	Name string `json:"name"`
 }
 
 func CreateChannels(ctx *gin.Context) {
