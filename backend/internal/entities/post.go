@@ -4,9 +4,9 @@ import "time"
 
 type Posts []Post
 type Post struct {
-	Id        int        `json:"id"`
-	ChannelId int        `json:"channel_id"`
-	UserId    int        `json:"user_id"`
+	Id        int `json:"id"`
+	ChannelId int `json:"channel_id"`
+	User      User
 	Content   string     `json:"content"`
 	CreatedAt time.Time  `json:"created_at"`
 	UpdatedAt time.Time  `json:"updated_at"`

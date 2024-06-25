@@ -46,7 +46,7 @@ func convertCreatePostRepositoryModelToEntity(v *post) *entities.Post {
 	return &entities.Post{
 		Id:        v.Id,
 		ChannelId: v.ChannelId,
-		UserId:    v.UserId,
+		User:      entities.User{Id: v.UserId},
 		Content:   v.Content,
 		CreatedAt: v.CreatedAt,
 		UpdatedAt: v.UpdatedAt,
