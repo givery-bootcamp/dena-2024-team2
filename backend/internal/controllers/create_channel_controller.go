@@ -1,10 +1,12 @@
 package controllers
 
 import (
+	"myapp/internal/entities"
 	"myapp/internal/repositories"
 	"myapp/internal/usecases"
 	"net/http"
 	"strconv"
+	"time"
 
 	"github.com/gin-gonic/gin"
 )
@@ -37,7 +39,23 @@ func CreateChannels(ctx *gin.Context) {
 	if err != nil {
 		handleError(ctx, http.StatusBadRequest, err)
 	} else {
-		ctx.JSON(200, result)
+		ctx.JSON(200, newChannelConvertToJson(result))
 	}
 
+}
+
+func newChannelConvertToJson(v *entities.Channel) newChannelJson {
+	return newChannelJson{
+		Id:        v.Id,
+		ServerId:  v.ServerId,
+		Name:      v.Name,
+		CreatedAt: v.CreatedAt,
+	}
+}
+
+type newChannelJson struct {
+	Id        int       `json:"id"`
+	ServerId  int       `json:"serverId"`
+	Name      string    `json:"name"`
+	CreatedAt time.Time `json:"createdAt"`
 }
