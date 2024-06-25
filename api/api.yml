@@ -27,7 +27,7 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/SigninRequest"
-      responses: 
+      responses:
         200:
           description: "Success Signin"
           content:
@@ -46,7 +46,7 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/SignupRequest"
-      responses: 
+      responses:
         200:
           description: "Success Signup"
           content:
@@ -93,7 +93,7 @@ components:
           type: "string"
         password:
           type: "string"
-    SigninResponse: 
+    SigninResponse:
       type: "object"
       properties:
         access_token:
@@ -105,7 +105,7 @@ components:
           type: "string"
         password:
           type: "string"
-    SignupResponse: 
+    SignupResponse:
       type: "object"
       properties:
         access_token:
