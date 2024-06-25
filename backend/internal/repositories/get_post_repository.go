@@ -13,13 +13,13 @@ type GetPostsRepository struct {
 
 type Post struct {
 	Id        int
-	Title     string
-	Body      string
+	ChannelId int
 	UserId    int
 	UserName  string
+	Content   string
 	CreatedAt time.Time
 	UpdatedAt time.Time
-	DeletedAt time.Time
+	DeletedAt *time.Time
 }
 
 func NewGetPostRepository(conn *gorm.DB) *GetPostsRepository {
@@ -30,7 +30,10 @@ func NewGetPostRepository(conn *gorm.DB) *GetPostsRepository {
 
 func (r *GetPostsRepository) Get(channelId int) (entities.Posts, error) {
 	posts := []Post{}
-	if err := r.Conn.Table("posts").Select("posts.id, posts.title, posts.body, posts.created_at, posts.updated_at,users.id, users.name").Joins("join users on posts.user_id = users.id").Where("channel_id = ?", channelId).Scan(&posts).Error; err != nil {
+	if err := r.Conn.Table("posts").
+		Select("posts.id, posts.channel_id, posts.user_id, users.name, posts.content, posts.created_at, posts.updated_at").
+		Joins("join users on posts.user_id = users.id").
+		Where("channel_id = ?", channelId).Scan(&posts).Error; err != nil {
 		return nil, err
 	}
 
@@ -42,9 +45,9 @@ func convertToEntities(posts []Post) entities.Posts {
 	for i, v := range posts {
 		entityPosts[i] = entities.Post{
 			Id:        v.Id,
-			Title:     v.Title,
-			Body:      v.Body,
+			ChannelId: v.ChannelId,
 			User:      entities.User{Id: v.UserId, Name: v.UserName},
+			Content:   v.Content,
 			CreatedAt: v.CreatedAt,
 			UpdatedAt: v.UpdatedAt,
 			DeletedAt: v.DeletedAt,

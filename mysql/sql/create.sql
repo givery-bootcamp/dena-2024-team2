@@ -30,12 +30,12 @@ CREATE TABLE IF NOT EXISTS channels(
   deleted_at DATETIME     NULL,
   FOREIGN KEY (server_id) REFERENCES servers (id)
 );
+
 CREATE TABLE IF NOT EXISTS posts(
   id         INT          AUTO_INCREMENT PRIMARY KEY,
   user_id    INT          NOT NULL,
-  channel_id INT          NOT NULL,
-  title      VARCHAR(100) NOT NULL,
-  body       TEXT         NOT NULL,
+  channel_id    INT          NOT NULL,
+  content       TEXT         NOT NULL,
   created_at DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   deleted_at DATETIME     NULL,
