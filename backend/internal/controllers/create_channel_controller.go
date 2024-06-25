@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"myapp/internal/repositories"
 	"myapp/internal/usecases"
 	"net/http"
 	"strconv"
@@ -29,8 +30,10 @@ func CreateChannels(ctx *gin.Context) {
 		handleError(ctx, http.StatusBadRequest, err)
 	}
 
-	usecase := usecases.NewCreateChannelUsecase()
-	result, err := usecase.Execute(ctx, serverId, param.Name)
+	serverRepository := repositories.NewGetServerRepository(DB(ctx))
+	createChannelRepository := repositories.NewCreateChannelRepository(DB(ctx))
+	usecase := usecases.NewCreateChannelUsecase(serverRepository, createChannelRepository)
+	result, err := usecase.Execute(serverId, param.Name)
 	if err != nil {
 		handleError(ctx, http.StatusBadRequest, err)
 	} else {
