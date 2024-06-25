@@ -11,8 +11,6 @@ func SetupRoutes(app *gin.Engine) {
 		ctx.String(200, "It works")
 	})
 
-	app.POST("/channels/:id/posts", controllers.CreatePost)
-
 	app.POST("/signin", controllers.Signin)
 	app.POST("/signup", controllers.Signup)
 
@@ -21,5 +19,6 @@ func SetupRoutes(app *gin.Engine) {
 	{
 		authorized.GET("/channels", controllers.GetChannels)
 		authorized.GET("/channels/:id/posts", controllers.GetPosts)
+		authorized.POST("/channels/:id/posts", controllers.CreatePost)
 	}
 }
