@@ -33,9 +33,4 @@ fun Application.configureRouting() {
             }
         }
     }
-    routing {
-        get("/webjars") {
-            call.respondText("<script src='/webjars/jquery/jquery.js'></script>", ContentType.Text.Html)
-        }
-    }
 }

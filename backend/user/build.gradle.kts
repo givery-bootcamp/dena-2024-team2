@@ -7,6 +7,7 @@ plugins {
     kotlin("jvm") version "2.0.0"
     id("io.ktor.plugin") version "2.3.12"
     id("org.jetbrains.kotlin.plugin.serialization") version "2.0.0"
+    id("com.google.devtools.ksp")  version "2.0.0-1.0.22"
 }
 
 group = "myapp"
@@ -39,10 +40,23 @@ dependencies {
     implementation("io.ktor:ktor-serialization-jackson")
     implementation("org.jetbrains.exposed:exposed-core:$exposed_version")
     implementation("org.jetbrains.exposed:exposed-jdbc:$exposed_version")
-    implementation("com.h2database:h2:$h2_version")
+    implementation("org.jetbrains.exposed:exposed-kotlin-datetime:$exposed_version")
+    implementation("com.mysql:mysql-connector-j:8.4.0")
     implementation("io.ktor:ktor-server-netty-jvm")
     implementation("ch.qos.logback:logback-classic:$logback_version")
     implementation("dev.forst:ktor-openapi-generator:0.6.1")
+    implementation(platform("io.insert-koin:koin-bom:3.5.6"))
+    implementation("io.insert-koin:koin-core")
+    implementation("io.insert-koin:koin-ktor")
+    implementation("io.insert-koin:koin-logger-slf4j")
+    implementation("io.insert-koin:koin-annotations:1.3.1")
+    implementation("at.favre.lib:bcrypt:0.10.2")
+    ksp("io.insert-koin:koin-ksp-compiler:1.3.1")
     testImplementation("io.ktor:ktor-server-tests-jvm")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
+    testImplementation("io.insert-koin:koin-test")
+}
+
+ksp {
+    arg("KOIN_CONFIG_CHECK","true")
 }
