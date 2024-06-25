@@ -1,7 +1,7 @@
 import ky from "ky";
 
 export const apiClient = ky
-	.create({ prefixUrl: process.env.API_BASE_URL })
+	.create({ prefixUrl: import.meta.env.VITE_API_BASE_URL })
 	.extend({
 		hooks: {
 			beforeRequest: [
