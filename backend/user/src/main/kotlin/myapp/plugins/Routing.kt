@@ -1,35 +1,38 @@
 package myapp.plugins
 
-import com.papsign.ktor.openapigen.OpenAPIGen
-import com.papsign.ktor.openapigen.route.apiRouting
-import com.papsign.ktor.openapigen.route.path.normal.get
-import com.papsign.ktor.openapigen.route.response.respond
-import com.papsign.ktor.openapigen.route.route
-import io.ktor.http.*
-import io.ktor.server.application.*
-import io.ktor.server.plugins.autohead.*
-import io.ktor.server.plugins.statuspages.*
-import io.ktor.server.response.*
-import io.ktor.server.routing.*
+import io.ktor.http.ContentType
+import io.ktor.http.HttpStatusCode
+import io.ktor.server.application.Application
+import io.ktor.server.application.call
+import io.ktor.server.application.install
+import io.ktor.server.plugins.autohead.AutoHeadResponse
+import io.ktor.server.plugins.statuspages.StatusPages
+import io.ktor.server.request.receive
+import io.ktor.server.response.respondText
+import io.ktor.server.routing.get
+import io.ktor.server.routing.post
+import io.ktor.server.routing.route
+import io.ktor.server.routing.routing
+import myapp.model.UserLogin
+import myapp.usecase.NewUserUsecase
+import org.koin.ktor.ext.inject
 
 fun Application.configureRouting() {
     install(AutoHeadResponse)
-    install(OpenAPIGen) {
-        serveOpenApiJson = true
-        serveSwaggerUi = true
-        info {
-            title = "MyAPP API"
-        }
-    }
     install(StatusPages) {
         exception<Throwable> { call, cause ->
             call.respondText(text = "500: $cause", status = HttpStatusCode.InternalServerError)
         }
     }
-    apiRouting {
-        route("/") {
-            get<Unit, String> {
-                respond("Hello World!")
+    routing {
+        val newUserUsecase by inject<NewUserUsecase>()
+        get("/") {
+            call.respondText("Hello World!", ContentType.Text.Plain)
+        }
+        route("/user") {
+            post("/new") {
+                val (name, password) = call.receive<UserLogin>()
+                newUserUsecase.createUser(name, password)
             }
         }
     }

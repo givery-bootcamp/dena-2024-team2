@@ -20,6 +20,7 @@ class UserRepositoryImpl(
         }
     }
 
+    @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
     override suspend fun createUser(userName: String, userPassword: String): User {
         val newUser = db.query {
             UserTable.insert {

@@ -1,14 +1,14 @@
-openapi: "3.0.3"
+openapi: "3.1.0"
 info:
-  title: "Application API"
-  description: "Application API"
+  title: "dena_2024_team2 API"
+  description: "dena_2024_team2 API"
   version: "1.0.0"
 servers:
-  - url: "http://0.0.0.0:8080"
+- url: "https://dena_2024_team2"
 paths:
   /:
     get:
-      description: "Hello World!"
+      description: ""
       responses:
         "200":
           description: "OK"
@@ -19,5 +19,24 @@ paths:
               examples:
                 Example#1:
                   value: "Hello World!"
+  /user/new:
+    post:
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserLogin"
+        required: true
 components:
-  schemas: { }
+  schemas:
+    UserLogin:
+      type: "object"
+      properties:
+        name:
+          type: "string"
+        password:
+          type: "string"
+      required:
+      - "name"
+      - "password"
