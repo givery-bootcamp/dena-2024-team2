@@ -1,6 +1,7 @@
 package usecases
 
 import (
+	"myapp/internal/entities"
 	"myapp/internal/repositories"
 
 	"github.com/gin-gonic/gin"
@@ -13,7 +14,7 @@ func NewCreateChannelUsecase() *CreateChannelUsecase {
 	return &CreateChannelUsecase{}
 }
 
-func (uc *CreateChannelUsecase) Execute(ctx *gin.Context, serverId int, name string) error {
+func (uc *CreateChannelUsecase) Execute(ctx *gin.Context, serverId int, name string) (*entities.Channel, error) {
 	// 存在しているサーバーか確認する
 	serverRepository := repositories.NewGetServerRepository(DB(ctx))
 	if _, err := serverRepository.Get(serverId); err != nil {
@@ -21,6 +22,6 @@ func (uc *CreateChannelUsecase) Execute(ctx *gin.Context, serverId int, name str
 	}
 
 	repository := repositories.NewCreateChannelRepository(DB(ctx))
-	err := repository.Post(serverId, name)
-	return err
+	result, err := repository.Post(serverId, name)
+	return result, err
 }
