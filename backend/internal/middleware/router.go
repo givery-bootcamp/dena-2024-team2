@@ -13,7 +13,7 @@ func SetupRoutes(app *gin.Engine) {
 
 	app.POST("/signin", controllers.Signin)
 	app.POST("/signup", controllers.Signup)
-
+	app.GET("/servers", controllers.GetServers)
 	authorized := app.Group("/")
 	authorized.Use(Auth())
 	{
