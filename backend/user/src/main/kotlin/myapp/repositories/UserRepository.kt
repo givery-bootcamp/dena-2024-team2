@@ -8,9 +8,11 @@ import org.koin.core.annotation.Single
 interface UserRepository {
     suspend fun createUser(name: String, password: String): User
     suspend fun findById(id: UInt): User?
+    suspend fun findByName(name: String): User?
 }
 
 @Single
+@Suppress("unused")
 class UserRepositoryImpl(
     private val db: Database
 ) : UserRepository {
@@ -36,19 +38,23 @@ class UserRepositoryImpl(
     }
 
     override suspend fun findById(id: UInt) : User? = db.query {
-        UserTable.select { UserTable.id eq id }.map {
-            User(
-                id = it[UserTable.id],
-                name = it[UserTable.name],
-                password = it[UserTable.password]
-            )
-        }.singleOrNull()
+        UserTable.select { UserTable.id eq id }.map(::mapUser).singleOrNull()
     }
+
+    override suspend fun findByName(name: String): User? = db.query {
+        UserTable.select { UserTable.name eq name }.map(::mapUser).singleOrNull()
+    }
+
+    private fun mapUser(it: ResultRow) = User(
+        id = it[UserTable.id],
+        name = it[UserTable.name],
+        password = it[UserTable.password]
+    )
 }
 
 private object UserTable : Table() {
     val id = uinteger("id").autoIncrement()
-    val name = varchar("name", 32)
+    val name = varchar("name", 32).uniqueIndex()
     val password = char("password", 60)
 
     override val primaryKey: PrimaryKey = PrimaryKey(id)

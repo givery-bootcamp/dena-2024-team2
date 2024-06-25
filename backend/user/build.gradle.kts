@@ -49,6 +49,7 @@ dependencies {
     implementation("io.insert-koin:koin-logger-slf4j")
     implementation("io.insert-koin:koin-annotations:1.3.1")
     implementation("at.favre.lib:bcrypt:0.10.2")
+    implementation("io.arrow-kt:arrow-core:1.2.4")
     ksp("io.insert-koin:koin-ksp-compiler:1.3.1")
     testImplementation("io.ktor:ktor-server-tests-jvm")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
