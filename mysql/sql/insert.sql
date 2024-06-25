@@ -1,7 +1,7 @@
 INSERT INTO users (name, password) VALUES ('taro', 'password');
 INSERT INTO users (name, password) VALUES ('hanako', 'PASSWORD');
 
-INSERT INTO servers (name, owner, icon) VALUES ("server1", 'manager', 'hoge.png');
+INSERT INTO servers (name, owner_id, icon) VALUES ("server1", 1, 'hoge.png');
 
 INSERT INTO channels (server_id, name) VALUES (1, 'channel1');
 INSERT INTO channels (server_id, name) VALUES (1, 'channel2');
