@@ -31,7 +31,7 @@ func CreateChannels(ctx *gin.Context) {
 	}
 
 	usecase := usecases.NewCreateChannelUsecase()
-	if err := usecase.Execute(ctx, serverId); err != nil {
+	if err := usecase.Execute(ctx, serverId, param.Name); err != nil {
 		handleError(ctx, http.StatusBadRequest, err)
 	} else {
 		ctx.JSON(200, "")
