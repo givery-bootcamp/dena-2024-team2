@@ -41,8 +41,8 @@ type ChannelsResponseJson struct {
 
 type ChannelJson struct {
 	Id        int       `json:"id"`
-	ServerId  int       `json:"serverId"`
+	ServerId  int       `json:"server_id"`
 	Name      string    `json:"name"`
-	CreatedAt time.Time `json:"createdAt"`
-	UpdatedAt time.Time `json:"updatedAt"`
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
 }

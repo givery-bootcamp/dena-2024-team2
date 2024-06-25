@@ -64,18 +64,5 @@ services:
       - ./api/api.yml:/openapi.yml
     environment:
       SWAGGER_JSON: /openapi.yml
-  apidoc2:
-    build:
-      context: ./
-      dockerfile: ./docker/apidoc-element.Dockerfile
-    ports:
-      - '8010:80'
-  apimock:
-    image: stoplight/prism:5
-    ports:
-      - '8080:4010'
-    volumes:
-      - ./api/api.yml:/openapi.yml
-    command: 'mock -d -h 0.0.0.0 /openapi.yml'
 volumes:
   mysql-local:
