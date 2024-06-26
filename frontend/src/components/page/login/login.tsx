@@ -1,25 +1,41 @@
-import { Button, Card, Input } from "~/components/ui";
+import { Button, Card, Input, Text } from "~/components/ui";
+import { useLoginForm } from "./hooks/use-login-form";
 import styles from "./login.module.scss";
 
 export const LoginPage = () => {
-	const handleClickLogin = () => {
-		console.log("Login");
-	};
-
+	const {
+		handleChangePassword,
+		handleChangeUsername,
+		handleClickLogin,
+		status,
+	} = useLoginForm();
 	return (
 		<div className={styles.root}>
 			<div className={styles.card}>
 				<Card
-					header={<h1>Login</h1>}
+					header={
+						<Text as="h2" size="lg" bold>
+							Login
+						</Text>
+					}
 					body={
 						<div className={styles.card__body}>
-							<Input type="text" placeholder="Username" />
-							<Input type="password" placeholder="Password" />
+							<Input
+								type="text"
+								placeholder="Username"
+								onChange={handleChangeUsername}
+							/>
+							<Input
+								type="password"
+								placeholder="Password"
+								onChange={handleChangePassword}
+							/>
 							<Button
 								size="md"
 								color="primary"
 								variant="fill"
 								onClick={handleClickLogin}
+								disabled={status === "pending"}
 							>
 								Login
 							</Button>
