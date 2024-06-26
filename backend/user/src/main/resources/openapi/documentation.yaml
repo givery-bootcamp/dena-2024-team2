@@ -29,21 +29,18 @@ paths:
               $ref: "#/components/schemas/UserLogin"
         required: true
       responses:
-        "500":
-          description: "Internal Server Error"
+        "400":
+          description: "Bad Request"
           content:
             text/plain:
               schema:
                 type: "string"
-              examples:
-                Example#1:
-                  value: ""
-                Example#2:
-                  value: ""
-                Example#3:
-                  value: ""
-                Example#4:
-                  value: ""
+        "200":
+          description: "OK"
+          content:
+            'application/json':
+              schema:
+                $ref: "#/components/schemas/UserPublic"
   /user/signin:
     post:
       description: ""
