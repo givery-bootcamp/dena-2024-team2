@@ -13,6 +13,11 @@ func NewCreateServerUsecase() *CreateServerUsecase {
 	return &CreateServerUsecase{}
 }
 
-func (uc *CreateServerUsecase) Execute(ctx *gin.Context, name string, icon string) (entities.Server, error) {
-	serverRepo := repositories.NewServerRepository()
+func (uc *CreateServerUsecase) Execute(ctx *gin.Context, name string, icon string, uid int) (*entities.Server, error) {
+	serverRepo := repositories.NewServerReopsitory(DB(ctx))
+	server, err := serverRepo.Create(ctx, name, icon, uid)
+	if err != nil {
+		return nil, err
+	}
+	return server, nil
 }
