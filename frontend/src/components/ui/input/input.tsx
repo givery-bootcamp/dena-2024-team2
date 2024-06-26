@@ -3,6 +3,9 @@ import styles from "./input.module.scss";
 type Props = React.InputHTMLAttributes<HTMLInputElement>;
 
 export const Input = ({ name, value, onChange, ...rest }: Props) => {
+	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		onChange?.(e);
+	};
 	return (
 		<input
 			type="text"
@@ -10,7 +13,7 @@ export const Input = ({ name, value, onChange, ...rest }: Props) => {
 			name={name}
 			id={name}
 			value={value}
-			onChange={onChange}
+			onChange={handleChange}
 			{...rest}
 		/>
 	);
