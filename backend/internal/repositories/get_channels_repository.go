@@ -1,7 +1,6 @@
 package repositories
 
 import (
-	"fmt"
 	"myapp/internal/entities"
 	"time"
 
@@ -31,8 +30,12 @@ func NewGetChannelsRepository(conn *gorm.DB) *GetChannelsRepository {
 func (r *GetChannelsRepository) Get(serverId int) ([]entities.Channel, error) {
 
 	obj := []Channel{}
-	r.Conn.Table("channels").Select("name").Where("server_id = ?", serverId).Find(&obj)
-	fmt.Printf("result: %+v\n", obj)
+	if err := r.Conn.Table("channels").
+		Select("id, server_id, name, created_at, updated_at").
+		Where("server_id = ?", serverId).
+		Find(&obj).Error; err != nil {
+		return nil, err
+	}
 	return convertChannelsRepositoryModelToEntity(obj), nil
 }
 
