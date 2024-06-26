@@ -2,6 +2,7 @@ package repositories
 
 import (
 	"fmt"
+	"log"
 	"myapp/internal/entities"
 	"time"
 
@@ -31,7 +32,10 @@ func NewServersRepository(conn *gorm.DB) *GetServersRepository {
 
 func (r *GetServersRepository) Get() ([]entities.Server, error) {
 	obj := []Server{}
-	r.Conn.Find(&obj)
+	if err := r.Conn.Find(&obj).Error; err != nil {
+		log.Printf("%v", err)
+		return nil, err
+	}
 	fmt.Printf("result: %+v\n", obj)
 	return convertServersRepositoryModelToEntity(obj), nil
 }
