@@ -9,8 +9,8 @@ import (
 )
 
 type createServerRequestParams struct {
-	name string
-	icon string
+	Name string `json:"name"`
+	Icon string `json:"icon"`
 }
 
 func CreateServer(ctx *gin.Context) {
@@ -19,13 +19,9 @@ func CreateServer(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, err.Error())
 		return
 	}
-	uid, err := getUserIdFromContext(ctx)
-	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, err.Error())
-		return
-	}
+	uid := getUserIdFromContext(ctx)
 	uc := usecases.NewCreateServerUsecase()
-	server, err := uc.Execute(ctx, req.name, req.icon, uid)
+	server, err := uc.Execute(ctx, req.Name, req.Icon, uid)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, err.Error())
 		return

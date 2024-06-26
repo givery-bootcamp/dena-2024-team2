@@ -2,7 +2,6 @@ package middleware
 
 import (
 	"fmt"
-	"myapp/internal/entities"
 	"myapp/internal/infrastructures"
 	"net/http"
 	"strings"
@@ -18,7 +17,7 @@ func Auth() gin.HandlerFunc {
 			return
 		}
 		uid, err := infrastructures.VerifyToken(jwtToken)
-		ctx.Set(entities.UserIdKey, uid)
+		ctx.Set("uid", uid)
 		if err != nil {
 			ctx.AbortWithStatusJSON(http.StatusUnauthorized, err.Error())
 			return
