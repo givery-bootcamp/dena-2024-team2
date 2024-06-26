@@ -8,7 +8,9 @@
 		"build": "tsc && vite build",
 		"lint": "biome ci .",
 		"preview": "vite preview",
-		"storybook": "storybook dev -p 6001"
+		"storybook": "storybook dev -p 6001",
+		"test": "vitest run",
+		"test:watch": "vitest"
 	},
 	"dependencies": {
 		"@tanstack/react-query": "^5.45.1",
