@@ -4,6 +4,7 @@ import (
 	"errors"
 	"myapp/internal/entities"
 	"myapp/internal/repositories"
+	"myapp/internal/usecases"
 	"net/http"
 	"strconv"
 	"time"
@@ -17,8 +18,10 @@ func GetChannels(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, err.Error())
 	}
 
-	repository := repositories.NewChannelsRepository(DB(ctx))
-	channels, err := repository.Get()
+	serverRepository := repositories.NewGetServerRepository(DB(ctx))
+	getChannelsRepository := repositories.NewGetChannelsRepository(DB(ctx))
+	usecase := usecases.NewGetChannelsUsecase()
+	channels, err := usecase.Execute()
 	if err != nil {
 		handleError(ctx, 500, err)
 	} else if channels != nil {
