@@ -24,8 +24,11 @@ import org.koin.ktor.ext.inject
 fun Application.configureRouting() {
     install(AutoHeadResponse)
     install(StatusPages) {
+        exception<WrongRequestException> { call, error ->
+            call.respond(HttpStatusCode.BadRequest, "${error.message}")
+        }
         exception<Throwable> { call, cause ->
-            call.respondText(text = "500: $cause", status = HttpStatusCode.InternalServerError)
+            call.respondText(text = "500: ${cause.message}", status = HttpStatusCode.InternalServerError)
         }
     }
     routing {
@@ -34,12 +37,14 @@ fun Application.configureRouting() {
         get("/") {
             call.respondText("Hello World!", ContentType.Text.Plain)
         }
+
         route("/user") {
             post("/new") {
                 val (name, password) = call.receive<UserLogin>()
                 name.validate("User name length should between 4 and 32") { length in 4..32 }
                 password.validate("Password length should between 6 and 64") { length in 8..64 }
-                newUserUsecase.createUser(name, password)
+                val user = newUserUsecase.createUser(name, password)
+                call.respond(UserPublic(user.id, user.name))
             }
             post("/signin") {
                 val (name, password) = call.receive<UserLogin>()

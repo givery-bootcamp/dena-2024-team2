@@ -27,15 +27,13 @@ interface UserSigninUsecase {
 class UserSigninUsecaseImpl(
     private val userRepository: UserRepository,
 ) : UserSigninUsecase {
-    private val hasher = BCrypt.withDefaults()
+    private val verifyer = BCrypt.verifyer()
     private val jwtSecret = requireNotNull(System.getenv("JWT_SECRET"))
 
     override suspend fun login(username: String, password: String): Either<FailureReason, Pair<User, String>> {
         try {
             val user = userRepository.findByName(username) ?: return FailureReason.LOGIN_FAILED.left()
-            val hashedPassword = hasher.hashToString(10, password.toCharArray())
-
-            return if (hashedPassword == user.password) {
+            return if (verifyer.verify(password.toCharArray(), user.password).verified) {
                 (user to genJwt(user)).right()
             } else {
                 FailureReason.LOGIN_FAILED.left()
