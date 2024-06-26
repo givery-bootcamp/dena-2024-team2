@@ -1,16 +1,14 @@
 package entities
 
-import (
-	"time"
-)
+import "time"
 
 type Posts []Post
 type Post struct {
-	Id        int
-	Title     string
-	Body      string
+	Id        int `json:"id"`
+	ChannelId int `json:"channel_id"`
 	User      User
-	CreatedAt time.Time
-	UpdatedAt time.Time
-	DeletedAt time.Time
+	Content   string     `json:"content"`
+	CreatedAt time.Time  `json:"created_at"`
+	UpdatedAt time.Time  `json:"updated_at"`
+	DeletedAt *time.Time `json:"deleted_at"`
 }
