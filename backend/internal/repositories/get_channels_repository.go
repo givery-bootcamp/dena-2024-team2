@@ -29,8 +29,9 @@ func NewGetChannelsRepository(conn *gorm.DB) *GetChannelsRepository {
 }
 
 func (r *GetChannelsRepository) Get(serverId int) ([]entities.Channel, error) {
+
 	obj := []Channel{}
-	r.Conn.Find(&obj)
+	r.Conn.Table("channels").Select("name").Where("server_id = ?", serverId).Find(&obj)
 	fmt.Printf("result: %+v\n", obj)
 	return convertChannelsRepositoryModelToEntity(obj), nil
 }
