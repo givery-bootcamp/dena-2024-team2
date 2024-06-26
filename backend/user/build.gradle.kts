@@ -1,3 +1,5 @@
+import org.jlleitschuh.gradle.ktlint.KtlintExtension
+
 val kotlin_version: String by project
 val logback_version: String by project
 val exposed_version: String by project
@@ -9,7 +11,7 @@ plugins {
     id("org.jetbrains.kotlin.plugin.serialization") version "2.0.0"
     id("com.google.devtools.ksp") version "2.0.0-1.0.22"
     id("org.jlleitschuh.gradle.ktlint") version "12.1.1"
-    id("com.google.cloud.tools.jib") version "2.8.0"
+    id("com.google.cloud.tools.jib") version "3.4.3"
 }
 
 group = "myapp"
@@ -18,8 +20,7 @@ version = "0.0.1"
 application {
     mainClass.set("myapp.ApplicationKt")
 
-    val isDevelopment: Boolean = project.ext.has("development")
-    applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
+    applicationDefaultJvmArgs = listOf("-Dio.ktor.development=true")
 }
 
 repositories {
@@ -35,7 +36,6 @@ dependencies {
     implementation("io.ktor:ktor-server-status-pages-jvm")
     implementation("io.ktor:ktor-server-compression-jvm")
     implementation("io.ktor:ktor-server-cors-jvm")
-    implementation("io.ktor:ktor-server-openapi")
     implementation("io.ktor:ktor-server-call-logging-jvm")
     implementation("io.ktor:ktor-server-content-negotiation-jvm")
     implementation("io.ktor:ktor-serialization-jackson")
@@ -62,6 +62,16 @@ ksp {
     arg("KOIN_CONFIG_CHECK", "true")
 }
 
-application {
-    applicationDefaultJvmArgs = listOf("-Dio.ktor.development=true")
+jib {
+    to {
+        image = "101501319743.dkr.ecr.ap-northeast-1.amazonaws.com/dena-training-2024-team-2-backend-user"
+        tags = setOf("latest")
+    }
+}
+
+configure<KtlintExtension> {
+    filter {
+        exclude("build.gradle.kts")
+        exclude("**/generated/**")
+    }
 }

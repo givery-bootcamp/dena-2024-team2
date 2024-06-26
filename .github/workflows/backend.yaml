@@ -3,7 +3,7 @@ name: Backend Lint
 on:
   pull_request:
     paths:
-      - 'backend/**'
+      - 'backend/timeline/**'
   workflow_dispatch:
 
 permissions:
