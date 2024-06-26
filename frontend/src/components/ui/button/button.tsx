@@ -7,7 +7,7 @@ type Props = {
 	variant: "fill" | "outline" | "ghost";
 	color: "primary" | "secondary";
 	type?: "button" | "submit" | "reset";
-	onClick: () => void;
+	onClick?: () => void;
 };
 
 export const Button = ({
@@ -18,6 +18,10 @@ export const Button = ({
 	type = "button",
 	onClick,
 }: Props) => {
+	const handleClick = () => {
+		onClick?.();
+	};
+
 	return (
 		<button
 			className={clsx(
@@ -28,7 +32,7 @@ export const Button = ({
 				styles[color],
 			)}
 			type={type}
-			onClick={onClick}
+			onClick={handleClick}
 		>
 			{children}
 		</button>
