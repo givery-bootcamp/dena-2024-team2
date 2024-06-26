@@ -4,12 +4,19 @@ import (
 	"errors"
 	"myapp/internal/entities"
 	"myapp/internal/repositories"
+	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/gin-gonic/gin"
 )
 
 func GetChannels(ctx *gin.Context) {
+	serverId, err := strconv.Atoi(ctx.Param("id"))
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, err.Error())
+	}
+
 	repository := repositories.NewChannelsRepository(DB(ctx))
 	channels, err := repository.Get()
 	if err != nil {
