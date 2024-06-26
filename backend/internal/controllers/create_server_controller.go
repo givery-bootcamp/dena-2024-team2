@@ -47,6 +47,6 @@ type ServerJson struct {
 	OwnerId   int       `json:"owner_id"`
 	Name      string    `json:"name"`
 	Icon      string    `json:"icon"`
-	CreatedAt time.Time `json:"createdAt"`
-	UpdatedAt time.Time `json:"updatedAt"`
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
 }
