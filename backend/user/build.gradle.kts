@@ -7,7 +7,9 @@ plugins {
     kotlin("jvm") version "2.0.0"
     id("io.ktor.plugin") version "2.3.12"
     id("org.jetbrains.kotlin.plugin.serialization") version "2.0.0"
-    id("com.google.devtools.ksp")  version "2.0.0-1.0.22"
+    id("com.google.devtools.ksp") version "2.0.0-1.0.22"
+    id("org.jlleitschuh.gradle.ktlint") version "12.1.1"
+    id("com.google.cloud.tools.jib") version "2.8.0"
 }
 
 group = "myapp"
@@ -57,7 +59,7 @@ dependencies {
 }
 
 ksp {
-    arg("KOIN_CONFIG_CHECK","true")
+    arg("KOIN_CONFIG_CHECK", "true")
 }
 
 application {
