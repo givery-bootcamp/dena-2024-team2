@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"net/http"
 
 	"myapp/internal/usecases"
@@ -20,9 +19,9 @@ func CreateServer(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, err.Error())
 		return
 	}
-	uid, ok := ctx.Get(middleware.userIdKey)
-	if !ok {
-		ctx.JSON(http.StatusBadRequest, fmt.Errorf("failed to retrieve uid from ctx"))
+	uid, err := getUserIdFromContext(ctx)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, err.Error())
 		return
 	}
 	uc := usecases.NewCreateServerUsecase()

@@ -2,14 +2,13 @@ package middleware
 
 import (
 	"fmt"
+	"myapp/internal/entities"
 	"myapp/internal/infrastructures"
 	"net/http"
 	"strings"
 
 	"github.com/gin-gonic/gin"
 )
-
-var userIdKey string = "uid"
 
 func Auth() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
@@ -19,7 +18,7 @@ func Auth() gin.HandlerFunc {
 			return
 		}
 		uid, err := infrastructures.VerifyToken(jwtToken)
-		ctx.Set(userIdKey, uid)
+		ctx.Set(entities.UserIdKey, uid)
 		if err != nil {
 			ctx.AbortWithStatusJSON(http.StatusUnauthorized, err.Error())
 			return

@@ -1,6 +1,8 @@
 package controllers
 
 import (
+	"fmt"
+
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )
@@ -19,4 +21,12 @@ func handleError(ctx *gin.Context, status int, err error) {
 		Message: err.Error(),
 	}
 	ctx.JSON(status, &res)
+}
+
+func getUserIdFromContext(ctx *gin.Context) (int, error) {
+	uid, ok := ctx.Get("uid")
+	if !ok {
+		return 0, fmt.Errorf("failed to retrieve context")
+	}
+	return uid.(int), nil
 }
