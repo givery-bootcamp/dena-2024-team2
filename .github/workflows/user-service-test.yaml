@@ -27,6 +27,7 @@ jobs:
         uses: gradle/actions/setup-gradle@v3
 
       - name: Lint with Gradle
+        working-directory: backend/user
         run: ./gradlew ktlintCheck
 
   test:
@@ -51,4 +52,5 @@ jobs:
         uses: gradle/actions/setup-gradle@v3
 
       - name: Test with Gradle
+        working-directory: backend/user
         run: ./gradlew test
