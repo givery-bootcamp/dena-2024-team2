@@ -59,3 +59,7 @@ dependencies {
 ksp {
     arg("KOIN_CONFIG_CHECK","true")
 }
+
+application {
+    applicationDefaultJvmArgs = listOf("-Dio.ktor.development=true")
+}
