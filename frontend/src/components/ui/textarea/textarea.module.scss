@@ -1,0 +1,18 @@
+.textarea {
+  width: 100%;
+  padding: 1rem;
+  border-radius: var(--radius-sm);
+  border: none;
+  outline: 1px solid;
+  outline-color: var(--c-gray-100);
+  resize: none;
+  transition: outline-color 0.2s;
+
+  &::placeholder {
+    color: var(--c-gray-200);
+  }
+
+  &:focus {
+    outline-color: var(--c-primary);
+  }
+}
