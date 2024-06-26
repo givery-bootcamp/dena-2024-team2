@@ -4,7 +4,7 @@ info:
   description: "dena_2024_team2 API"
   version: "1.0.0"
 servers:
-- url: "https://localhost:8080"
+- url: "https://localhost:9090"
 paths:
   /:
     get:
@@ -24,7 +24,7 @@ paths:
       description: ""
       requestBody:
         content:
-          '*/*':
+          application/json:
             schema:
               $ref: "#/components/schemas/UserLogin"
         required: true
@@ -49,7 +49,7 @@ paths:
       description: ""
       requestBody:
         content:
-          '*/*':
+          application/json:
             schema:
               $ref: "#/components/schemas/UserLogin"
         required: true
