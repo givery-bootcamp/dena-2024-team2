@@ -2,9 +2,10 @@ package repositories
 
 import (
 	"fmt"
-	"gorm.io/gorm"
-	"time"
 	"myapp/internal/entities"
+	"time"
+
+	"gorm.io/gorm"
 )
 
 type GetChannelsRepository struct {
@@ -21,7 +22,7 @@ type Channel struct {
 	DeletedAt time.Time
 }
 
-func NewChannelsRepository(conn *gorm.DB) *GetChannelsRepository {
+func NewGetChannelsRepository(conn *gorm.DB) *GetChannelsRepository {
 	return &GetChannelsRepository{
 		Conn: conn,
 	}
