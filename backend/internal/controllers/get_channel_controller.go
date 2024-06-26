@@ -21,7 +21,7 @@ func GetChannels(ctx *gin.Context) {
 	serverRepository := repositories.NewGetServerRepository(DB(ctx))
 	getChannelsRepository := repositories.NewGetChannelsRepository(DB(ctx))
 	usecase := usecases.NewGetChannelsUsecase(serverRepository, getChannelsRepository)
-	channels, err := usecase.Execute()
+	channels, err := usecase.Execute(serverId)
 	if err != nil {
 		handleError(ctx, 500, err)
 	} else if channels != nil {

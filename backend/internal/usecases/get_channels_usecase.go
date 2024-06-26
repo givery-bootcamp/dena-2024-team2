@@ -1,6 +1,9 @@
 package usecases
 
-import "myapp/internal/interfaces"
+import (
+	"myapp/internal/entities"
+	"myapp/internal/interfaces"
+)
 
 type GetChannelsUsecase struct {
 	serverRepository      interfaces.ServerRepository
@@ -14,5 +17,12 @@ func NewGetChannelsUsecase(sr interfaces.ServerRepository, gcr interfaces.GetCha
 	}
 }
 
-func (u *GetChannelsUsecase) Execute() {
+func (uc *GetChannelsUsecase) Execute(serverId int) ([]entities.Channel, error) {
+	// 存在しているサーバーか確認する
+	if _, err := uc.serverRepository.Get(serverId); err != nil {
+		return nil, err
+	}
+
+	result, err := uc.getChannelsRepository.Get(serverId)
+	return result, err
 }

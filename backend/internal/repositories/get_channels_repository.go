@@ -28,7 +28,7 @@ func NewGetChannelsRepository(conn *gorm.DB) *GetChannelsRepository {
 	}
 }
 
-func (r *GetChannelsRepository) Get() ([]entities.Channel, error) {
+func (r *GetChannelsRepository) Get(serverId int) ([]entities.Channel, error) {
 	obj := []Channel{}
 	r.Conn.Find(&obj)
 	fmt.Printf("result: %+v\n", obj)
