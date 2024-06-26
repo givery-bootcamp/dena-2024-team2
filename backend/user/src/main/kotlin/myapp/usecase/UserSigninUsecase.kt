@@ -17,10 +17,9 @@ interface UserSigninUsecase {
 
     enum class FailureReason {
         LOGIN_FAILED,
-        INTERNAL_ERROR
+        INTERNAL_ERROR,
     }
 }
-
 
 @Single
 @Suppress("unused")

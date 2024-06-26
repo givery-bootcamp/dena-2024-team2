@@ -23,4 +23,3 @@ class MyModule {
     @Single
     fun database() = databaseConfig()
 }
-

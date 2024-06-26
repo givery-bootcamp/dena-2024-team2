@@ -48,9 +48,9 @@ fun Application.configureRouting() {
             }
             post("/signin") {
                 val (name, password) = call.receive<UserLogin>()
-                when(val loginResult = signinUsecase.login(name, password)) {
+                when (val loginResult = signinUsecase.login(name, password)) {
                     is Either.Left -> {
-                        when(loginResult.value) {
+                        when (loginResult.value) {
                             UserSigninUsecase.FailureReason.LOGIN_FAILED -> {
                                 call.respondText("Username or Password is not correct", status = HttpStatusCode.BadRequest)
                             }

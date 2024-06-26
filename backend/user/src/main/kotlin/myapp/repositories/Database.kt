@@ -7,7 +7,7 @@ import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransacti
 fun databaseConfig(
     dbUrl: String = System.getenv("DB_URL") ?: "jdbc:mysql://localhost:3306/training",
     user: String = System.getenv("DB_USER") ?: "root",
-    password: String = System.getenv("DB_PASSWORD") ?: ""
+    password: String = System.getenv("DB_PASSWORD") ?: "",
 ) = Database.connect(
     url = dbUrl,
     user = user,
@@ -15,5 +15,4 @@ fun databaseConfig(
     driver = "com.mysql.cj.jdbc.Driver",
 )
 
-suspend fun <T> Database.query(block: suspend () -> T): T =
-    newSuspendedTransaction(Dispatchers.IO, this) { block() }
+suspend fun <T> Database.query(block: suspend () -> T): T = newSuspendedTransaction(Dispatchers.IO, this) { block() }

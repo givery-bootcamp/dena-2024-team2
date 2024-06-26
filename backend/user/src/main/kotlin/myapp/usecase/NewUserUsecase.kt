@@ -11,7 +11,7 @@ interface NewUserUsecase {
 
 @Single
 class NewUserUsecaseImpl(
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
 ) : NewUserUsecase {
     private val hasher = BCrypt.withDefaults()
 
