@@ -1,7 +1,7 @@
 package myapp.model
 
 data class User(
-    val id: UInt,
+    val id: Int,
     val name: String,
     val password: String
 )
@@ -12,6 +12,6 @@ data class UserLogin(
 )
 
 data class UserPublic(
-    val id: UInt,
+    val id: Int,
     val name: String
 )

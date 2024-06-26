@@ -7,7 +7,7 @@ import org.koin.core.annotation.Single
 
 interface UserRepository {
     suspend fun createUser(name: String, password: String): User
-    suspend fun findById(id: UInt): User?
+    suspend fun findById(id: Int): User?
     suspend fun findByName(name: String): User?
 }
 
@@ -37,7 +37,7 @@ class UserRepositoryImpl(
         )
     }
 
-    override suspend fun findById(id: UInt) : User? = db.query {
+    override suspend fun findById(id: Int) : User? = db.query {
         UserTable.select { UserTable.id eq id }.map(::mapUser).singleOrNull()
     }
 
@@ -52,8 +52,8 @@ class UserRepositoryImpl(
     )
 }
 
-private object UserTable : Table() {
-    val id = uinteger("id").autoIncrement()
+private object UserTable : Table("users") {
+    val id = integer("id").autoIncrement()
     val name = varchar("name", 32).uniqueIndex()
     val password = char("password", 60)
 
