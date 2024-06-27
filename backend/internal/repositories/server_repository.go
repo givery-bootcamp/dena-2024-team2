@@ -5,6 +5,7 @@ import (
 	"log"
 	"myapp/internal/entities"
 
+	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )
 
@@ -28,4 +29,14 @@ func (r *ServerRepository) Get(serverId int) (*entities.Server, error) {
 		return nil, err
 	}
 	return server, nil
+}
+
+func (r *ServerRepository) Create(ctx *gin.Context, name string, icon string, uid uint) (*entities.Server, error) {
+	server := entities.Server{OwnerId: int(uid), Name: name, Icon: icon}
+	result := r.Conn.Omit("DeletedAt").Create(&server)
+	if result.Error != nil {
+		return nil, result.Error
+	}
+
+	return &server, nil
 }
