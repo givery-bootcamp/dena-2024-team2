@@ -1,0 +1,28 @@
+.root {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.link {
+  text-decoration: none;
+  color: var(--c-text-main);
+}
+
+.item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border-radius: var(--radius-sm);
+
+  &:hover {
+    background-color: var(--c-gray-50);
+  }
+}
+
+.item__current {
+  background-color: var(--c-cyan-50);
+  color: var(--c-cyan-600);
+}

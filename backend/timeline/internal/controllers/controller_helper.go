@@ -21,6 +21,6 @@ func handleError(ctx *gin.Context, status int, err error) {
 	ctx.JSON(status, &res)
 }
 
-func getUserIdFromContext(ctx *gin.Context) uint {
-	return ctx.MustGet("uid").(uint)
+func getUserIdFromContext(ctx *gin.Context) int {
+	return ctx.MustGet("uid").(int)
 }
