@@ -7,6 +7,7 @@ type Props = {
 	variant: "fill" | "outline" | "ghost";
 	color: "primary" | "secondary";
 	type?: "button" | "submit" | "reset";
+	disabled?: boolean;
 	onClick?: () => void;
 };
 
@@ -16,6 +17,7 @@ export const Button = ({
 	variant,
 	color,
 	type = "button",
+	disabled = false,
 	onClick,
 }: Props) => {
 	const handleClick = () => {
@@ -33,6 +35,7 @@ export const Button = ({
 			)}
 			type={type}
 			onClick={handleClick}
+			disabled={disabled}
 		>
 			{children}
 		</button>

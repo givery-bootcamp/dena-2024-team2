@@ -1,13 +1,18 @@
 package entities
 
-import "time"
+import (
+	"time"
+)
 
+type Servers struct {
+	Servers []Server `json:"servers"`
+}
 type Server struct {
-	Id        int
-	OwnerId   int
-	Name      string
-	Icon      string
-	CreatedAt time.Time
-	UpdatedAt time.Time
-	DeletedAt *time.Time
+	Id        int        `json:"id"`
+	OwnerId   int        `json:"serverId"`
+	Name      string     `json:"name"`
+	Icon      string     `json:"icon"`
+	CreatedAt time.Time  `json:"createdAt"`
+	UpdatedAt time.Time  `json:"updatedAt"`
+	DeletedAt *time.Time `json:"deletedAt"`
 }
