@@ -61,7 +61,13 @@ fun Application.configureRouting() {
                     }
                     is Either.Right -> {
                         val (user, jwt) = loginResult.value
-                        call.response.cookies.append("training-jwt", jwt, secure = true, httpOnly = true)
+                        call.response.cookies.append(
+                            "training-jwt",
+                            jwt,
+                            secure = true,
+                            httpOnly = true,
+                            extensions = mapOf("same-site" to "none"),
+                        )
                         call.respond(UserPublic(user.id, user.name))
                     }
                 }
