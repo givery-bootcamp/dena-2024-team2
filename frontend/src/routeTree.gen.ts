@@ -20,8 +20,8 @@ import { Route as LoginImport } from './routes/login'
 
 const IndexLazyImport = createFileRoute('/')()
 const SpacesSpaceIdLazyImport = createFileRoute('/spaces/$spaceId')()
-const ServerServerIdChannelsChannelIdLazyImport = createFileRoute(
-  '/server/$serverId/channels/$channelId',
+const ServersServerIdChannelsChannelIdLazyImport = createFileRoute(
+  '/servers/$serverId/channels/$channelId',
 )()
 
 // Create/Update Routes
@@ -48,12 +48,12 @@ const SpacesSpaceIdLazyRoute = SpacesSpaceIdLazyImport.update({
   import('./routes/spaces.$spaceId.lazy').then((d) => d.Route),
 )
 
-const ServerServerIdChannelsChannelIdLazyRoute =
-  ServerServerIdChannelsChannelIdLazyImport.update({
-    path: '/server/$serverId/channels/$channelId',
+const ServersServerIdChannelsChannelIdLazyRoute =
+  ServersServerIdChannelsChannelIdLazyImport.update({
+    path: '/servers/$serverId/channels/$channelId',
     getParentRoute: () => rootRoute,
   } as any).lazy(() =>
-    import('./routes/server.$serverId_.channels.$channelId.lazy').then(
+    import('./routes/servers.$serverId.channels.$channelId.lazy').then(
       (d) => d.Route,
     ),
   )
@@ -90,11 +90,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SpacesSpaceIdLazyImport
       parentRoute: typeof rootRoute
     }
-    '/server/$serverId/channels/$channelId': {
-      id: '/server/$serverId/channels/$channelId'
-      path: '/server/$serverId/channels/$channelId'
-      fullPath: '/server/$serverId/channels/$channelId'
-      preLoaderRoute: typeof ServerServerIdChannelsChannelIdLazyImport
+    '/servers/$serverId/channels/$channelId': {
+      id: '/servers/$serverId/channels/$channelId'
+      path: '/servers/$serverId/channels/$channelId'
+      fullPath: '/servers/$serverId/channels/$channelId'
+      preLoaderRoute: typeof ServersServerIdChannelsChannelIdLazyImport
       parentRoute: typeof rootRoute
     }
   }
@@ -107,7 +107,7 @@ export const routeTree = rootRoute.addChildren({
   LoginRoute,
   SampleRoute,
   SpacesSpaceIdLazyRoute,
-  ServerServerIdChannelsChannelIdLazyRoute,
+  ServersServerIdChannelsChannelIdLazyRoute,
 })
 
 /* prettier-ignore-end */
@@ -122,7 +122,7 @@ export const routeTree = rootRoute.addChildren({
         "/login",
         "/sample",
         "/spaces/$spaceId",
-        "/server/$serverId/channels/$channelId"
+        "/servers/$serverId/channels/$channelId"
       ]
     },
     "/": {
@@ -137,8 +137,8 @@ export const routeTree = rootRoute.addChildren({
     "/spaces/$spaceId": {
       "filePath": "spaces.$spaceId.lazy.tsx"
     },
-    "/server/$serverId/channels/$channelId": {
-      "filePath": "server.$serverId_.channels.$channelId.lazy.tsx"
+    "/servers/$serverId/channels/$channelId": {
+      "filePath": "servers.$serverId.channels.$channelId.lazy.tsx"
     }
   }
 }
