@@ -23,6 +23,6 @@ ListOnly.args = {
 			name: "John Doe",
 		},
 		content: "This is a post",
-		createdAt: "2021-01-01T00:00:00.000Z",
+		createdAt: "2024-06-26T17:31:15+09:00",
 	},
 };
