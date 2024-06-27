@@ -3,22 +3,21 @@ package infrastructures
 import (
 	"fmt"
 	"log"
+	"strconv"
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/google/uuid"
 )
 
-var secretKey = []byte("secret")
+var secretKey = []byte("ultra_super_ultimate_secret")
 
 type CustomClaims struct {
-	UserId uint
 	jwt.RegisteredClaims
 }
 
 func GenerateToken(userId uint) (string, error) {
 	claims := CustomClaims{
-		userId,
 		jwt.RegisteredClaims{
 			ExpiresAt: jwt.NewNumericDate(time.Now().Add(24 * time.Hour)),
 			IssuedAt:  jwt.NewNumericDate(time.Now()),
@@ -39,7 +38,7 @@ func GenerateToken(userId uint) (string, error) {
 	return signedToken, nil
 }
 
-func VerifyToken(token string) (uint, error) {
+func VerifyToken(token string) (int, error) {
 	parsedToken, err := jwt.ParseWithClaims(token, &CustomClaims{}, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
@@ -53,7 +52,11 @@ func VerifyToken(token string) (uint, error) {
 	}
 
 	if claims, ok := parsedToken.Claims.(*CustomClaims); ok {
-		return claims.UserId, nil
+		uid, err := strconv.Atoi(claims.Subject)
+		if err != nil {
+			return 0, err
+		}
+		return uid, nil
 	} else {
 		log.Fatal("unknown claims type, cannot proceed")
 		return 0, fmt.Errorf("failed to convert token to customClaims")
