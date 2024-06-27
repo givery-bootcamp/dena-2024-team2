@@ -9,8 +9,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-var userIdKey string = "uid"
-
 func Auth() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		jwtToken, err := extractBearerToken(ctx.GetHeader("Authorization"))
@@ -19,7 +17,7 @@ func Auth() gin.HandlerFunc {
 			return
 		}
 		uid, err := infrastructures.VerifyToken(jwtToken)
-		ctx.Set(userIdKey, uid)
+		ctx.Set("uid", uid)
 		if err != nil {
 			ctx.AbortWithStatusJSON(http.StatusUnauthorized, err.Error())
 			return
