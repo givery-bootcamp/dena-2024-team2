@@ -6,13 +6,27 @@ services:
     ports:
       - '9000:9000'
     volumes:
-      - ./backend:/go/src/myapp
+      - ./backend/timeline:/go/src/myapp
     command: "air"
     depends_on:
       db:
         condition: service_healthy
     environment:
       TZ: Asia/Tokyo
+  backend-user:
+    image: gradle:8.8.0-jdk21-jammy
+    command: "gradle run"
+    ports:
+      - '9090:9090'
+    volumes:
+      - ./backend/user:/home/gradle
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      TZ: Asia/Tokyo
+      JWT_SECRET: ultra_super_ultimate_secret
+      DB_URL: "jdbc:mysql://db:3306/training"
   frontend:
     image: node:20.12.2
     working_dir: /home/node/myapp
@@ -42,7 +56,7 @@ services:
       context: ./docker
       dockerfile: mysql.Dockerfile
     volumes:
-      - ./docker/mysql:/var/lib/mysql
+      - mysql-volume:/var/lib/mysql
       - ./mysql/my.cnf:/etc/mysql/conf.d/my.cnf
       - ./mysql/sql:/docker-entrypoint-initdb.d
     ports:
@@ -77,3 +91,5 @@ services:
     volumes:
       - ./api/api.yaml:/openapi.yaml
     command: 'mock -d -h 0.0.0.0 /openapi.yaml'
+volumes:
+  mysql-volume:
