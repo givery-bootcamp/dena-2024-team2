@@ -85,7 +85,6 @@ jobs:
   # backendのdeploy(ECR更新とサービスのdeploy)
   backend-ecr-push:
     runs-on: ubuntu-latest
-    needs: [backend-build]
     if: github.ref == 'refs/heads/main'
 
     steps:
