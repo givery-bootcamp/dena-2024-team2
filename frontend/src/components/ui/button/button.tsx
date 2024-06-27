@@ -7,7 +7,8 @@ type Props = {
 	variant: "fill" | "outline" | "ghost";
 	color: "primary" | "secondary";
 	type?: "button" | "submit" | "reset";
-	onClick: () => void;
+	disabled?: boolean;
+	onClick?: () => void;
 };
 
 export const Button = ({
@@ -16,8 +17,13 @@ export const Button = ({
 	variant,
 	color,
 	type = "button",
+	disabled = false,
 	onClick,
 }: Props) => {
+	const handleClick = () => {
+		onClick?.();
+	};
+
 	return (
 		<button
 			className={clsx(
@@ -28,7 +34,8 @@ export const Button = ({
 				styles[color],
 			)}
 			type={type}
-			onClick={onClick}
+			onClick={handleClick}
+			disabled={disabled}
 		>
 			{children}
 		</button>

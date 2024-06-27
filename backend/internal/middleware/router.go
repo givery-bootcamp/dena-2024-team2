@@ -13,13 +13,14 @@ func SetupRoutes(app *gin.Engine) {
 
 	app.POST("/signin", controllers.Signin)
 	app.POST("/signup", controllers.Signup)
-
 	authorized := app.Group("/")
 	authorized.Use(Auth())
 	{
+		authorized.GET("/servers", controllers.GetServers)
 		authorized.GET("/servers/:id/channels", controllers.GetChannels)
 		authorized.POST("/servers/:id/channels", controllers.CreateChannels)
 		authorized.GET("/channels/:id/posts", controllers.GetPosts)
 		authorized.POST("/channels/:id/posts", controllers.CreatePost)
+		authorized.POST("/servers", controllers.CreateServer)
 	}
 }
