@@ -3,14 +3,13 @@ package infrastructures
 import (
 	"fmt"
 	"log"
+	"myapp/internal/config"
 	"strconv"
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/google/uuid"
 )
-
-var secretKey = []byte("ultra_super_ultimate_secret")
 
 type CustomClaims struct {
 	jwt.RegisteredClaims
@@ -29,7 +28,7 @@ func GenerateToken(userId uint) (string, error) {
 		},
 	}
 	unsignedToken := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	signedToken, err := unsignedToken.SignedString(secretKey)
+	signedToken, err := unsignedToken.SignedString([]byte(config.JWTSecret))
 	if err != nil {
 		log.Printf("%v", err)
 		return "", err
@@ -44,7 +43,7 @@ func VerifyToken(token string) (int, error) {
 			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
 		}
 
-		return secretKey, nil
+		return []byte(config.JWTSecret), nil
 	})
 
 	if err != nil {
