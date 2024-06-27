@@ -17,7 +17,7 @@ type createChannelsRequestParam struct {
 
 func CreateChannels(ctx *gin.Context) {
 	var param createChannelsRequestParam
-	serverId, err := strconv.Atoi(ctx.Param("id"))
+	serverId, err := strconv.Atoi(ctx.Param("serverId"))
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, err.Error())
 	}
