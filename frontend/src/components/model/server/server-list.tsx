@@ -8,6 +8,7 @@ type Props = {
 	onClickPlus?: () => void;
 };
 
+// TODO: 余裕があればコンテキストメニューを追加する
 export const ServerList = ({ servers, onClickPlus }: Props) => {
 	// NOTE: ここにこの関数作るのちょっと違和感あるけど一旦このままで
 	// サーバーへのリンクを生成する
