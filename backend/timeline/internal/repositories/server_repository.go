@@ -31,8 +31,8 @@ func (r *ServerRepository) Get(serverId int) (*entities.Server, error) {
 	return server, nil
 }
 
-func (r *ServerRepository) Create(ctx *gin.Context, name string, icon string, uid uint) (*entities.Server, error) {
-	server := entities.Server{OwnerId: int(uid), Name: name, Icon: icon}
+func (r *ServerRepository) Create(ctx *gin.Context, name string, icon string, uid int) (*entities.Server, error) {
+	server := entities.Server{OwnerId: uid, Name: name, Icon: icon}
 	result := r.Conn.Omit("DeletedAt").Create(&server)
 	if result.Error != nil {
 		return nil, result.Error

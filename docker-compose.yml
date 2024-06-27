@@ -13,6 +13,7 @@ services:
         condition: service_healthy
     environment:
       TZ: Asia/Tokyo
+      JWT_SECRET: ultra_super_ultimate_secret
   backend-user:
     image: gradle:8.8.0-jdk21-jammy
     command: "gradle run"
