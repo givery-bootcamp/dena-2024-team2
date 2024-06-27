@@ -8,7 +8,9 @@
 		"build": "tsc && vite build",
 		"lint": "biome ci .",
 		"preview": "vite preview",
-		"storybook": "storybook dev -p 6001"
+		"storybook": "storybook dev -p 6001",
+		"test": "vitest run",
+		"test:watch": "vitest"
 	},
 	"dependencies": {
 		"@tanstack/react-query": "^5.45.1",
@@ -25,6 +27,7 @@
 		"@storybook/addon-links": "^8.1.4",
 		"@storybook/cli": "^8.1.4",
 		"@storybook/react-vite": "^8.1.4",
+		"@storybook/test": "^8.1.10",
 		"@tanstack/router-devtools": "^1.38.1",
 		"@tanstack/router-vite-plugin": "^1.38.0",
 		"@types/node": "^20.12.12",
