@@ -1,5 +1,6 @@
 import { Text } from "~/components/ui";
 import type { Post } from "~/domains/posts";
+import { formatDateTime } from "~/utils/date-utils";
 import styles from "./post-card.module.scss";
 
 type Props = {
@@ -7,6 +8,8 @@ type Props = {
 };
 
 export const PostCard = ({ post }: Props) => {
+	const date = formatDateTime(new Date(post.createdAt), "yyyy/MM/dd HH:mm");
+
 	return (
 		<div className={styles.root}>
 			<div className={styles.header}>
@@ -16,7 +19,7 @@ export const PostCard = ({ post }: Props) => {
 					</Text>
 				</span>
 				<Text as="span" size="sm">
-					{post.createdAt}
+					{date}
 				</Text>
 			</div>
 			<div className={styles.body}>{post.content}</div>
