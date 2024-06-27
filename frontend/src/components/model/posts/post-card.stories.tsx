@@ -13,8 +13,8 @@ const Template: StoryFn<ComponentProps<typeof PostCard>> = (args) => (
 	<PostCard {...args} />
 );
 
-export const ListOnly = Template.bind({});
-ListOnly.args = {
+export const Default = Template.bind({});
+Default.args = {
 	post: {
 		id: 1,
 		channelId: 1,
