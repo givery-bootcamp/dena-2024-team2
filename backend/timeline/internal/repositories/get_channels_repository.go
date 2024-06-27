@@ -1,10 +1,10 @@
 package repositories
 
 import (
-	"fmt"
-	"gorm.io/gorm"
-	"time"
 	"myapp/internal/entities"
+	"time"
+
+	"gorm.io/gorm"
 )
 
 type GetChannelsRepository struct {
@@ -21,16 +21,22 @@ type Channel struct {
 	DeletedAt time.Time
 }
 
-func NewChannelsRepository(conn *gorm.DB) *GetChannelsRepository {
+func NewGetChannelsRepository(conn *gorm.DB) *GetChannelsRepository {
 	return &GetChannelsRepository{
 		Conn: conn,
 	}
 }
 
-func (r *GetChannelsRepository) Get() ([]entities.Channel, error) {
+func (r *GetChannelsRepository) Get(serverId int) ([]entities.Channel, error) {
+
 	obj := []Channel{}
-	r.Conn.Find(&obj)
-	fmt.Printf("result: %+v\n", obj)
+	if err := r.Conn.Table("channels").
+		Select("id, server_id, name, created_at, updated_at").
+		Where("server_id = ?", serverId).
+		Where("deleted_at IS NULL").
+		Find(&obj).Error; err != nil {
+		return nil, err
+	}
 	return convertChannelsRepositoryModelToEntity(obj), nil
 }
 
