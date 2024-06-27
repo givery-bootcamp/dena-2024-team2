@@ -33,6 +33,7 @@ func (r *GetChannelsRepository) Get(serverId int) ([]entities.Channel, error) {
 	if err := r.Conn.Table("channels").
 		Select("id, server_id, name, created_at, updated_at").
 		Where("server_id = ?", serverId).
+		Where("deleted_at IS NULL").
 		Find(&obj).Error; err != nil {
 		return nil, err
 	}
