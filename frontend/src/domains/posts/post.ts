@@ -5,5 +5,5 @@ export type Post = {
 	channelId: number;
 	user: User;
 	content: string;
-	createdAt: Date;
+	createdAt: string;
 };
