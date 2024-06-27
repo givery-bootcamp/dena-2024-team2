@@ -1,8 +1,8 @@
 import { createLazyFileRoute } from "@tanstack/react-router";
-import { ChannelDetailPage } from "~/components/page";
+import { Home } from "~/components/page/home/home";
 
 export const Route = createLazyFileRoute(
 	"/servers/$serverId/channels/$channelId",
 )({
-	component: () => <ChannelDetailPage />,
+	component: () => <Home />,
 });
