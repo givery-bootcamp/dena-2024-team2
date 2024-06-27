@@ -1,0 +1,168 @@
+openapi: "3.0.2"
+info:
+  title: "Training App API"
+  version: "1.0.0"
+servers:
+  - url: "http://localhost:8080"
+    description: "Mock Server"
+  - url: "http://localhost:9000"
+    description: "Development Server"
+paths:
+  /:
+    get:
+      operationId: "healthcheck"
+      responses:
+        200:
+          description: "Healthcheck"
+          content:
+            plain/text:
+              schema:
+                type: "string"
+                example: "It works"
+  /signin:
+    post:
+      operationId: "signin"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SigninRequest"
+      responses:
+        200:
+          description: "Success Signin"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SigninResponse"
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+  /signup:
+    post:
+      operationId: "signup"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SignupRequest"
+      responses:
+        200:
+          description: "Success Signup"
+          content:
+            plain/text:
+              schema:
+                type: "string"
+                example: "アカウント登録完了"
+        400:
+          description: Bad Request
+  /channels:
+    get:
+      operationId: "getChannels"
+      responses:
+        200:
+          description: "List of channels"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetChannelsResponse"
+        404:
+          description: NotFound
+        401:
+          description: Unauthorized
+  /channels/{channelId}/posts:
+    get:
+      operationId: "getChannelPosts"
+      responses:
+        200:
+          description: "List of posts of channl"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetChannelPostsResponse"
+        404:
+          description: NotFound
+        401:
+          description: Unauthorized
+components:
+  schemas:
+    SigninRequest:
+      type: "object"
+      properties:
+        name:
+          type: "string"
+        password:
+          type: "string"
+    SigninResponse:
+      type: "object"
+      properties:
+        access_token:
+          type: "string"
+    SignupRequest:
+      type: "object"
+      properties:
+        name:
+          type: "string"
+        password:
+          type: "string"
+    SignupResponse:
+      type: "object"
+      properties:
+        access_token:
+          type: "string"
+    GetChannelsResponse:
+      type: "object"
+      properties:
+        channels:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/channel"
+    GetChannelPostsResponse:
+      type: "object"
+      properties:
+        posts:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/post"
+    channel:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          example: 1
+        server_id:
+          type: "integer"
+          example: 1
+        name:
+          type: "string"
+          example: "General"
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    post:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          example: 1
+        channel_id:
+          type: "integer"
+          example: 1
+        user_name:
+          type: "string"
+          example: "General"
+        user_id:
+          type: "integer"
+          example: 1
+        content:
+          type: "string"
+          example: "General"
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time

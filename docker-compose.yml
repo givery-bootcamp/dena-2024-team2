@@ -38,42 +38,31 @@ services:
       TZ: Asia/Tokyo
     init: true
   db:
-    build:
-      context: ./docker
-      dockerfile: mysql.Dockerfile
-    volumes:
-      - ./docker/mysql:/var/lib/mysql
-      - ./mysql/my.cnf:/etc/mysql/conf.d/my.cnf
-      - ./mysql/sql:/docker-entrypoint-initdb.d
+    image: mysql:8
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     ports:
       - '3306:3306'
+    volumes:
+      - mysql-local:/var/lib/mysql
+      - ./mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./mysql/sql:/docker-entrypoint-initdb.d
     environment:
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
       - MYSQL_DATABASE=training
+      - TZ=Asia/Tokyo
     healthcheck:
       test: mysqladmin ping -h 127.0.0.1 -u root
       interval: 5s
-      timeout: 30s
-      retries: 10
+      timeout: 10s
+      retries: 6
       start_period: 5s
   apidoc:
     image: swaggerapi/swagger-ui
     ports:
       - '8000:8080'
     volumes:
-      - ./api/api.yaml:/openapi.yaml
+      - ./api/api.yml:/openapi.yml
     environment:
-      SWAGGER_JSON: /openapi.yaml
-  apidoc2:
-    build:
-      context: ./
-      dockerfile: ./docker/apidoc-element.Dockerfile
-    ports:
-      - '8010:80'
-  apimock:
-    image: stoplight/prism:5
-    ports:
-      - '8080:4010'
-    volumes:
-      - ./api/api.yaml:/openapi.yaml
-    command: 'mock -d -h 0.0.0.0 /openapi.yaml'
+      SWAGGER_JSON: /openapi.yml
+volumes:
+  mysql-local:

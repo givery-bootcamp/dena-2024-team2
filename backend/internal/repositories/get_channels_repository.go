@@ -2,9 +2,10 @@ package repositories
 
 import (
 	"fmt"
-	"gorm.io/gorm"
-	"time"
 	"myapp/internal/entities"
+	"time"
+
+	"gorm.io/gorm"
 )
 
 type GetChannelsRepository struct {
