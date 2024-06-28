@@ -1,12 +1,18 @@
-import { SidePanel } from "./components/side-panel";
+import { ChannelsPanel, PostForm, PostsPanel } from "./components";
 import { mock } from "./mock";
+import styles from "./posts.module.scss";
 
 export const Posts = () => {
 	return (
-		<div>
-			<h1>Posts</h1>
-			<div>
-				<SidePanel servers={mock.servers} channels={mock.channels} />
+		<div className={styles.root}>
+			<div className={styles.channels}>
+				<ChannelsPanel channels={mock.channels} />
+			</div>
+			<div className={styles.posts}>
+				<PostsPanel posts={mock.posts} />
+			</div>
+			<div className={styles.form}>
+				<PostForm onChange={() => {}} onSubmit={() => {}} />
 			</div>
 		</div>
 	);
