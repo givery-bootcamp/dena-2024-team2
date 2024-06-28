@@ -3,7 +3,6 @@ import org.jlleitschuh.gradle.ktlint.KtlintExtension
 plugins {
     alias(libs.plugins.kotlin)
     alias(libs.plugins.ktlint)
-    alias(libs.plugins.ksp)
 }
 
 group = "myapp"
@@ -15,7 +14,8 @@ repositories {
 
 dependencies {
     implementation(libs.bundles.koin)
-    ksp(libs.koin.ksp)
+    implementation(libs.bcrypt)
+    implementation(libs.arrow)
     api(project(":entity"))
     testImplementation(libs.test.kotlin)
     testImplementation(libs.bundles.kotest)
