@@ -10,7 +10,6 @@ import (
 )
 
 type createPostRequestParams struct {
-	UserId  int    `json:"user_id"`
 	Content string `json:"content"`
 }
 
@@ -30,11 +29,13 @@ func CreatePost(ctx *gin.Context) {
 		return
 	}
 
+	uid := getUserIdFromContext(ctx)
+
 	createPostRepository := repositories.NewCreatePostRepository(DB(ctx))
 	serverRepository := repositories.NewGetServerRepository(DB(ctx))
 	channelRepository := repositories.NewGetChannelRepository(DB(ctx))
 	usecase := usecases.NewCreatePostUsecase(createPostRepository, serverRepository, channelRepository)
-	result, err := usecase.Execute(post.UserId, serverId, channelId, post.Content)
+	result, err := usecase.Execute(uid, serverId, channelId, post.Content)
 	if err != nil {
 		handleError(ctx, 500, err)
 		return
