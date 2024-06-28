@@ -54,11 +54,10 @@ func VerifyToken(token string) (int, string, error) {
 
 	if claims, ok := parsedToken.Claims.(*CustomClaims); ok {
 		uid, err := strconv.Atoi(claims.Subject)
+		userName := claims.UserName
 		if err != nil {
 			return 0, "", err
 		}
-
-		userName := claims.UserName
 
 		return uid, userName, nil
 	} else {
