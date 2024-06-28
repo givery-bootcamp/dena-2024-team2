@@ -1,8 +1,8 @@
 import { createLazyFileRoute } from "@tanstack/react-router";
-import { Home } from "~/components/page/home/home";
+import { Posts } from "~/components/page/posts";
 
 export const Route = createLazyFileRoute(
 	"/servers/$serverId/channels/$channelId",
 )({
-	component: () => <Home />,
+	component: () => <Posts />,
 });
