@@ -23,6 +23,7 @@ fun Application.configureHTTP() {
         allowHeader(HttpHeaders.ContentType)
         allowHeader(HttpHeaders.AccessControlAllowHeaders)
         allowHeader(HttpHeaders.AccessControlAllowCredentials)
-        anyHost()
+        allowHost(System.getenv("FRONTEND_HOST") ?: "localhost:3000")
+        allowCredentials = true
     }
 }

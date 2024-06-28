@@ -28,6 +28,7 @@ services:
       TZ: Asia/Tokyo
       JWT_SECRET: ultra_super_ultimate_secret
       DB_URL: "jdbc:mysql://db:3306/training"
+      FRONTEND_HOST: "${FRONTEND_HOST}"
   frontend:
     image: node:20.12.2
     working_dir: /home/node/myapp
