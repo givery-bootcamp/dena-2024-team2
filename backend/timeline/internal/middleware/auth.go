@@ -14,8 +14,9 @@ func Auth() gin.HandlerFunc {
 			ctx.AbortWithStatusJSON(http.StatusUnauthorized, err.Error())
 			return
 		}
-		uid, err := infrastructures.VerifyToken(jwtToken)
+		uid, userName, err := infrastructures.VerifyToken(jwtToken)
 		ctx.Set("uid", uid)
+		ctx.Set("userName", userName)
 		if err != nil {
 			ctx.AbortWithStatusJSON(http.StatusUnauthorized, err.Error())
 			return

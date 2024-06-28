@@ -29,7 +29,8 @@ func CreatePost(ctx *gin.Context) {
 		return
 	}
 
-	uid := getUserIdFromContext(ctx)
+	userId := getUserIdFromContext(ctx)
+	userName := getUserNameFromContext(ctx)
 
 	createPostRepository := repositories.NewCreatePostRepository(DB(ctx))
 	serverRepository := repositories.NewGetServerRepository(DB(ctx))
