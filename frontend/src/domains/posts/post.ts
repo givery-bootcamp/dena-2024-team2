@@ -1,9 +1,8 @@
-import type { User } from "../users";
-
 export type Post = {
 	id: number;
 	channelId: number;
-	user: User;
+	user_id: number;
+	user_name: string;
 	content: string;
 	createdAt: string;
 };
