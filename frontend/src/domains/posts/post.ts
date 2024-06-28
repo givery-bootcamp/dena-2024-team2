@@ -1,8 +1,8 @@
 export type Post = {
 	id: number;
 	channelId: number;
-	user_id: number;
-	user_name: string;
+	userId: number;
+	userName: string;
 	content: string;
 	createdAt: string;
 };
