@@ -124,5 +124,15 @@ export const mock = {
 			content: "This is the very very last test post.",
 			createdAt: "2021-01-01T00:00:00Z",
 		},
+		{
+			id: 10,
+			channelId: 2,
+			user: {
+				id: 2,
+				name: "Jane Smith",
+			},
+			content: "This is the very very final test post.",
+			createdAt: "2021-01-01T00:00:00Z",
+		},
 	],
 } as { channels: Channel[]; servers: Server[]; posts: Post[] };
