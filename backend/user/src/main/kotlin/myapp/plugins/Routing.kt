@@ -1,6 +1,8 @@
 package myapp.plugins
 
 import arrow.core.Either
+import com.auth0.jwt.JWT
+import com.auth0.jwt.algorithms.Algorithm
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.Application
@@ -15,11 +17,13 @@ import io.ktor.server.routing.get
 import io.ktor.server.routing.post
 import io.ktor.server.routing.route
 import io.ktor.server.routing.routing
+import myapp.entity.User
 import myapp.model.UserLogin
 import myapp.model.UserPublic
 import myapp.usecase.NewUserUsecase
 import myapp.usecase.UserSigninUsecase
 import org.koin.ktor.ext.inject
+import java.time.Instant
 
 fun Application.configureRouting() {
     install(AutoHeadResponse)
@@ -46,6 +50,7 @@ fun Application.configureRouting() {
                 val user = newUserUsecase.createUser(name, password)
                 call.respond(UserPublic(user.id, user.name))
             }
+
             post("/signin") {
                 val (name, password) = call.receive<UserLogin>()
                 when (val loginResult = signinUsecase.login(name, password)) {
@@ -60,10 +65,10 @@ fun Application.configureRouting() {
                         }
                     }
                     is Either.Right -> {
-                        val (user, jwt) = loginResult.value
+                        val user = loginResult.value
                         call.response.cookies.append(
                             "training-jwt",
-                            jwt,
+                            genJwt(user),
                             secure = true,
                             httpOnly = true,
                             extensions = mapOf("same-site" to "none"),
@@ -87,3 +92,13 @@ private inline fun <T> T.validate(message: String = "Request parameter is not va
         throw WrongRequestException(message)
     })
 }
+
+private val jwtSecret = requireNotNull(System.getenv("JWT_SECRET"))
+
+private fun genJwt(user: User): String = JWT.create()
+    .withSubject(user.id.toString())
+    .withIssuer("Kodee")
+    .withIssuedAt(Instant.now())
+    .withExpiresAt(Instant.now().plusMillis(3_600_000)) // 1 hour
+    .withClaim("username", user.name)
+    .sign(Algorithm.HMAC256(jwtSecret))

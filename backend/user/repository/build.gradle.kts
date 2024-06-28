@@ -15,7 +15,7 @@ repositories {
 dependencies {
     implementation(libs.bundles.exposed)
     implementation(libs.bundles.koin)
-    implementation(project(":usecase"))
+    api(project(":usecase"))
     testImplementation(libs.test.kotlin)
     testImplementation(libs.bundles.kotest)
     testImplementation(libs.test.koin)
