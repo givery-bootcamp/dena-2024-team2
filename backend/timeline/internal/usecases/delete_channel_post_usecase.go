@@ -13,17 +13,7 @@ func NewDeleteChannelPostUsecase() *DeleteChannelPostUsecase {
 	return &DeleteChannelPostUsecase{}
 }
 
-func (uc *DeleteChannelPostUsecase) Execute(ctx *gin.Context, serverId int, channelId int, postId int) error {
-	serverRepo := repositories.NewGetServerRepository(DB(ctx))
-	if _, err := serverRepo.Get(serverId); err != nil {
-		return err
-	}
-
-	channelRepo := repositories.NewGetChannelRepository(DB(ctx))
-	if _, err := channelRepo.Get(channelId); err != nil {
-		return err
-	}
-
+func (uc *DeleteChannelPostUsecase) Execute(ctx *gin.Context, postId int) error {
 	postRepo := repositories.NewDeletePostRepository(DB(ctx))
 	err := postRepo.Delete(postId)
 	if err != nil {
