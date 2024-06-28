@@ -15,7 +15,7 @@ export const PostCard = ({ post }: Props) => {
 			<div className={styles.header}>
 				<span className={styles.header__name}>
 					<Text as="span" size="md" bold>
-						{post.user.name}
+						{post.user_name || "No Name"}
 					</Text>
 				</span>
 				<Text as="span" size="sm">
