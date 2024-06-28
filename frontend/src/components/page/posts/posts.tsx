@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "@tanstack/react-router";
 import { getChannels } from "~/domains/channels";
+import { getPosts } from "~/domains/posts";
 import { ChannelsPanel, PostForm, PostsPanel } from "./components";
-import { mock } from "./mock";
 import styles from "./posts.module.scss";
 
 export const Posts = () => {
@@ -13,6 +13,11 @@ export const Posts = () => {
 	const { data: channels } = useQuery({
 		queryKey: ["channels"],
 		queryFn: getChannels(Number(serverId)),
+	});
+
+	const { data: posts } = useQuery({
+		queryKey: ["posts"],
+		queryFn: getPosts(Number(channelId)),
 	});
 
 	return (
@@ -28,7 +33,7 @@ export const Posts = () => {
 					channelName={
 						channels?.find((c) => c.id === Number(channelId))?.name ?? ""
 					}
-					posts={mock.posts}
+					posts={posts ?? []}
 				/>
 			</div>
 			<div className={styles.form}>

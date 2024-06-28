@@ -13,7 +13,6 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as SampleImport } from './routes/sample'
 import { Route as LoginImport } from './routes/login'
 
 // Create Virtual Routes
@@ -30,11 +29,6 @@ const ServersLazyRoute = ServersLazyImport.update({
   path: '/servers',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/servers.lazy').then((d) => d.Route))
-
-const SampleRoute = SampleImport.update({
-  path: '/sample',
-  getParentRoute: () => rootRoute,
-} as any)
 
 const LoginRoute = LoginImport.update({
   path: '/login',
@@ -74,13 +68,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginImport
       parentRoute: typeof rootRoute
     }
-    '/sample': {
-      id: '/sample'
-      path: '/sample'
-      fullPath: '/sample'
-      preLoaderRoute: typeof SampleImport
-      parentRoute: typeof rootRoute
-    }
     '/servers': {
       id: '/servers'
       path: '/servers'
@@ -103,7 +90,6 @@ declare module '@tanstack/react-router' {
 export const routeTree = rootRoute.addChildren({
   IndexLazyRoute,
   LoginRoute,
-  SampleRoute,
   ServersLazyRoute,
   ServersServerIdChannelsChannelIdLazyRoute,
 })
@@ -118,7 +104,6 @@ export const routeTree = rootRoute.addChildren({
       "children": [
         "/",
         "/login",
-        "/sample",
         "/servers",
         "/servers/$serverId/channels/$channelId"
       ]
@@ -128,9 +113,6 @@ export const routeTree = rootRoute.addChildren({
     },
     "/login": {
       "filePath": "login.tsx"
-    },
-    "/sample": {
-      "filePath": "sample.tsx"
     },
     "/servers": {
       "filePath": "servers.lazy.tsx"
