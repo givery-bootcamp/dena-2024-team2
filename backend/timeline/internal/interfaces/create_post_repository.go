@@ -5,5 +5,5 @@ import (
 )
 
 type CreatePostRepository interface {
-	Post(userID int, channelID int, content string) (*entities.Post, error)
+	Post(channelID int, userID int, userName string, content string) (*entities.Post, error)
 }
