@@ -4,4 +4,4 @@ plugins {
 rootProject.name = "myapp-user"
 include("repository")
 include("usecase")
-include("domain")
+include("entity")

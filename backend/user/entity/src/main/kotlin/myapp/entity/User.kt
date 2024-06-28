@@ -1,4 +1,4 @@
-package myapp
+package myapp.entity
 
 data class User(
     val id: Int,

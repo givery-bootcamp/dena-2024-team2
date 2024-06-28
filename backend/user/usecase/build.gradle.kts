@@ -16,7 +16,7 @@ repositories {
 dependencies {
     implementation(libs.bundles.koin)
     ksp(libs.koin.ksp)
-    api(project(":domain"))
+    api(project(":entity"))
     testImplementation(libs.test.kotlin)
     testImplementation(libs.bundles.kotest)
     testImplementation(libs.test.koin)
