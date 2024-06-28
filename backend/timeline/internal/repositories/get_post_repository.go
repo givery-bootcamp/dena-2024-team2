@@ -12,7 +12,6 @@ type GetPostsRepository struct {
 }
 
 type Post struct {
-	DeletedAt *time.Time
 	Id        int       `gorm:"column:id"`
 	ChannelId int       `gorm:"column:channel_id"`
 	UserId    int       `gorm:"column:user_id"`
@@ -50,7 +49,6 @@ func convertToEntities(posts []Post) entities.Posts {
 			Content:   v.Content,
 			CreatedAt: v.CreatedAt,
 			UpdatedAt: v.UpdatedAt,
-			DeletedAt: v.DeletedAt,
 		}
 	}
 	return entityPosts
