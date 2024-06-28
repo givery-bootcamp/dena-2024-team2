@@ -24,7 +24,12 @@ export const Posts = () => {
 				/>
 			</div>
 			<div className={styles.posts}>
-				<PostsPanel channelName={mock.channels[0].name} posts={mock.posts} />
+				<PostsPanel
+					channelName={
+						channels?.find((c) => c.id === Number(channelId))?.name ?? ""
+					}
+					posts={mock.posts}
+				/>
 			</div>
 			<div className={styles.form}>
 				<PostForm onChange={() => {}} onSubmit={() => {}} />

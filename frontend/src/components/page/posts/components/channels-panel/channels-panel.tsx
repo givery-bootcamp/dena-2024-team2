@@ -12,7 +12,7 @@ export const ChannelsPanel = ({ channels, currentChannelId }: Props) => {
 		<Card
 			header={
 				<Text as="h2" size="md" bold>
-					Channels
+					📺 Channels
 				</Text>
 			}
 			body={
