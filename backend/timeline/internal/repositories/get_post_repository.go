@@ -32,7 +32,9 @@ func (r *GetPostsRepository) Get(channelId int) (entities.Posts, error) {
 	if err := r.Conn.Table("posts").
 		Select("posts.id, posts.channel_id, posts.user_id, users.name, posts.content, posts.created_at, posts.updated_at").
 		Joins("join users on posts.user_id = users.id").
-		Where("channel_id = ?", channelId).Scan(&posts).Error; err != nil {
+		Where("channel_id = ?", channelId).
+		Order("posts.created_at ASC").
+		Scan(&posts).Error; err != nil {
 		return nil, err
 	}
 
