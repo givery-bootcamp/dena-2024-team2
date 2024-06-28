@@ -6,10 +6,10 @@ export const Posts = () => {
 	return (
 		<div className={styles.root}>
 			<div className={styles.channels}>
-				<ChannelsPanel channels={mock.channels} />
+				<ChannelsPanel channels={mock.channels} currentChannelId={1} />
 			</div>
 			<div className={styles.posts}>
-				<PostsPanel posts={mock.posts} />
+				<PostsPanel channelName={mock.channels[0].name} posts={mock.posts} />
 			</div>
 			<div className={styles.form}>
 				<PostForm onChange={() => {}} onSubmit={() => {}} />

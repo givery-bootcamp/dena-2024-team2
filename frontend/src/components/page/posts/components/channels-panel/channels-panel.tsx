@@ -4,9 +4,10 @@ import type { Channel } from "~/domains/channels";
 
 type Props = {
 	channels: Channel[];
+	currentChannelId: number;
 };
 
-export const ChannelsPanel = ({ channels }: Props) => {
+export const ChannelsPanel = ({ channels, currentChannelId }: Props) => {
 	return (
 		<Card
 			header={
@@ -14,7 +15,9 @@ export const ChannelsPanel = ({ channels }: Props) => {
 					Channels
 				</Text>
 			}
-			body={<ChannelList channels={channels} />}
+			body={
+				<ChannelList channels={channels} currentChannelId={currentChannelId} />
+			}
 		/>
 	);
 };
