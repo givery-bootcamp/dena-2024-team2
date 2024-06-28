@@ -16,7 +16,11 @@ type createPostRequestParams struct {
 
 func CreatePost(ctx *gin.Context) {
 	var post createPostRequestParams
-	channelId, err := strconv.Atoi(ctx.Param("id"))
+	serverId, err := strconv.Atoi(ctx.Param("serverId"))
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, err.Error())
+	}
+	channelId, err := strconv.Atoi(ctx.Param("channelId"))
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, err.Error())
 	}
@@ -26,9 +30,11 @@ func CreatePost(ctx *gin.Context) {
 		return
 	}
 
-	repository := repositories.NewCreatePostRepository(DB(ctx))
-	usecase := usecases.NewCreatePostUsecase(repository)
-	result, err := usecase.Execute(post.UserId, channelId, post.Content)
+	createPostRepository := repositories.NewCreatePostRepository(DB(ctx))
+	serverRepository := repositories.NewGetServerRepository(DB(ctx))
+	channelRepository := repositories.NewGetChannelRepository(DB(ctx))
+	usecase := usecases.NewCreatePostUsecase(createPostRepository, serverRepository, channelRepository)
+	result, err := usecase.Execute(post.UserId, serverId, channelId, post.Content)
 	if err != nil {
 		handleError(ctx, 500, err)
 		return

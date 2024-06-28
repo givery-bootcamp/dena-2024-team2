@@ -6,15 +6,28 @@ import (
 )
 
 type CreatePostUsecase struct {
-	repository interfaces.CreatePostRepository
+	createPostRepository interfaces.CreatePostRepository
+	serverRepository     interfaces.ServerRepository
+	channelRepository    interfaces.ChannelRepository
 }
 
-func NewCreatePostUsecase(r interfaces.CreatePostRepository) *CreatePostUsecase {
+func NewCreatePostUsecase(cpr interfaces.CreatePostRepository, sr interfaces.ServerRepository, cr interfaces.ChannelRepository) *CreatePostUsecase {
 	return &CreatePostUsecase{
-		repository: r,
+		createPostRepository: cpr,
+		serverRepository:     sr,
+		channelRepository:    cr,
 	}
 }
 
-func (u *CreatePostUsecase) Execute(userID int, channelID int, content string) (*entities.Post, error) {
-	return u.repository.Post(userID, channelID, content)
+func (u *CreatePostUsecase) Execute(userID int, serverID int, channelID int, content string) (*entities.Post, error) {
+	// 存在しているサーバーか確認する
+	if _, err := u.serverRepository.Get(serverID); err != nil {
+		return nil, err
+	}
+
+	if _, err := u.channelRepository.Get(channelID); err != nil {
+		return nil, err
+	}
+
+	return u.createPostRepository.Post(userID, channelID, content)
 }
