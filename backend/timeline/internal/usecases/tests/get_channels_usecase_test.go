@@ -12,7 +12,7 @@ type serverRepositoryMock struct {
 	FakeGet func(serverId int) (*entities.Server, error)
 }
 
-type getChannelsRepository struct {
+type getChannelsRepositoryMock struct {
 	interfaces.GetChannelsRepository
 	FakeGet func(serverId int) ([]entities.Channel, error)
 }
@@ -21,10 +21,9 @@ func (m *serverRepositoryMock) Get(serverId int) (*entities.Server, error) {
 	return m.FakeGet(serverId)
 }
 
-func (m *getChannelsRepository) Get(serverId int) ([]entities.Channel, error) {
+func (m *getChannelsRepositoryMock) Get(serverId int) ([]entities.Channel, error) {
 	return m.FakeGet(serverId)
 }
-
 func Test_GetChannelUsecase_1(t *testing.T) {
 	serverRepo := &serverRepositoryMock{
 		FakeGet: func(serverId int) (*entities.Server, error) {
@@ -33,7 +32,7 @@ func Test_GetChannelUsecase_1(t *testing.T) {
 		},
 	}
 
-	getChannelsRepo := &getChannelsRepository{
+	getChannelsRepo := &getChannelsRepositoryMock{
 		FakeGet: func(serverId int) ([]entities.Channel, error) {
 			get := []entities.Channel{
 				{Id: 1, ServerId: serverId, Name: "channel1"},
