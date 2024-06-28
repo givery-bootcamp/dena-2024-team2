@@ -1,11 +1,9 @@
 import { useMutation } from "@tanstack/react-query";
-import { useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { postPost } from "~/domains/posts";
 
 export const usePost = (serverId: number, channelId: number) => {
 	const [content, setContent] = useState("");
-	const navigate = useNavigate();
 
 	const { mutate, status } = useMutation({
 		mutationFn: postPost(serverId, channelId),
@@ -13,4 +11,18 @@ export const usePost = (serverId: number, channelId: number) => {
 			location.reload();
 		},
 	});
+
+	const handleChangeContent = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+		setContent(e.target.value);
+	};
+
+	const handleClickSubmit = () => {
+		mutate({ content });
+	};
+
+	return {
+		status,
+		handleChangeContent,
+		handleClickSubmit,
+	};
 };

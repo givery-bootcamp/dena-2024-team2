@@ -3,12 +3,18 @@ import { useParams } from "@tanstack/react-router";
 import { getChannels } from "~/domains/channels";
 import { getPosts } from "~/domains/posts";
 import { ChannelsPanel, PostForm, PostsPanel } from "./components";
+import { usePost } from "./hooks/use-post";
 import styles from "./posts.module.scss";
 
 export const Posts = () => {
 	const { serverId, channelId } = useParams({
 		strict: false,
 	});
+
+	const { status, handleChangeContent, handleClickSubmit } = usePost(
+		Number(serverId),
+		Number(channelId),
+	);
 
 	const { data: channels } = useQuery({
 		queryKey: ["channels"],
@@ -37,7 +43,11 @@ export const Posts = () => {
 				/>
 			</div>
 			<div className={styles.form}>
-				<PostForm onChange={() => {}} onSubmit={() => {}} />
+				<PostForm
+					onChange={handleChangeContent}
+					onSubmit={handleClickSubmit}
+					disableSubmit={status === "pending"}
+				/>
 			</div>
 		</div>
 	);

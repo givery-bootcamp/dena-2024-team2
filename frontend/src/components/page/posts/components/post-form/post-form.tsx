@@ -4,6 +4,7 @@ import styles from "./post-form.module.scss";
 type Props = {
 	onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
 	onSubmit: () => void;
+	disableSubmit?: boolean;
 };
 
 export const PostForm = ({ onChange, onSubmit }: Props) => {
