@@ -17,7 +17,7 @@ type Post struct {
 	UserId    int       `gorm:"column:user_id"`
 	UserName  string    `gorm:"column:name"`
 	Content   string    `gorm:"column:content"`
-	CreatedAt time.Time `gorm:"column:created_at "`
+	CreatedAt time.Time `gorm:"column:created_at"`
 	UpdatedAt time.Time `gorm:"column:updated_at"`
 }
 
