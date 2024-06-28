@@ -29,7 +29,7 @@ func NewCreatePostRepository(conn *gorm.DB) *CreatePostRepository {
 	}
 }
 
-func (r *CreatePostRepository) Post(userID int, channelID int, content string) (*entities.Post, error) {
+func (r *CreatePostRepository) Post(channelID int, userID int, userName string, content string) (*entities.Post, error) {
 	var post post
 	post.ChannelId = channelID
 	post.UserId = userID
@@ -39,14 +39,14 @@ func (r *CreatePostRepository) Post(userID int, channelID int, content string) (
 	if result.Error != nil {
 		return nil, result.Error
 	}
-	return convertCreatePostRepositoryModelToEntity(&post), nil
+	return convertCreatePostRepositoryModelToEntity(&post, userName), nil
 }
 
-func convertCreatePostRepositoryModelToEntity(v *post) *entities.Post {
+func convertCreatePostRepositoryModelToEntity(v *post, userName string) *entities.Post {
 	return &entities.Post{
 		Id:        v.Id,
 		ChannelId: v.ChannelId,
-		User:      entities.User{Id: v.UserId},
+		User:      entities.User{Id: v.UserId, Name: userName},
 		Content:   v.Content,
 		CreatedAt: v.CreatedAt,
 		UpdatedAt: v.UpdatedAt,

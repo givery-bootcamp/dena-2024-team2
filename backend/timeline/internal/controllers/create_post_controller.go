@@ -35,7 +35,7 @@ func CreatePost(ctx *gin.Context) {
 	serverRepository := repositories.NewGetServerRepository(DB(ctx))
 	channelRepository := repositories.NewGetChannelRepository(DB(ctx))
 	usecase := usecases.NewCreatePostUsecase(createPostRepository, serverRepository, channelRepository)
-	result, err := usecase.Execute(uid, serverId, channelId, post.Content)
+	result, err := usecase.Execute(serverId, channelId, userId, userName, post.Content)
 	if err != nil {
 		handleError(ctx, 500, err)
 		return
