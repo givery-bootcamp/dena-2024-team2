@@ -6,7 +6,7 @@ type GetChannelsResponse = {
 };
 
 export const getChannels = async () => {
-	const { channels } = (await apiClient
+	const { channels } = (await apiClient("timeline")
 		.get("channels")
 		.json()) as GetChannelsResponse;
 	return channels;
