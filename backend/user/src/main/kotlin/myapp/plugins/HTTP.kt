@@ -24,7 +24,7 @@ fun Application.configureHTTP() {
         allowHeader(HttpHeaders.AccessControlAllowHeaders)
         allowHeader(HttpHeaders.AccessControlAllowCredentials)
         // FIXME: 環境変数から取るようにしたほうがよさそう
-        allowHost("localhost:3000")
+        allowHost(System.getenv("FRONTEND_HOST") ?: "localhost:3000")
         allowCredentials = true
     }
 }
