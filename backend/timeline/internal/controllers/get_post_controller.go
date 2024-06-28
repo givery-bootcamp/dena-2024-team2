@@ -12,17 +12,13 @@ import (
 )
 
 func GetPosts(ctx *gin.Context) {
-	serverId, err := strconv.Atoi(ctx.Param("serverId"))
-	if err != nil {
-		ctx.JSON(http.StatusBadRequest, err.Error())
-	}
 	channelId, err := strconv.Atoi(ctx.Param("channelId"))
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, err.Error())
 	}
 
 	uc := usecases.NewGetChannelPostUsecase()
-	posts, err := uc.Execute(ctx, serverId, channelId)
+	posts, err := uc.Execute(ctx, channelId)
 	if err != nil {
 		if errors.Is(err, entities.ErrNotFound) {
 			handleError(ctx, 404, errors.New("channel not found"))
