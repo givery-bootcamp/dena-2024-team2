@@ -1,7 +1,7 @@
 package myapp.repository
 
 import kotlinx.coroutines.Dispatchers
-import myapp.usecase.UserRepository
+import myapp.usecase.interfaces.UserRepository
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.koin.dsl.bind

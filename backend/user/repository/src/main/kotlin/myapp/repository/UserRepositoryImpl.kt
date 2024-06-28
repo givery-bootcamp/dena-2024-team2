@@ -1,7 +1,7 @@
 package myapp.repository
 
 import myapp.User
-import myapp.usecase.UserRepository
+import myapp.usecase.interfaces.UserRepository
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 

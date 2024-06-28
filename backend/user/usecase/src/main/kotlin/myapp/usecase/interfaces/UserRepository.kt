@@ -1,4 +1,4 @@
-package myapp.usecase
+package myapp.usecase.interfaces
 
 import myapp.User
 
