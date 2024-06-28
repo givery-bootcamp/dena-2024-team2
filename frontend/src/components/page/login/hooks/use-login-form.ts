@@ -1,16 +1,18 @@
 import { useMutation } from "@tanstack/react-query";
+import { useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { postSignin } from "~/domains/auth";
 
 export const useLoginForm = () => {
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
+	const navigate = useNavigate();
 
 	const { mutate, status } = useMutation({
 		mutationFn: postSignin,
 		onSuccess(data) {
-			// FIXME: cookieに入るようになったら削除
-			localStorage.setItem("TMP_TOKEN", data.accessToken);
+			localStorage.setItem("user", JSON.stringify(data));
+			navigate({ to: "/servers" });
 		},
 	});
 
