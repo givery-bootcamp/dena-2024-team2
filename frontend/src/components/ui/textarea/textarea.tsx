@@ -6,6 +6,7 @@ type Props = {
 	value?: string;
 	placeholder?: string;
 	onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+	onKeyDown?: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void;
 };
 
 export const Textarea = ({
@@ -14,6 +15,7 @@ export const Textarea = ({
 	value,
 	placeholder,
 	onChange,
+	onKeyDown,
 }: Props) => {
 	const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		onChange?.(e);
@@ -25,6 +27,7 @@ export const Textarea = ({
 			defaultValue={defaultValue}
 			value={value}
 			onChange={handleChange}
+			onKeyDown={onKeyDown}
 			placeholder={placeholder}
 		/>
 	);
