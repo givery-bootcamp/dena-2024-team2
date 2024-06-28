@@ -67,6 +67,7 @@ fun Application.configureRouting() {
                             secure = true,
                             httpOnly = true,
                             extensions = mapOf("same-site" to "none"),
+                            path = "/",
                         )
                         call.respond(UserPublic(user.id, user.name))
                     }

@@ -12,7 +12,9 @@ type Props = {
 export const ServerList = ({ servers, onClickPlus }: Props) => {
 	// NOTE: ここにこの関数作るのちょっと違和感あるけど一旦このままで
 	// サーバーへのリンクを生成する
-	const urlToServer = (server: Server) => joinPaths(["/server", server.id]);
+	const urlToServer = (server: Server) =>
+		// NOTE: ホントは最後に開いてたチャンネルに飛ぶべきだけどちょっとめんどくさいので0にしてる
+		joinPaths(["/servers", server.id, "channels", "0"]);
 
 	const handleClickPlus = () => {
 		onClickPlus?.();

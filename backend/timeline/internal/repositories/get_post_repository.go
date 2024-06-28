@@ -12,14 +12,13 @@ type GetPostsRepository struct {
 }
 
 type Post struct {
-	Id        int
-	ChannelId int
-	UserId    int
-	UserName  string
-	Content   string
-	CreatedAt time.Time
-	UpdatedAt time.Time
-	DeletedAt *time.Time
+	Id        int       `gorm:"column:id"`
+	ChannelId int       `gorm:"column:channel_id"`
+	UserId    int       `gorm:"column:user_id"`
+	UserName  string    `gorm:"column:name"`
+	Content   string    `gorm:"column:content"`
+	CreatedAt time.Time `gorm:"column:created_at"`
+	UpdatedAt time.Time `gorm:"column:updated_at"`
 }
 
 func NewGetPostRepository(conn *gorm.DB) *GetPostsRepository {
@@ -33,7 +32,9 @@ func (r *GetPostsRepository) Get(channelId int) (entities.Posts, error) {
 	if err := r.Conn.Table("posts").
 		Select("posts.id, posts.channel_id, posts.user_id, users.name, posts.content, posts.created_at, posts.updated_at").
 		Joins("join users on posts.user_id = users.id").
-		Where("channel_id = ?", channelId).Scan(&posts).Error; err != nil {
+		Where("channel_id = ?", channelId).
+		Order("posts.created_at ASC").
+		Scan(&posts).Error; err != nil {
 		return nil, err
 	}
 
@@ -50,7 +51,6 @@ func convertToEntities(posts []Post) entities.Posts {
 			Content:   v.Content,
 			CreatedAt: v.CreatedAt,
 			UpdatedAt: v.UpdatedAt,
-			DeletedAt: v.DeletedAt,
 		}
 	}
 	return entityPosts

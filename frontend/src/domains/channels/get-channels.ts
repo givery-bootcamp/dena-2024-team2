@@ -5,9 +5,12 @@ type GetChannelsResponse = {
 	channels: Channel[];
 };
 
-export const getChannels = async () => {
-	const { channels } = (await apiClient
-		.get("channels")
+export const getChannels = (serverId?: number) => async () => {
+	if (!serverId) {
+		return [];
+	}
+	const { channels } = (await apiClient("timeline")
+		.get(`servers/${serverId}/channels`)
 		.json()) as GetChannelsResponse;
 	return channels;
 };
