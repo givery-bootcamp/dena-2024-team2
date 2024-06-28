@@ -23,6 +23,8 @@ fun Application.configureHTTP() {
         allowHeader(HttpHeaders.ContentType)
         allowHeader(HttpHeaders.AccessControlAllowHeaders)
         allowHeader(HttpHeaders.AccessControlAllowCredentials)
-        anyHost()
+        // FIXME: 環境変数から取るようにしたほうがよさそう
+        allowHost("localhost:3000")
+        allowCredentials = true
     }
 }
