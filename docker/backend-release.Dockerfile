@@ -7,11 +7,9 @@ COPY ./backend/timeline/ ./
 RUN go mod download
 RUN go build -o /myapp
 
-FROM gcr.io/distroless/base-debian12:nonroot-amd64
+FROM gcr.io/distroless/base-debian12:latest-amd64
 WORKDIR /app
 COPY --from=build /myapp /myapp
 EXPOSE 9000
-
-USER nonroot:nonroot
 
 ENTRYPOINT ["/myapp"]

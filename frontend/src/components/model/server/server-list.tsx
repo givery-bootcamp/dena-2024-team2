@@ -1,6 +1,6 @@
 import { joinPaths } from "@tanstack/react-router";
 import { IconButton, IconImage, Text } from "~/components/ui";
-import type { Server } from "~/domains/servers/server";
+import type { Server } from "~/domains/servers";
 import styles from "./server-list.module.scss";
 
 type Props = {
