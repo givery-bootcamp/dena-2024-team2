@@ -19,20 +19,16 @@ Default.args = {
 		{
 			id: 1,
 			channelId: 1,
-			user: {
-				id: 1,
-				name: "John Doe",
-			},
+			userId: 1,
+			userName: "John Doe",
 			content: "This is a post",
 			createdAt: "2024-06-26T17:31:15+09:00",
 		},
 		{
 			id: 2,
 			channelId: 1,
-			user: {
-				id: 2,
-				name: "Jane Doe",
-			},
+			userId: 2,
+			userName: "Jane Doe",
 			content: "This is another post",
 			createdAt: "2024-06-26T17:31:15+09:00",
 		},
