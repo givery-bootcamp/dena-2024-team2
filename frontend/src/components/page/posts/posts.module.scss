@@ -1,0 +1,23 @@
+.root {
+  display: grid;
+  grid-template-areas:
+    "a b b b"
+    "a c c c";
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  padding: 1rem 0;
+}
+
+.channels {
+  grid-area: a;
+}
+
+.posts {
+  grid-area: b;
+  // NOTE: 画面全体の高さから、ヘッダー、投稿フォーム、各種paddingを引いた高さ
+  height: calc(100lvh - 3.25rem - 0.5rem - 1rem - 2.5rem - 10rem);
+}
+
+.form {
+  grid-area: c;
+}

@@ -24,3 +24,7 @@ func handleError(ctx *gin.Context, status int, err error) {
 func getUserIdFromContext(ctx *gin.Context) int {
 	return ctx.MustGet("uid").(int)
 }
+
+func getUserNameFromContext(ctx *gin.Context) string {
+	return ctx.MustGet("userName").(string)
+}

@@ -6,3 +6,4 @@ backend/myapp
 .vscode/
 .metals
 .idea/
+.env

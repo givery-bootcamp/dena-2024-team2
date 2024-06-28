@@ -19,7 +19,7 @@ func NewCreatePostUsecase(cpr interfaces.CreatePostRepository, sr interfaces.Ser
 	}
 }
 
-func (u *CreatePostUsecase) Execute(userID int, serverID int, channelID int, content string) (*entities.Post, error) {
+func (u *CreatePostUsecase) Execute(serverID int, channelID int, userID int, userName string, content string) (*entities.Post, error) {
 	// 存在しているサーバーか確認する
 	if _, err := u.serverRepository.Get(serverID); err != nil {
 		return nil, err
@@ -29,5 +29,5 @@ func (u *CreatePostUsecase) Execute(userID int, serverID int, channelID int, con
 		return nil, err
 	}
 
-	return u.createPostRepository.Post(userID, channelID, content)
+	return u.createPostRepository.Post(channelID, userID, userName, content)
 }

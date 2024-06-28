@@ -19,8 +19,8 @@ func (uc *GetChannelPostUsecase) Execute(ctx *gin.Context, channelId int) (entit
 	if _, err := channelRepo.Get(channelId); err != nil {
 		return nil, err
 	}
-	postRepo := repositories.NewGetPostRepository(DB(ctx))
 
+	postRepo := repositories.NewGetPostRepository(DB(ctx))
 	posts, err := postRepo.Get(channelId)
 	if err != nil {
 		return nil, err

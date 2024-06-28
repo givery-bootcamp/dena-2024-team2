@@ -19,7 +19,7 @@ func SetupRoutes(app *gin.Engine) {
 		authorized.GET("/servers", controllers.GetServers)
 		authorized.GET("/servers/:serverId/channels", controllers.GetChannels)
 		authorized.POST("/servers/:serverId/channels", controllers.CreateChannels)
-		authorized.GET("/channels/:id/posts", controllers.GetPosts)
+		authorized.GET("/channels/:channelId/posts", controllers.GetPosts)
 		authorized.POST("/servers/:serverId/channels/:channelId/posts", controllers.CreatePost)
 		authorized.POST("/servers", controllers.CreateServer)
 	}

@@ -13,6 +13,7 @@ import (
 
 type CustomClaims struct {
 	jwt.RegisteredClaims
+	UserName string
 }
 
 func GenerateToken(userId uint) (string, error) {
@@ -26,6 +27,7 @@ func GenerateToken(userId uint) (string, error) {
 			ID:        uuid.New().String(),
 			Audience:  []string{},
 		},
+		"",
 	}
 	unsignedToken := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	signedToken, err := unsignedToken.SignedString([]byte(config.JWTSecret))
@@ -37,7 +39,7 @@ func GenerateToken(userId uint) (string, error) {
 	return signedToken, nil
 }
 
-func VerifyToken(token string) (int, error) {
+func VerifyToken(token string) (int, string, error) {
 	parsedToken, err := jwt.ParseWithClaims(token, &CustomClaims{}, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
@@ -47,17 +49,19 @@ func VerifyToken(token string) (int, error) {
 	})
 
 	if err != nil {
-		return 0, err
+		return 0, "", err
 	}
 
 	if claims, ok := parsedToken.Claims.(*CustomClaims); ok {
 		uid, err := strconv.Atoi(claims.Subject)
+		userName := claims.UserName
 		if err != nil {
-			return 0, err
+			return 0, "", err
 		}
-		return uid, nil
+
+		return uid, userName, nil
 	} else {
 		log.Fatal("unknown claims type, cannot proceed")
-		return 0, fmt.Errorf("failed to convert token to customClaims")
+		return 0, "", fmt.Errorf("failed to convert token to customClaims")
 	}
 }

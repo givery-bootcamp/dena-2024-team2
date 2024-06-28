@@ -18,13 +18,18 @@ import { Route as LoginImport } from './routes/login'
 
 // Create Virtual Routes
 
+const ServersLazyImport = createFileRoute('/servers')()
 const IndexLazyImport = createFileRoute('/')()
-const SpacesSpaceIdLazyImport = createFileRoute('/spaces/$spaceId')()
-const ServerServerIdChannelsChannelIdLazyImport = createFileRoute(
-  '/server/$serverId/channels/$channelId',
+const ServersServerIdChannelsChannelIdLazyImport = createFileRoute(
+  '/servers/$serverId/channels/$channelId',
 )()
 
 // Create/Update Routes
+
+const ServersLazyRoute = ServersLazyImport.update({
+  path: '/servers',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/servers.lazy').then((d) => d.Route))
 
 const SampleRoute = SampleImport.update({
   path: '/sample',
@@ -41,19 +46,12 @@ const IndexLazyRoute = IndexLazyImport.update({
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
 
-const SpacesSpaceIdLazyRoute = SpacesSpaceIdLazyImport.update({
-  path: '/spaces/$spaceId',
-  getParentRoute: () => rootRoute,
-} as any).lazy(() =>
-  import('./routes/spaces.$spaceId.lazy').then((d) => d.Route),
-)
-
-const ServerServerIdChannelsChannelIdLazyRoute =
-  ServerServerIdChannelsChannelIdLazyImport.update({
-    path: '/server/$serverId/channels/$channelId',
-    getParentRoute: () => rootRoute,
+const ServersServerIdChannelsChannelIdLazyRoute =
+  ServersServerIdChannelsChannelIdLazyImport.update({
+    path: '/$serverId/channels/$channelId',
+    getParentRoute: () => ServersLazyRoute,
   } as any).lazy(() =>
-    import('./routes/server.$serverId_.channels.$channelId.lazy').then(
+    import('./routes/servers.$serverId.channels.$channelId.lazy').then(
       (d) => d.Route,
     ),
   )
@@ -83,19 +81,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SampleImport
       parentRoute: typeof rootRoute
     }
-    '/spaces/$spaceId': {
-      id: '/spaces/$spaceId'
-      path: '/spaces/$spaceId'
-      fullPath: '/spaces/$spaceId'
-      preLoaderRoute: typeof SpacesSpaceIdLazyImport
+    '/servers': {
+      id: '/servers'
+      path: '/servers'
+      fullPath: '/servers'
+      preLoaderRoute: typeof ServersLazyImport
       parentRoute: typeof rootRoute
     }
-    '/server/$serverId/channels/$channelId': {
-      id: '/server/$serverId/channels/$channelId'
-      path: '/server/$serverId/channels/$channelId'
-      fullPath: '/server/$serverId/channels/$channelId'
-      preLoaderRoute: typeof ServerServerIdChannelsChannelIdLazyImport
-      parentRoute: typeof rootRoute
+    '/servers/$serverId/channels/$channelId': {
+      id: '/servers/$serverId/channels/$channelId'
+      path: '/$serverId/channels/$channelId'
+      fullPath: '/servers/$serverId/channels/$channelId'
+      preLoaderRoute: typeof ServersServerIdChannelsChannelIdLazyImport
+      parentRoute: typeof ServersLazyImport
     }
   }
 }
@@ -106,8 +104,9 @@ export const routeTree = rootRoute.addChildren({
   IndexLazyRoute,
   LoginRoute,
   SampleRoute,
-  SpacesSpaceIdLazyRoute,
-  ServerServerIdChannelsChannelIdLazyRoute,
+  ServersLazyRoute: ServersLazyRoute.addChildren({
+    ServersServerIdChannelsChannelIdLazyRoute,
+  }),
 })
 
 /* prettier-ignore-end */
@@ -121,8 +120,7 @@ export const routeTree = rootRoute.addChildren({
         "/",
         "/login",
         "/sample",
-        "/spaces/$spaceId",
-        "/server/$serverId/channels/$channelId"
+        "/servers"
       ]
     },
     "/": {
@@ -134,11 +132,15 @@ export const routeTree = rootRoute.addChildren({
     "/sample": {
       "filePath": "sample.tsx"
     },
-    "/spaces/$spaceId": {
-      "filePath": "spaces.$spaceId.lazy.tsx"
+    "/servers": {
+      "filePath": "servers.lazy.tsx",
+      "children": [
+        "/servers/$serverId/channels/$channelId"
+      ]
     },
-    "/server/$serverId/channels/$channelId": {
-      "filePath": "server.$serverId_.channels.$channelId.lazy.tsx"
+    "/servers/$serverId/channels/$channelId": {
+      "filePath": "servers.$serverId.channels.$channelId.lazy.tsx",
+      "parent": "/servers"
     }
   }
 }

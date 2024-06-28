@@ -7,12 +7,13 @@ type SigninRequest = {
 
 // FIXME: ここの型は今後変更になる
 type SigninResponse = {
-	accessToken: string;
+	id: number;
+	name: string;
 };
 
 export const postSignin = async (data: SigninRequest) => {
-	const token = (await apiClient
-		.post("signin", {
+	const token = (await apiClient("user")
+		.post("user/signin", {
 			json: data,
 		})
 		.json()) as SigninResponse;
