@@ -4,14 +4,24 @@ import (
 	"errors"
 	"myapp/internal/entities"
 	"myapp/internal/repositories"
+	"myapp/internal/usecases"
+	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/gin-gonic/gin"
 )
 
 func GetChannels(ctx *gin.Context) {
-	repository := repositories.NewChannelsRepository(DB(ctx))
-	channels, err := repository.Get()
+	serverId, err := strconv.Atoi(ctx.Param("serverId"))
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, err.Error())
+	}
+
+	serverRepository := repositories.NewGetServerRepository(DB(ctx))
+	getChannelsRepository := repositories.NewGetChannelsRepository(DB(ctx))
+	usecase := usecases.NewGetChannelsUsecase(serverRepository, getChannelsRepository)
+	channels, err := usecase.Execute(serverId)
 	if err != nil {
 		handleError(ctx, 500, err)
 	} else if channels != nil {
@@ -41,8 +51,8 @@ type ChannelsResponseJson struct {
 
 type ChannelJson struct {
 	Id        int       `json:"id"`
-	ServerId  int       `json:"serverId"`
+	ServerId  int       `json:"server_id"`
 	Name      string    `json:"name"`
-	CreatedAt time.Time `json:"createdAt"`
-	UpdatedAt time.Time `json:"updatedAt"`
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
 }

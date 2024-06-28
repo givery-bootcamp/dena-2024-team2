@@ -1,0 +1,24 @@
+.root {
+  padding: 0.5rem 1rem;
+
+  &:hover {
+    background-color: var(--c-gray-50);
+  }
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.header__name {
+  color: var(--c-red-500);
+}
+
+.header__time {
+}
+
+.body {
+}
