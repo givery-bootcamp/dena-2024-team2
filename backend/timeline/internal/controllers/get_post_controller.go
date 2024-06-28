@@ -41,6 +41,7 @@ func convertToJson(posts entities.Posts) ResponseJson {
 			Content:   v.Content,
 			CreatedAt: v.CreatedAt,
 			UpdatedAt: v.UpdatedAt,
+			DeletedAt: v.DeletedAt,
 		}
 	}
 	return ResponseJson{Posts: jsonPosts}
@@ -51,11 +52,12 @@ type ResponseJson struct {
 }
 
 type ChannnelPostJson struct {
-	Id        int       `json:"id"`
-	ChannelId int       `json:"channel_id"`
-	UserId    int       `json:"user_id"`
-	UserName  string    `json:"user_name"`
-	Content   string    `json:"content"`
-	CreatedAt time.Time `json:"created_at"`
-	UpdatedAt time.Time `json:"updated_at"`
+	Id        int        `json:"id"`
+	ChannelId int        `json:"channel_id"`
+	UserId    int        `json:"user_id"`
+	UserName  string     `json:"user_name"`
+	Content   string     `json:"content"`
+	CreatedAt time.Time  `json:"created_at"`
+	UpdatedAt time.Time  `json:"updated_at"`
+	DeletedAt *time.Time `json:"deleted_at"`
 }
