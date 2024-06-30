@@ -5,9 +5,18 @@ import type { Channel } from "~/domains/channels";
 type Props = {
 	channels: Channel[];
 	currentChannelId: number;
+	onClickPlus?: () => void;
 };
 
-export const ChannelsPanel = ({ channels, currentChannelId }: Props) => {
+export const ChannelsPanel = ({
+	channels,
+	currentChannelId,
+	onClickPlus,
+}: Props) => {
+	const handleClickPlus = () => {
+		onClickPlus?.();
+	};
+
 	return (
 		<Card
 			header={
@@ -16,7 +25,11 @@ export const ChannelsPanel = ({ channels, currentChannelId }: Props) => {
 				</Text>
 			}
 			body={
-				<ChannelList channels={channels} currentChannelId={currentChannelId} />
+				<ChannelList
+					channels={channels}
+					currentChannelId={currentChannelId}
+					onClickPlus={handleClickPlus}
+				/>
 			}
 		/>
 	);
