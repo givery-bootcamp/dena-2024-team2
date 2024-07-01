@@ -19,6 +19,7 @@ export const ServerList = ({ servers, onClickPlus }: Props) => {
 	const handleClickPlus = () => {
 		onClickPlus?.();
 	};
+
 	return (
 		<ul className={styles.root}>
 			{servers.map((server) => (
