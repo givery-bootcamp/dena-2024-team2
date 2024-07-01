@@ -71,6 +71,7 @@ fun Application.configureRouting() {
                             genJwt(user),
                             secure = true,
                             httpOnly = true,
+                            domain = "member0005.track-bootcamp.run",
                             extensions = mapOf("same-site" to "none"),
                         )
                         call.respond(UserPublic(user.id, user.name))
