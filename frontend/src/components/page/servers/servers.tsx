@@ -1,7 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 import { ServerList } from "~/components/model/server";
 import { Card, Text } from "~/components/ui";
 import { getServers } from "~/domains/servers";
+import { NewServerDialog } from "./components";
+import { useServer } from "./hooks";
 import styles from "./servers.module.scss";
 
 export const ServersPage = () => {
@@ -9,6 +12,17 @@ export const ServersPage = () => {
 		queryKey: ["servers"],
 		queryFn: getServers,
 	});
+
+	const [open, setOpen] = useState(false);
+
+	const handleClickPlus = () => {
+		setOpen(true);
+	};
+	const handleClose = () => {
+		setOpen(false);
+	};
+
+	const { handleChangeName, handleCreateSever } = useServer();
 
 	return (
 		<div className={styles.root}>
@@ -19,9 +33,17 @@ export const ServersPage = () => {
 							🪐 Servers
 						</Text>
 					}
-					body={<ServerList servers={servers ?? []} />}
+					body={
+						<ServerList servers={servers ?? []} onClickPlus={handleClickPlus} />
+					}
 				/>
 			</div>
+			<NewServerDialog
+				open={open}
+				onClose={handleClose}
+				onSubmit={handleCreateSever}
+				onChangeName={handleChangeName}
+			/>
 		</div>
 	);
 };
