@@ -30,7 +30,7 @@ func NewGetPostRepository(conn *gorm.DB) *GetPostsRepository {
 func (r *GetPostsRepository) Get(channelId int) (entities.Posts, error) {
 	posts := []Post{}
 	if err := r.Conn.Table("posts").
-		Select("posts.id, posts.channel_id, posts.user_id, users.name, posts.content, posts.created_at, posts.updated_at").
+		Select("posts.id, posts.channel_id, posts.user_id, users.name, posts.content, posts.created_at, posts.updated_at, posts.deleted_at").
 		Joins("join users on posts.user_id = users.id").
 		Where("channel_id = ?", channelId).
 		Order("posts.created_at ASC").
