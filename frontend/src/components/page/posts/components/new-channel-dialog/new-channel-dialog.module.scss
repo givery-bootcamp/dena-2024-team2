@@ -20,6 +20,8 @@
   height: fit-content;
   max-height: 30rem;
   z-index: 100;
+  background: white;
+  border-radius: var(--radius-md);
 }
 
 .dialog__header {
