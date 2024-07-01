@@ -7,6 +7,7 @@ type Props = {
 	onClose: () => void;
 	onSubmit: () => void;
 	onChangeName: (e: React.ChangeEvent<HTMLInputElement>) => void;
+	onChangeIcon: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 export const NewServerDialog = ({
@@ -14,12 +15,16 @@ export const NewServerDialog = ({
 	onClose,
 	onSubmit,
 	onChangeName,
+	onChangeIcon,
 }: Props) => {
 	const handleClick = () => {
 		onSubmit();
 	};
 	const handleChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
 		onChangeName(e);
+	};
+	const handleChangeIcon = (e: React.ChangeEvent<HTMLInputElement>) => {
+		onChangeIcon(e);
 	};
 	const handleClose = () => {
 		onClose();
@@ -39,12 +44,20 @@ export const NewServerDialog = ({
 								}
 								body={
 									<form>
-										<Input
-											type="text"
-											onChange={handleChangeName}
-											placeholder="Server Name"
-											required
-										/>
+										<div className={styles.inputs}>
+											<Input
+												type="text"
+												onChange={handleChangeName}
+												placeholder="Icon URL"
+												required
+											/>
+											<Input
+												type="text"
+												onChange={handleChangeIcon}
+												placeholder="Server Name"
+												required
+											/>
+										</div>
 										<div className={styles.actions}>
 											<Button
 												type="submit"

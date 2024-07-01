@@ -22,7 +22,7 @@ export const ServersPage = () => {
 		setOpen(false);
 	};
 
-	const { handleChangeName, handleCreateSever } = useServer();
+	const { handleChangeName, handleChangeIcon, handleCreateSever } = useServer();
 
 	return (
 		<div className={styles.root}>
@@ -43,6 +43,7 @@ export const ServersPage = () => {
 				onClose={handleClose}
 				onSubmit={handleCreateSever}
 				onChangeName={handleChangeName}
+				onChangeIcon={handleChangeIcon}
 			/>
 		</div>
 	);

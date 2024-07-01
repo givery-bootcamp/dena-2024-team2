@@ -4,6 +4,7 @@ import { postServer } from "~/domains/servers";
 
 export const useServer = () => {
 	const [name, setName] = useState("");
+	const [icon, setIcon] = useState("");
 
 	const { mutate, status } = useMutation({
 		mutationFn: postServer,
@@ -15,14 +16,18 @@ export const useServer = () => {
 	const handleChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setName(e.target.value);
 	};
+	const handleChangeIcon = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setIcon(e.target.value);
+	};
 
 	const handleCreateSever = () => {
-		mutate({ name });
+		mutate({ name, icon });
 	};
 
 	return {
 		status,
 		handleChangeName,
+		handleChangeIcon,
 		handleCreateSever,
 	};
 };
