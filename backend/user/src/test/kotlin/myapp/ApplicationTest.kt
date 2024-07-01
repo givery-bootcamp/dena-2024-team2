@@ -1,21 +1,21 @@
 package myapp
 
-import io.ktor.client.request.*
-import io.ktor.client.statement.*
-import io.ktor.http.*
-import io.ktor.server.testing.*
-import myapp.plugins.*
-import kotlin.test.*
+import io.kotest.core.spec.style.FunSpec
+import io.kotest.matchers.shouldBe
+import io.ktor.client.request.get
+import io.ktor.client.statement.bodyAsText
+import io.ktor.http.HttpStatusCode
+import io.ktor.server.testing.testApplication
+import myapp.plugins.configureRouting
 
-class ApplicationTest {
-    @Test
-    fun testRoot() = testApplication {
-        application {
-            configureRouting()
-        }
-        client.get("/").apply {
-            assertEquals(HttpStatusCode.OK, status)
-            assertEquals("Hello World!", bodyAsText())
+class ApplicationTest : FunSpec({
+    test("GET / should return text") {
+        testApplication {
+            application { configureRouting() }
+            client.get("/").apply {
+                status shouldBe HttpStatusCode.OK
+                bodyAsText() shouldBe "Hello World!"
+            }
         }
     }
-}
+})

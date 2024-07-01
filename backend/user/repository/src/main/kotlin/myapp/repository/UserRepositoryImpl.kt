@@ -1,21 +1,11 @@
-package myapp.repositories
+package myapp.repository
 
-import myapp.model.User
+import myapp.entity.User
+import myapp.usecase.interfaces.UserRepository
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
-import org.koin.core.annotation.Single
 
-interface UserRepository {
-    suspend fun createUser(name: String, password: String): User
-
-    suspend fun findById(id: Int): User?
-
-    suspend fun findByName(name: String): User?
-}
-
-@Single
-@Suppress("unused")
-class UserRepositoryImpl(
+internal class UserRepositoryImpl(
     private val db: Database,
 ) : UserRepository {
     init {
@@ -26,12 +16,13 @@ class UserRepositoryImpl(
 
     @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
     override suspend fun createUser(userName: String, userPassword: String): User {
-        val newUser = db.query {
-            UserTable.insert {
-                it[name] = userName
-                it[password] = userPassword
+        val newUser =
+            db.query {
+                UserTable.insert {
+                    it[name] = userName
+                    it[password] = userPassword
+                }
             }
-        }
         return User(
             id = newUser[UserTable.id],
             name = newUser[UserTable.name],
@@ -52,12 +43,4 @@ class UserRepositoryImpl(
         name = it[UserTable.name],
         password = it[UserTable.password],
     )
-}
-
-private object UserTable : Table("users") {
-    val id = integer("id").autoIncrement()
-    val name = varchar("name", 32).uniqueIndex()
-    val password = char("password", 60)
-
-    override val primaryKey: PrimaryKey = PrimaryKey(id)
 }

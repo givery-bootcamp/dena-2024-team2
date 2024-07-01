@@ -1,8 +1,8 @@
 package myapp.usecase
 
 import at.favre.lib.crypto.bcrypt.BCrypt
-import myapp.model.User
-import myapp.repositories.UserRepository
+import myapp.entity.User
+import myapp.usecase.interfaces.UserRepository
 import org.koin.core.annotation.Single
 
 interface NewUserUsecase {
@@ -10,7 +10,7 @@ interface NewUserUsecase {
 }
 
 @Single
-class NewUserUsecaseImpl(
+internal class NewUserUsecaseImpl(
     private val userRepository: UserRepository,
 ) : NewUserUsecase {
     private val hasher = BCrypt.withDefaults()

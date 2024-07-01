@@ -1,8 +1,16 @@
-package myapp.repositories
+package myapp.repository
 
 import kotlinx.coroutines.Dispatchers
+import myapp.usecase.interfaces.UserRepository
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
+import org.koin.dsl.bind
+import org.koin.dsl.module
+
+val repositoryModule = module {
+    single { databaseConfig() }
+    single { UserRepositoryImpl(get()) }.bind(UserRepository::class)
+}
 
 fun databaseConfig(
     dbUrl: String = System.getenv("DB_URL") ?: "jdbc:mysql://localhost:3306/training",
@@ -15,4 +23,4 @@ fun databaseConfig(
     driver = "com.mysql.cj.jdbc.Driver",
 )
 
-suspend fun <T> Database.query(block: suspend () -> T): T = newSuspendedTransaction(Dispatchers.IO, this) { block() }
+internal suspend fun <T> Database.query(block: suspend () -> T): T = newSuspendedTransaction(Dispatchers.IO, this) { block() }

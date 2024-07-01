@@ -1,0 +1,64 @@
+[versions]
+kotlin = "2.0.0"
+ktor = "2.3.12"
+exposed = "0.41.1"
+koin = "3.5.6"
+koin-annotation = "1.3.1"
+kotest = "5.9.1"
+
+[libraries]
+ktor-core = { module = "io.ktor:ktor-server-core-jvm" }
+ktor-auth = { module = "io.ktor:ktor-server-auth-jvm" }
+ktor-jwt = { module = "io.ktor:ktor-server-auth-jwt-jvm" }
+ktor-auto-head = { module = "io.ktor:ktor-server-auto-head-response-jvm" }
+ktor-host = { module = "io.ktor:ktor-server-host-common-jvm" }
+ktor-status = { module = "io.ktor:ktor-server-status-pages-jvm" }
+ktor-compress = { module = "io.ktor:ktor-server-compression-jvm" }
+ktor-cors = { module = "io.ktor:ktor-server-cors-jvm" }
+ktor-logging = { module = "io.ktor:ktor-server-call-logging-jvm" }
+ktor-content = { module = "io.ktor:ktor-server-content-negotiation-jvm" }
+ktor-jackson = { module = "io.ktor:ktor-serialization-jackson" }
+ktor-netty = { module = "io.ktor:ktor-server-netty-jvm" }
+exposed-core = { module = "org.jetbrains.exposed:exposed-core", version.ref = "exposed" }
+exposed-jdbc = { module = "org.jetbrains.exposed:exposed-jdbc", version.ref = "exposed" }
+exposed-datetime = { module = "org.jetbrains.exposed:exposed-kotlin-datetime", version.ref = "exposed" }
+mysql-jdbc = { module = "com.mysql:mysql-connector-j", version = "8.4.0" }
+logback = { module = "ch.qos.logback:logback-classic", version = "1.4.14"}
+koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
+koin-ktor = { module = "io.insert-koin:koin-ktor", version.ref = "koin" }
+koin-logger = { module = "io.insert-koin:koin-logger-slf4j", version.ref = "koin" }
+koin-annotation = { module = "io.insert-koin:koin-annotations", version.ref = "koin-annotation" }
+koin-ksp = { module = "io.insert-koin:koin-ksp-compiler", version.ref = "koin-annotation" }
+bcrypt = { module = "at.favre.lib:bcrypt", version = "0.10.2" }
+arrow = { module = "io.arrow-kt:arrow-core", version = "1.2.4"}
+
+### Test Libraries
+test-ktor = { module = "io.ktor:ktor-server-tests-jvm" }
+test-kotlin = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin"}
+test-koin = { module = "io.insert-koin:koin-test", version.ref = "koin" }
+kotest-runner = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest"}
+kotest-assertion = { module = "io.kotest:kotest-assertions-core", version.ref = "kotest"}
+kotest-property = { module = "io.kotest:kotest-property", version.ref = "kotest"}
+
+[plugins]
+kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref= "kotlin" }
+ktor = { id = "io.ktor.plugin", version.ref = "ktor"}
+ksp = { id = "com.google.devtools.ksp", version = "2.0.0-1.0.22" }
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version = "12.1.1" }
+jib = { id = "com.google.cloud.tools.jib", version = "3.4.3" }
+
+[bundles]
+ktor = [
+    "ktor-core", "ktor-auth", "ktor-auto-head", "ktor-compress",
+    "ktor-content", "ktor-cors", "ktor-host", "ktor-jackson",
+    "ktor-jwt", "ktor-logging", "ktor-status", "ktor-netty",
+]
+exposed = [
+    "exposed-core", "exposed-datetime", "exposed-jdbc", "mysql-jdbc"
+]
+koin = [
+    "koin-core", "koin-annotation", "koin-logger"
+]
+kotest = [
+    "kotest-assertion", "kotest-property", "kotest-runner"
+]
