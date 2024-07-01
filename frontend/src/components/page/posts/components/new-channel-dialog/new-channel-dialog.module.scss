@@ -1,0 +1,40 @@
+.root {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+  background-color: rgba($color: #000000, $alpha: 0.7);
+}
+
+.dialog {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  padding: 0;
+  width: 20rem;
+  height: fit-content;
+  max-height: 30rem;
+  z-index: 100;
+  background: white;
+  border-radius: var(--radius-md);
+}
+
+.dialog__header {
+  background: white;
+}
+
+.dialog__body {
+  background: white;
+}
+
+.actions {
+  display: flex;
+  justify-content: end;
+  gap: 1rem;
+  margin-top: 1rem;
+}

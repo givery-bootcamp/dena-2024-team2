@@ -1,9 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "@tanstack/react-router";
+import { useState } from "react";
 import { getChannels } from "~/domains/channels";
 import { getPosts } from "~/domains/posts";
-import { ChannelsPanel, PostForm, PostsPanel } from "./components";
-import { usePost } from "./hooks/use-post";
+import {
+	ChannelsPanel,
+	NewChannelDialog,
+	PostForm,
+	PostsPanel,
+} from "./components";
+import { useChannel, usePost } from "./hooks";
 import styles from "./posts.module.scss";
 
 export const Posts = () => {
@@ -16,6 +22,18 @@ export const Posts = () => {
 		Number(channelId),
 	);
 
+	const { handleChangeName, handleCreateChannel } = useChannel(
+		Number(serverId),
+	);
+
+	const [open, setOpen] = useState(false);
+	const handleCloseDialog = () => {
+		setOpen(false);
+	};
+	const handleClickPlus = () => {
+		setOpen(true);
+	};
+
 	const { data: channels } = useQuery({
 		queryKey: ["channels"],
 		queryFn: getChannels(Number(serverId)),
@@ -24,6 +42,7 @@ export const Posts = () => {
 	const { data: posts } = useQuery({
 		queryKey: ["posts"],
 		queryFn: getPosts(Number(channelId)),
+		refetchInterval: 1000 * 10,
 	});
 
 	return (
@@ -32,6 +51,7 @@ export const Posts = () => {
 				<ChannelsPanel
 					channels={channels ?? []}
 					currentChannelId={Number(channelId)}
+					onClickPlus={handleClickPlus}
 				/>
 			</div>
 			<div className={styles.posts}>
@@ -49,6 +69,12 @@ export const Posts = () => {
 					disableSubmit={status === "pending"}
 				/>
 			</div>
+			<NewChannelDialog
+				open={open}
+				onChangeName={handleChangeName}
+				onSubmit={handleCreateChannel}
+				onClose={handleCloseDialog}
+			/>
 		</div>
 	);
 };
