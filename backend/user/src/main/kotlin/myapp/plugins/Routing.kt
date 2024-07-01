@@ -72,7 +72,7 @@ fun Application.configureRouting() {
                             secure = true,
                             httpOnly = true,
                             domain = "member0005.track-bootcamp.run",
-                            extensions = mapOf("same-site" to "none"),
+                            extensions = mapOf("SameSite" to "None"),
                             path = "/",
                         )
                         call.respond(UserPublic(user.id, user.name))
