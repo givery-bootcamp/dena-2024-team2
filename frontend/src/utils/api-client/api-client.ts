@@ -24,6 +24,12 @@ export const apiClient = (service: "timeline" | "user") =>
 				afterResponse: [
 					// camelCaseをsnake_caseに変換する処理
 					async (_request, _options, response) => {
+						if (response.status === 401) {
+							// 401の場合はログイン画面にリダイレクト
+							// 本来はrouteのloaderでfetchして、401の場合はログイン画面にリダイレクトするようにするのが正しそう…？
+							location.href = "/login";
+						}
+
 						if (
 							response.headers.get("content-type")?.includes("application/json")
 						) {
