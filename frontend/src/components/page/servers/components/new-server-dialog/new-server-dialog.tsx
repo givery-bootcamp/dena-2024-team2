@@ -47,13 +47,13 @@ export const NewServerDialog = ({
 										<div className={styles.inputs}>
 											<Input
 												type="text"
-												onChange={handleChangeName}
+												onChange={handleChangeIcon}
 												placeholder="Icon URL"
 												required
 											/>
 											<Input
 												type="text"
-												onChange={handleChangeIcon}
+												onChange={handleChangeName}
 												placeholder="Server Name"
 												required
 											/>
