@@ -14,6 +14,7 @@ var DBPassword = ""
 var DBPort = 3306
 var DBName = "training"
 var JWTSecret = ""
+var DBNameTest = "training_test"
 
 func init() {
 	if v := os.Getenv("HOSTNAME"); v != "" {
@@ -42,5 +43,8 @@ func init() {
 	}
 	if v := os.Getenv("JWT_SECRET"); v != "" {
 		JWTSecret = v
+	}
+	if v := os.Getenv("DB_NAME_TEST"); v != "" {
+		DBNameTest = v
 	}
 }
